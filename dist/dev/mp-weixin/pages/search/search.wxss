@@ -1,0 +1,12 @@
+
+.search{
+	/* margin-top: 15rpx; */
+}
+.u-search__action.data-v-1a326067 {
+	background-color: #ff547b;
+	height: 60rpx;
+	line-height: 60rpx;
+	margin-right: 10rpx
+}
+
+

@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "家樂商城",
+  "usingComponents": {
+    "u-search": "/node-modules/uview-ui/components/u-search/u-search",
+    "u-notice-bar": "/node-modules/uview-ui/components/u-notice-bar/u-notice-bar"
+  }
+}

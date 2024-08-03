@@ -1,0 +1,114 @@
+{
+	"easycom": {
+		"^u-(.*)": "uview-ui/components/u-$1/u-$1.vue"
+	},
+	"pages": [
+		{
+			"path": "pages/index/index",
+			"style": {
+				"navigationBarTitleText": "家樂商城"
+			}
+		},
+		{
+			"path": "pages/business/login",
+			"style": {
+				"navigationBarTitleText": "授权登录"
+			}
+		},
+		{
+			"path": "pages/business/index",
+			"style": {
+				"navigationBarTitleText": "会员中心"
+			}
+		},
+		{
+			"path": "pages/business/profile",
+			"style": {
+				"navigationBarTitleText": "基本资料"
+			}
+		},
+		{
+			"path": "pages/post/add",
+			"style": {
+				"navigationBarTitleText": "发布提问"
+			}
+		},
+		{
+			"path": "pages/post/edit",
+			"style": {
+				"navigationBarTitleText": "编辑提问"
+			}
+		},
+		{
+			"path": "pages/post/info",
+			"style": {
+				"navigationBarTitleText": "帖子详情"
+			}
+		},
+		{
+			"path": "pages/business/demo",
+			"style": {
+				"navigationBarTitleText": "测试"
+			}
+		},
+		{
+			"path": "pages/shopCar/shopCar",
+			"style": {
+				"navigationBarTitleText": "购物车"
+			}
+		},
+		{
+			"path" : "pages/search/search",
+			"style" : 
+			{
+				"navigationBarTitleText" : "搜索内容"
+			}
+		},
+		{
+			"path" : "pages/goods/list",
+			"style" : 
+			{
+				"navigationBarTitleText" : "商品列表"
+			}
+		}
+	],
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "知识社区论坛",
+		"navigationBarBackgroundColor": "#F8F8F8",
+		"backgroundColor": "#F8F8F8"
+	},
+	"tabBar": {
+		"color": "#909399",
+	    "selectedColor": "#303133",
+	    "borderStyle": "black",
+	    "backgroundColor": "#ffffff",
+		"list": [
+			{
+				"pagePath": "pages/index/index",
+				"iconPath": "static/tabbar/home.png",
+	        	"selectedIconPath": "static/tabbar/home-on.png",
+				"text": "首頁"
+			},
+			{
+				"pagePath": "pages/post/add",
+				"iconPath": "static/tabbar/category.png",
+	        	"selectedIconPath": "static/tabbar/category-on.png",
+				"text": "分类"
+			},
+			{
+				"pagePath": "pages/shopCar/shopCar",
+				"iconPath": "static/tabbar/cart.png",
+				"selectedIconPath": "static/tabbar/cart-active.png",
+				"text": "购物车"
+			},
+			{
+				"pagePath": "pages/business/index",
+				"iconPath": "static/tabbar/user.png",
+	        	"selectedIconPath": "static/tabbar/user-on.png",
+				"text": "我的"
+			}
+
+		]
+	}
+}

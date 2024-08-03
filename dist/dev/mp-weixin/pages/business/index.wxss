@@ -1,0 +1,237 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* 用户信息 */
+.user {
+	width: 100%;
+	padding:40rpx 0rpx;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	background: linear-gradient(rgb(1,115,222), rgb(78,169,245));
+	color:white;
+}
+.avatar {
+	width: 200rpx;
+	height: 200rpx;
+	border-radius: 50%;
+	overflow: hidden;
+}
+.avatar image{
+	width:100%;
+	height:100%;
+}
+.nickname{
+	font-size: 30rpx;
+	font-weight: bold;
+	margin: 10rpx 0;
+}
+.login{
+	width: 120px!important;
+	color: #fff;
+	background-color: #4ea9f5;
+	margin-top: 20rpx;
+	font-size: 30rpx;
+	padding:.5em .2em;
+}
+/* 菜单 */
+.menulist{
+	width: 100%;
+}
+.item{
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	height: auto;
+	width: auto;
+	padding: 20rpx 50rpx;
+	border-bottom: 20rpx solid rgb(234,234,234);
+	font-size: 26rpx;
+	box-shadow: 0 0 10px #DDD;
+}
+.item image{
+	height: 36rpx;
+	width: 36rpx;
+}
+

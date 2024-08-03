@@ -1,0 +1,55 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/business/login",
+    "pages/business/index",
+    "pages/business/profile",
+    "pages/post/add",
+    "pages/post/edit",
+    "pages/post/info",
+    "pages/business/demo",
+    "pages/shopCar/shopCar",
+    "pages/search/search",
+    "pages/goods/list"
+  ],
+  "subPackages": [],
+  "window": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "知识社区论坛",
+    "navigationBarBackgroundColor": "#F8F8F8",
+    "backgroundColor": "#F8F8F8"
+  },
+  "tabBar": {
+    "color": "#909399",
+    "selectedColor": "#303133",
+    "borderStyle": "black",
+    "backgroundColor": "#ffffff",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "iconPath": "static/tabbar/home.png",
+        "selectedIconPath": "static/tabbar/home-on.png",
+        "text": "首頁"
+      },
+      {
+        "pagePath": "pages/post/add",
+        "iconPath": "static/tabbar/category.png",
+        "selectedIconPath": "static/tabbar/category-on.png",
+        "text": "分类"
+      },
+      {
+        "pagePath": "pages/shopCar/shopCar",
+        "iconPath": "static/tabbar/cart.png",
+        "selectedIconPath": "static/tabbar/cart-active.png",
+        "text": "购物车"
+      },
+      {
+        "pagePath": "pages/business/index",
+        "iconPath": "static/tabbar/user.png",
+        "selectedIconPath": "static/tabbar/user-on.png",
+        "text": "我的"
+      }
+    ]
+  },
+  "usingComponents": {}
+}
