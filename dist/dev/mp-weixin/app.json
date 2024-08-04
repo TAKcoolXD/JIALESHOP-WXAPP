@@ -10,7 +10,8 @@
     "pages/business/demo",
     "pages/shopCar/shopCar",
     "pages/search/search",
-    "pages/goods/list"
+    "pages/goods/list",
+    "pages/goods/detail"
   ],
   "subPackages": [],
   "window": {

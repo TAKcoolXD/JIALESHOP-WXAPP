@@ -149,6 +149,7 @@ export default {
 		},
 		goSearch(){
 			console.log(222);
+			this.keywords=''
 			uni.navigateTo({
 				url: '/pages/search/search'
 			})

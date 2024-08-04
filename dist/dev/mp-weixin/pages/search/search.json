@@ -2,6 +2,7 @@
   "navigationBarTitleText": "搜索内容",
   "usingComponents": {
     "u-search": "/node-modules/uview-ui/components/u-search/u-search",
-    "u-icon": "/node-modules/uview-ui/components/u-icon/u-icon"
+    "u-icon": "/node-modules/uview-ui/components/u-icon/u-icon",
+    "u-toast": "/node-modules/uview-ui/components/u-toast/u-toast"
   }
 }

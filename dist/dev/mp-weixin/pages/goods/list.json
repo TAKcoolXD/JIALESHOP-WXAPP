@@ -1,4 +1,6 @@
 {
   "navigationBarTitleText": "商品列表",
-  "usingComponents": {}
+  "usingComponents": {
+    "u-search": "/node-modules/uview-ui/components/u-search/u-search"
+  }
 }

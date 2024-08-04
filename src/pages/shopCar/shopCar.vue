@@ -1,6 +1,6 @@
 <template>
-	<view>
-		
+	<view class="shopCar">
+			購物車
 	</view>
 </template>
 
