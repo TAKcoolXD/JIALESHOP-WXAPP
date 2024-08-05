@@ -1,7 +1,8 @@
 <template>
 	<view class="search">
-		<view style="margin-top: 10rpx;"><u-search placeholder="请输入您搜索的商品" v-model="keyword" @search="search(keyword)"
-				@custom="Search(keyword)"></u-search></view>
+		<view style="margin-top: 10rpx;">
+			<u-search placeholder="请输入您搜索的商品" v-model="keyword" @search="search(keyword)"@custom="Search(keyword)"></u-search>
+		</view>
 		<view style="display: flex; justify-content: space-between;align-items: center;">
 			<view style="margin-top: 40rpx;color: #959595;">最近搜索</view>
 			<u-icon style="margin-top: 5rpx;" name="trash-fill" top="17px" size="20px" @click="clear"></u-icon>

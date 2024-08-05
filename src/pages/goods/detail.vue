@@ -1,6 +1,5 @@
 <template>
-	<view class="detail">
-		商品詳情
+	<view class="detail" style="position: relative;">
 		<!-- 輪播圖 -->
 		<view class="uni-margin-wrap">
 			<swiper class="swiper" circular :indicator-dots="indicatorDots" :autoplay="autoplay" :interval="interval"
@@ -20,9 +19,9 @@
 		<!-- 商品名稱和分享 -->
 		<view style="display: flex;justify-content: space-between;align-items: center;">
 			<view style="color: #959595;">蘋果14PRO</view>
-			<view><u-icon name="share-square" color="#ff547b" size="28"></u-icon></view>
+			<view @click="showShare"><u-icon name="share-square" color="#ff547b" size="28"></u-icon></view>
 		</view>
-		<!-- 說明 -->
+		<!-- 服務 -->
 		<view style="display:  flex;margin-top: 20rpx;align-items: center;">
 
 			<view style="display:  flex;margin: 0 30rpx;font-size: 25rpx;">
@@ -33,56 +32,93 @@
 				<u-icon name="checkmark" color="#ff547b" size="15"></u-icon>
 				<view>48小時發貨</view>
 			</view>
-			<view style="margin-left: 285rpx;"><u-icon name="arrow-right" color="#ff547b" size="15""></u-icon></view>
-				
-				
-				
-			
+			<view @click="showService" style="margin-left: 285rpx;"><u-icon name="arrow-right" color="#ff547b" size="15""></u-icon></view>			
 		</view>
 		<!-- 商品的描述 -->
 		 <view style=" margin-top: 20rpx;">
 					<view>商品描述</view>
-					<view v-html="desc">
-
-					</view>
+					<view v-html="desc"></view>
 			</view>
+			<!-- 加入購物車 立即購買 -->
+			<view
+				style="width: 750rpx; display: flex;align-items: center;justify-content: space-around;position: sticky;left: 0rpx;bottom :0rpx;height: 130rpx;background: white;">
+				<view style="display: flex;align-items: center;">
+					<view style="margin:  0 10rpx;">
+						<u-icon name="home" color="#5b5b5d" size="28"></u-icon>
+					</view>
+					<view style="margin:  0 10rpx;">
+						<u-icon name="kefu-ermai" color="#5b5b5d" size="28"></u-icon>
+					</view>
+					<view style="margin:  0 10rpx;">
+						<u-icon name="shopping-cart" color="#5b5b5d" size="28"></u-icon>
+					</view>
+				</view>
+				<view style="display: flex;align-items: center;">
+					<view @click="showCart"
+						style="background-color: #ffe6e9;padding: 10rpx;border-radius: 131rpx;width: 200rpx;text-align: center;margin: 0 8rpx;color: #ff547b">
+						加入購物車</view>
+					<view @click="showBuy"
+						style="background-color: #ff557c;padding: 10rpx;border-radius:131rpx;width: 200rpx;text-align: center;margin: 0 8rpx;color: white">
+						立即購買</view>
+				</view>
+			</view>
+			<!-- 服務彈出框 -->
+			<u-popup :show="ServiceShow" @close="closeService" closeable="true">
+				<view style="height: 400rpx;">
+					<view style="width: 500rpx;height: 70rpx;margin: 0 auto;line-height: 70rpx;text-align: center;">服務
+					</view>
+					<view style="display:  flex;margin: 0 30rpx;font-size: 35rpx;">
+						<u-icon name="checkmark" color="#ff547b" size="15"></u-icon>
+						<view style="margin-left: 20rpx;">七天無理由退貨</view>
+					</view>
+					<view style="margin-left: 85rpx;font-size: 25rpx;margin-top: 20rpx">滿足相應條件時，消費者可申請7天無理由退貨</view>
+					<view style="display:  flex;margin: 0 30rpx;font-size: 35rpx;margin-top: 50rpx">
+						<u-icon name="checkmark" color="#ff547b" size="15"></u-icon>
+						<view style="margin-left: 20rpx;">48小時發貨</view>
+					</view>
+					<view style="margin-left: 85rpx;font-size: 25rpx;margin-top: 20rpx">下單後48小時之内發貨</view>
+				</view>
+			</u-popup>
+			<!-- 分享彈出框 -->
+			<u-popup :show="shareShow" @close="closeShare">
+				<view style="height: 300rpx;">
+					<!-- 圖標 -->
+					<view style="display: flex;">
+						<view style="border-radius: 50%; width: 100rpx;height: 100rpx; background-color: #44db74;display: flex;align-items: center;justify-content: center;margin: 30rpx 60rpx">
+							<u-icon name="weixin-fill" color="white" size="40"></u-icon>
+						</view>
+						<view style="border-radius: 50%; width: 100rpx;height: 100rpx;background-color: #38beec; display: flex;align-items: center;justify-content: center;margin: 30rpx 60rpx"">
+							<u-icon name="attach" color="white" size="40"></u-icon>
+						</view>
+					</view>
+					<!-- 發送給朋友 複製鏈接 -->
+					<view style="display: flex;">
+						<view style="margin: 0 40rpx;">發送給朋友</view>
+						<view style="margin-left: 35rpx;">複製鏈接</view>
+					</view>
+
+					<view @click="closeShare" style="margin: 30rpx auto; width: 400rpx;text-align: center;">關閉</view>
+				</view>
+			</u-popup>
+			<!-- 加入購物車彈出框 -->
+			<u-popup :show="shareCart" @close="closeCart">
+					<view style="height: 300rpx;">加入購物車</view>
+			</u-popup>
+			<!-- 立即購買彈出框 -->
+			<u-popup :show="shareBuy" @close="closeBuy">
+					<view style="height: 300rpx;">立即購買</view>
+			</u-popup>
 		</view>
+
 </template>
-设计与显示
-外观设计：采用不锈钢边框和陶瓷盾面板，提供极致的耐用性和美观度。
-
-颜色：提供多种颜色选择，包括银色、石墨色、金色和暗紫色。
-
-显示屏：6.1 英寸的 Super Retina XDR 显示屏，支持 ProMotion 技术，带来更加流畅的视觉体验。
-
-硬件配置
-处理器：搭载 A16 仿生芯片，提供强大的性能和效率。
-
-存储容量：提供128GB、256GB、512GB 和 1TB 多种选择，满足不同存储需求。
-
-摄像头系统：后置三摄系统，包括一个 48MP 主摄像头、一个 12MP 超广角摄像头和一个 12MP 长焦摄像头，支持 3 倍光学变焦。
-
-前置摄像头：12MP TrueDepth 摄像头，支持面容识别和各种自拍功能。
-
-功能特色
-ProMotion 技术：自适应刷新率高达 120Hz，提供流畅的滚动和响应。
-
-摄影功能：支持 ProRAW 和 ProRes 视频录制，提供专业级别的拍摄体验。
-
-电池续航：续航表现优秀，支持 MagSafe 无线充电和快充。
-
-操作系统：搭载最新的 iOS 系统，提供流畅、安全的用户体验。
-
-其他
-安全功能：面容 ID（Face ID）提供高度安全的解锁和支付功能。
-
-5G 支持：支持 5G 网络，带来更快的下载和上传速度。
-
-耐水性能：具备 IP68 级防水防尘功能，可在一定深度和时间内防水。
 <script>
 export default {
 	data() {
 		return {
+			ServiceShow: false,
+			shareShow: false,
+			shareCart:false,
+			shareBuy:false,
 			background: ['color1', 'color2', 'color3'],
 			indicatorDots: true,
 			autoplay: true,
@@ -92,9 +128,36 @@ export default {
 		}
 	},
 	methods: {
+		// 關閉服務彈出層
+		closeService() {
+			this.ServiceShow = false
+		},
+		showService() {
+			this.ServiceShow = true
+		},
+		closeShare() {
+			this.shareShow = false
+		},
+		showShare() {
+			this.shareShow = true
 
+		},
+		closeCart(){
+			this.shareCart = false
+		},
+		showCart(){
+			this.shareCart = true
+		},
+		closeBuy(){
+			this.shareBuy = false
+		},
+		showBuy(){
+			this.shareBuy = true
+		}
+			}
 	}
-}
+	
+
 </script>
 
 <style>
@@ -135,4 +198,3 @@ export default {
 	padding: 0 100rpx;
 }
 </style>
-安全功能：面容 ID（Face ID）提供高度安全的解锁和支付功能。

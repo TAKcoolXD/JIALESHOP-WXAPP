@@ -7,7 +7,7 @@ module.exports = (vm) => {
   
   // 如果为H5模式下可以仅配置前缀然后用反向代理来执行域名配置 (下面的注释是条件编译不要删除)!!!!
   // #ifdef H5
-    config.baseURL = '/ask';
+    config.baseURL = 'https://yoshop-test.azhuquq.com/index.php?s=/api/';
   // #endif
 
   // 如果为小程序模式，需配置完整域名路径 (下面的注释是条件编译不要删除)!!!!

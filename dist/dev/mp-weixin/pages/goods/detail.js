@@ -103,6 +103,9 @@ try {
     uIcon: function () {
       return Promise.all(/*! import() | node-modules/uview-ui/components/u-icon/u-icon */[__webpack_require__.e("common/vendor"), __webpack_require__.e("node-modules/uview-ui/components/u-icon/u-icon")]).then(__webpack_require__.bind(null, /*! uview-ui/components/u-icon/u-icon.vue */ 328))
     },
+    uPopup: function () {
+      return Promise.all(/*! import() | node-modules/uview-ui/components/u-popup/u-popup */[__webpack_require__.e("common/vendor"), __webpack_require__.e("node-modules/uview-ui/components/u-popup/u-popup")]).then(__webpack_require__.bind(null, /*! uview-ui/components/u-popup/u-popup.vue */ 429))
+    },
   }
 } catch (e) {
   if (
@@ -245,9 +248,45 @@ exports.default = void 0;
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 var _default = exports.default = {
   data: function data() {
     return {
+      ServiceShow: false,
+      shareShow: false,
+      shareCart: false,
+      shareBuy: false,
       background: ['color1', 'color2', 'color3'],
       indicatorDots: true,
       autoplay: true,
@@ -256,7 +295,33 @@ var _default = exports.default = {
       desc: '<p>设计与显示</p> <ul><li>外觀設計：采用不锈钢边框和陶瓷盾面板，提供极致的耐用性和美观度。</li><li>颜色：提供多种颜色选择，包括银色、石墨色、金色和暗紫色。</li><li>显示屏：6.1 英寸的 Super Retina XDR 显示屏，支持 ProMotion 技术，带来更加流畅的视觉体验。</li></ul><p>硬件配置</p> <ul><li>外觀設計：处理器：搭载 A16 仿生芯片，提供强大的性能和效率。</li><li>存储容量：提供128GB、256GB、512GB 和 1TB 多种选择，满足不同存储需求。</li><li>摄像头系统：后置三摄系统，包括一个 48MP 主摄像头、一个 12MP 超广角摄像头和一个 12MP 长焦摄像头，支持 3 倍光学变焦。</li></ul><p>功能特色</p> <ul><li>ProMotion 技术：自适应刷新率高达 120Hz，提供流畅的滚动和响应。</li><li>摄影功能：支持 ProRAW 和 ProRes 视频录制，提供专业级别的拍摄体验。</li><li>电池续航：续航表现优秀，支持 MagSafe 无线充电和快充。</li></ul><p>其他</p><ul><li>安全功能：面容 ID（Face ID）提供高度安全的解锁和支付功能。</li><li>5G 支持：支持 5G 网络，带来更快的下载和上传速度。</li><li>耐水性能：具备 IP68 级防水防尘功能，可在一定深度和时间内防水。</li></ul>'
     };
   },
-  methods: {}
+  methods: {
+    // 關閉服務彈出層
+    closeService: function closeService() {
+      this.ServiceShow = false;
+    },
+    showService: function showService() {
+      this.ServiceShow = true;
+    },
+    closeShare: function closeShare() {
+      this.shareShow = false;
+    },
+    showShare: function showShare() {
+      this.shareShow = true;
+    },
+    closeCart: function closeCart() {
+      this.shareCart = false;
+    },
+    showCart: function showCart() {
+      this.shareCart = true;
+    },
+    closeBuy: function closeBuy() {
+      this.shareBuy = false;
+    },
+    showBuy: function showBuy() {
+      this.shareBuy = true;
+    }
+  }
 };
 
 /***/ }),
