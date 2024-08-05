@@ -106,6 +106,9 @@ try {
     uPopup: function () {
       return Promise.all(/*! import() | node-modules/uview-ui/components/u-popup/u-popup */[__webpack_require__.e("common/vendor"), __webpack_require__.e("node-modules/uview-ui/components/u-popup/u-popup")]).then(__webpack_require__.bind(null, /*! uview-ui/components/u-popup/u-popup.vue */ 429))
     },
+    uNumberBox: function () {
+      return Promise.all(/*! import() | node-modules/uview-ui/components/u-number-box/u-number-box */[__webpack_require__.e("common/vendor"), __webpack_require__.e("node-modules/uview-ui/components/u-number-box/u-number-box")]).then(__webpack_require__.bind(null, /*! uview-ui/components/u-number-box/u-number-box.vue */ 594))
+    },
   }
 } catch (e) {
   if (
@@ -280,9 +283,54 @@ exports.default = void 0;
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 var _default = exports.default = {
   data: function data() {
     return {
+      CountValue: '',
       ServiceShow: false,
       shareShow: false,
       shareCart: false,
@@ -320,6 +368,9 @@ var _default = exports.default = {
     },
     showBuy: function showBuy() {
       this.shareBuy = true;
+    },
+    valChange: function valChange() {
+      console.log('计步器');
     }
   }
 };

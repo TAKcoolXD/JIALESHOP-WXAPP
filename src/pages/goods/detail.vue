@@ -101,12 +101,56 @@
 				</view>
 			</u-popup>
 			<!-- 加入購物車彈出框 -->
-			<u-popup :show="shareCart" @close="closeCart">
-					<view style="height: 300rpx;">加入購物車</view>
+			<u-popup :show="shareCart" @close="closeCart" closeable="true">
+					<view style="height: 500rpx;">
+						<!-- 商品图片 价格 库存 -->
+						<view style="display: flex;align-items: center;margin-top: 20rpx;">
+							<image
+							src="../../static/logo.png"
+							mode="scaleToFill"
+							style="width: 200rpx;height: 200rpx;margin-left: 30rpx;"
+						/>
+						<!-- 价格 库存 -->
+						<view style="margin-left: 30rpx;">
+							<view style="color: #ff547b;"><span style="font-size: 20rpx;">￥</span> <span style="font-size: 40rpx;">0.01</span></view>
+							<view style="font-size: 25rpx;">库存：100</view>
+						</view>
+						</view>
+						<!-- 數量  计步器-->
+						 <view style="width: 700rpx;height: 70rpx;margin: 25rpx auto;;display: flex;justify-content: space-between;align-items: center;">
+							<view>数量</view>
+							<view><u-number-box v-model="CountValue" @change="valChange"></u-number-box></view>
+						 </view>
+						 <view style="width: 600rpx;height: 80rpx;margin: 30rpx auto;border-radius: 50rpx;text-align: center;line-height: 80rpx;background-color: #ffe6e8;color: #ff547b;">
+							加入购物车
+						 </view>
+					</view>
 			</u-popup>
 			<!-- 立即購買彈出框 -->
-			<u-popup :show="shareBuy" @close="closeBuy">
-					<view style="height: 300rpx;">立即購買</view>
+			<u-popup :show="shareBuy" @close="closeBuy" closeable="true">
+				<view style="height: 500rpx;">
+						<!-- 商品图片 价格 库存 -->
+						<view style="display: flex;align-items: center;margin-top: 20rpx;">
+							<image
+							src="../../static/logo.png"
+							mode="scaleToFill"
+							style="width: 200rpx;height: 200rpx;margin-left: 30rpx;"
+						/>
+						<!-- 价格 库存 -->
+						<view style="margin-left: 30rpx;">
+							<view style="color: #ff547b;"><span style="font-size: 20rpx;">￥</span> <span style="font-size: 40rpx;">0.01</span></view>
+							<view style="font-size: 25rpx;">库存：100</view>
+						</view>
+						</view>
+						<!-- 數量  计步器-->
+						 <view style="width: 700rpx;height: 70rpx;margin: 25rpx auto;;display: flex;justify-content: space-between;align-items: center;">
+							<view>数量</view>
+							<view><u-number-box v-model="CountValue" @change="valChange"></u-number-box></view>
+						 </view>
+						 <view style="width: 600rpx;height: 80rpx;margin: 30rpx auto;border-radius: 50rpx;text-align: center;line-height: 80rpx;background-color: #ffe6e8;color: #ff547b;">
+							立即购买
+						 </view>
+					</view>
 			</u-popup>
 		</view>
 
@@ -115,6 +159,7 @@
 export default {
 	data() {
 		return {
+			CountValue:'',
 			ServiceShow: false,
 			shareShow: false,
 			shareCart:false,
@@ -153,8 +198,14 @@ export default {
 		},
 		showBuy(){
 			this.shareBuy = true
+		},
+		valChange(){
+			console.log('计步器'); 
+			
 		}
-			}
+			
+	}
+
 	}
 	
 
