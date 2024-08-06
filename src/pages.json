@@ -28,24 +28,6 @@
 			}
 		},
 		{
-			"path": "pages/post/add",
-			"style": {
-				"navigationBarTitleText": "发布提问"
-			}
-		},
-		{
-			"path": "pages/post/edit",
-			"style": {
-				"navigationBarTitleText": "编辑提问"
-			}
-		},
-		{
-			"path": "pages/post/info",
-			"style": {
-				"navigationBarTitleText": "帖子详情"
-			}
-		},
-		{
 			"path": "pages/business/demo",
 			"style": {
 				"navigationBarTitleText": "测试"
@@ -78,6 +60,14 @@
 				"navigationBarTitleText" : "",
 				"enablePullDownRefresh" : false
 			}
+		},
+		{
+			"path" : "pages/Categories/categories",
+			"style" : 
+			{
+				"navigationBarTitleText" : "",
+				"enablePullDownRefresh" : false
+			}
 		}
 	],
 	"globalStyle": {
@@ -99,7 +89,7 @@
 				"text": "首頁"
 			},
 			{
-				"pagePath": "pages/post/add",
+				"pagePath": "pages/Categories/categories",
 				"iconPath": "static/tabbar/category.png",
 	        	"selectedIconPath": "static/tabbar/category-on.png",
 				"text": "分类"

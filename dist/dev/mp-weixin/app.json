@@ -4,14 +4,12 @@
     "pages/business/login",
     "pages/business/index",
     "pages/business/profile",
-    "pages/post/add",
-    "pages/post/edit",
-    "pages/post/info",
     "pages/business/demo",
     "pages/shopCar/shopCar",
     "pages/search/search",
     "pages/goods/list",
-    "pages/goods/detail"
+    "pages/goods/detail",
+    "pages/Categories/categories"
   ],
   "subPackages": [],
   "window": {
@@ -33,7 +31,7 @@
         "text": "首頁"
       },
       {
-        "pagePath": "pages/post/add",
+        "pagePath": "pages/Categories/categories",
         "iconPath": "static/tabbar/category.png",
         "selectedIconPath": "static/tabbar/category-on.png",
         "text": "分类"
