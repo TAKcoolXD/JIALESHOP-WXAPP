@@ -68,6 +68,14 @@
 				"navigationBarTitleText" : "",
 				"enablePullDownRefresh" : false
 			}
+		},
+		{
+			"path" : "pages/settlement/settlement",
+			"style" : 
+			{
+				"navigationBarTitleText" : "订单结算台",
+				"enablePullDownRefresh" : false
+			}
 		}
 	],
 	"globalStyle": {

@@ -9,7 +9,8 @@
     "pages/search/search",
     "pages/goods/list",
     "pages/goods/detail",
-    "pages/Categories/categories"
+    "pages/Categories/categories",
+    "pages/settlement/settlement"
   ],
   "subPackages": [],
   "window": {

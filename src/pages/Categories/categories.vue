@@ -7,8 +7,9 @@
 		</view>
 
 		<view style=" width: 750rpx;height: 1355rpx;display: flex;">
-
+			<!-- 菜单分类 -->
 			<view style="width: 200rpx;height: 1330rpx;background-color: #f8f8f8;">
+				<!-- 全部商品 -->
 				<view style="width: 200rpx;height: 100rpx;text-align: center;line-height: 100rpx;" @click="showAll"
 					:class="{ active: index == 0 }">全部</view>
 				<view v-for="categoriesitem in categoriesList" :key="categoriesitem.category_id"
@@ -17,30 +18,32 @@
 						:class="{ active: index == categoriesitem.category_id }">{{ categoriesitem.name }}</view>
 				</view>
 			</view>
+			<!-- 商品展示 -->
 			<view style="width: 520rpx;height: 1330rpx;margin-left: 20rpx;overflow: scroll;">
+				<!-- 全部商品数据展示 -->
 				<view v-if="index == 0" style="width: 490rpx;height: 1330rpx;margin:10rpx 15rpx;overflow: scroll;">
-					<view v-for="goodsitem in goodsList" :key="goodsitem.goods_id" style="display: flex;padding: 8rpx;">
+					<view v-for="goodsitem in goodsList" :key="goodsitem.goods_id" style="display: flex;padding: 20rpx;">
 						<image :src="goodsitem.goods_image" mode="scaleToFill" style="width: 150rpx;height: 150rpx;" />
 						<view style="width: 350rpx;">
 							<view style="margin-left: 10rpx;">{{ goodsitem.goods_name }}</view>
 							<view style="display: flex;margin-top: 50rpx ;justify-content: space-between;">
 								<view style="color: #ff547b;">￥{{ goodsitem.goods_price_min }}</view>
-								<view><u-icon name="plus-circle" color="#ff547b" size="28"></u-icon></view>
+								<view style="margin-top: 8rpx;"><u-icon name="plus-circle" color="#ff547b" size="20"></u-icon></view>
 							</view>
 						</view>
 					</view>
 				</view>
-				<!-- <view style="border: 1px solid orchid;width: 490rpx;height: 1330rpx;margin:10rpx 15rpx"></view> -->
+				<!-- 通过右侧菜单动态控制 商品的展示 -->
 				<view v-if="categoitem.category_id == index" v-for="categoitem in categoriesList"
 					:key="categoitem.category_id"
 					style="width: 490rpx;height: 1330rpx;margin:10rpx 15rpx;overflow: scroll;">
-					<view v-for="item1 in goodsListDetail" :key="item1.goods_id" style="display: flex;padding: 8rpx;">
+					<view v-for="item1 in goodsListDetail" :key="item1.goods_id" style="display: flex;padding: 20rpx;">
 						<image :src="item1.goods_image" mode="scaleToFill" style="width: 150rpx;height: 150rpx;" />
 						<view style="width: 350rpx;">
 							<view style="margin-left: 10rpx;">{{ item1.goods_name }}</view>
 							<view style="display: flex;margin-top: 50rpx ;justify-content: space-between;">
 								<view style="color: #ff547b;">￥{{ item1.goods_price_max }}</view>
-								<view><u-icon name="plus-circle" color="#ff547b" size="28"></u-icon></view>
+								<view  style="margin-top: 8rpx;"><u-icon name="plus-circle" color="#ff547b" size="20"></u-icon></view>
 							</view>
 						</view>
 					</view>
