@@ -52,7 +52,7 @@
 			</view>
 			<view style="display: flex;align-items: center;margin-right: 20rpx;">
 				
-				<view @click="goSettleMent" style="padding: 10rpx 40rpx;background-color: #ff91ab;border-radius: 35rpx;color: white;">
+				<view @click="goCashier" style="padding: 10rpx 40rpx;background-color: #ff91ab;border-radius: 35rpx;color: white;">
 					提交订单
 				</view>
 			</view>
@@ -72,6 +72,12 @@ export default {
 		change(){
 			console.log('change');
 			
+		},
+		goCashier(){
+			
+			uni.navigateTo({
+				url:'/pages/settlement/cashier'
+			})
 		}
 	}
 }

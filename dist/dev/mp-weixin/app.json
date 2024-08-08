@@ -10,7 +10,9 @@
     "pages/goods/list",
     "pages/goods/detail",
     "pages/Categories/categories",
-    "pages/settlement/settlement"
+    "pages/settlement/settlement",
+    "pages/settlement/cashier",
+    "pages/order/order"
   ],
   "subPackages": [],
   "window": {

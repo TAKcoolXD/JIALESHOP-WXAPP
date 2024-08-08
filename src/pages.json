@@ -76,6 +76,22 @@
 				"navigationBarTitleText" : "订单结算台",
 				"enablePullDownRefresh" : false
 			}
+		},
+		{
+			"path" : "pages/settlement/cashier",
+			"style" : 
+			{
+				"navigationBarTitleText" : "支付平台",
+				"enablePullDownRefresh" : false
+			}
+		},
+		{
+			"path" : "pages/order/order",
+			"style" : 
+			{
+				"navigationBarTitleText" : "我的订单",
+				"enablePullDownRefresh" : false
+			}
 		}
 	],
 	"globalStyle": {
