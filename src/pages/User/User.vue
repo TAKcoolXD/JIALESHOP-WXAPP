@@ -1,0 +1,139 @@
+<template>
+	<view class="User" style="background: #e9e9e9;height: 1200rpx;">
+		<view style="background-color: #faf6eb;height: 150rpx;">
+			<view style="display:flex;margin-left: 40rpx;align-items: center;">
+				<image src="../../static/logo.png" mode="scaleToFill"
+					style="width: 100rpx;height: 100rpx;border-radius: 50%;" />
+				<view style="margin-left: 30rpx;color: #d0af6b;">微信用户_10001</view>
+			</view>
+		</view>
+		<view
+			style="background-color: #fcebd1;height: 70rpx;display: flex;justify-content: space-around;align-items: center;">
+			<view style="color: #eab766;">点击绑定手机号 确保账户的安全</view>
+			<view style="background-color: #eab766;border-radius: 30rpx;padding: 5rpx 10rpx;color: white;">去绑定</view>
+		</view>
+		<view style=" height: 170rpx;display: flex;align-items: center;justify-content: center;">
+
+			<view style="width: 500rpx;height: 130rpx;display: flex;align-items: center;justify-content: center;">
+				<view
+					style="margin: 0 35rpx;font-size: 30rpx;display: flex;flex-direction: column;align-items: center;">
+					<view style="margin-top: 10rpx;">6.97</view>
+					<view>账户余额</view>
+				</view>
+				<view
+					style="margin: 0 35rpx;font-size: 30rpx;display: flex;flex-direction: column;align-items: center;">
+					<view style="margin-top: 10rpx;">0</view>
+					<view>积分</view>
+				</view>
+				<view
+					style="margin: 0 35rpx;font-size: 30rpx;display: flex;flex-direction: column;align-items: center;">
+					<view style="margin-top: 10rpx;">0</view>
+					<view>优惠价</view>
+				</view>
+			</view>
+			<view
+				style="width: 200rpx;height: 130rpx;display: flex;align-items: center;justify-content: center;flex-direction: column;">
+				<view style="margin-top: 10rpx;"><u-icon name="red-packet-fill" color="#7d7d7d" size="25"></u-icon>
+				</view>
+				<view style="margin-top: 10rpx;">我的钱包</view>
+			</view>
+
+		</view>
+		<view
+			style="background-color: white; width: 700rpx;height: 170rpx;margin: 10rpx auto; display: flex;align-items: center;justify-content: center;">
+			<view
+				style="height: 100rpx;margin: 10rpx 35rpx;display: flex;flex-direction: column;align-items: center;justify-content: center;">
+				<view><u-icon name="file-text" color="#7d7d7d" size="25"></u-icon></view>
+				<view>全部订单</view>
+			</view>
+			<view
+				style="height: 100rpx;margin: 10rpx 35rpx;display: flex;flex-direction: column;align-items: center;justify-content: center;">
+				<view>
+					<image src="../../static/支付 钱包 待支付.png" style="width: 45rpx;height: 45rpx;" mode="scaleToFill" />
+				</view>
+				<view>待支付</view>
+			</view>
+			<view
+				style="height: 100rpx;margin: 10rpx 35rpx;display: flex;flex-direction: column;align-items: center;justify-content: center;">
+				<view>
+					<image src="../../static/待发货.png" style="width: 45rpx;height: 45rpx;" mode="scaleToFill" />
+				</view>
+				<view>待发货</view>
+			</view>
+			<view
+				style="height: 100rpx;margin: 10rpx 35rpx;display: flex;flex-direction: column;align-items: center;justify-content: center;">
+				<view>
+					<image src="../../static/待收货.png" style="width: 45rpx;height: 45rpx;" mode="scaleToFill" />
+				</view>
+				<view>待收货</view>
+			</view>
+		</view>
+		<view
+			style="background-color: white; width: 700rpx;height: 300rpx;margin: 20rpx auto; display: flex;align-items: center;justify-content: center;flex-wrap: wrap;">
+			<view style="padding: 10rpx 10rpx;display: flex;flex-direction: column;align-items: center;justify-content: center;margin: 0 10rpx;">
+				<view>
+					<image src="../../static/收获地址.png" style="width: 60rpx;height: 60rpx;" mode="scaleToFill" />
+				</view>
+				<view>收货地址</view>
+			</view>
+			<view style="padding: 10rpx 10rpx;display: flex;flex-direction: column;align-items: center;justify-content: center;margin: 0 10rpx;">
+				<view>
+					<image src="../../static/领卷活动.png" style="width: 45rpx;height: 45rpx;" mode="scaleToFill" />
+				</view>
+				<view>收货地址</view>
+			</view>
+			<view style="padding: 10rpx 10rpx;display: flex;flex-direction: column;align-items: center;justify-content: center;margin: 0 10rpx;">
+				<view>
+					<image src="../../static/优惠卷.png" style="width: 45rpx;height: 45rpx;" mode="scaleToFill" />
+				</view>
+				<view>收货地址</view>
+			</view>
+			<view style="padding: 10rpx 10rpx;display: flex;flex-direction: column;align-items: center;justify-content: center;margin: 0 10rpx;">
+				<view>
+					<image src="../../static/退换货.png" style="width: 45rpx;height: 45rpx;" mode="scaleToFill" />
+				</view>
+				<view>收货地址</view>
+			</view>
+			<view style="padding: 10rpx 10rpx;display: flex;flex-direction: column;align-items: center;justify-content: center;margin: 0 10rpx;">
+				<view>
+					<image src="../../static/客服在线.png" style="width: 45rpx;height: 45rpx;" mode="scaleToFill" />
+				</view>
+				<view>收货地址</view>
+			</view>
+			<view style="padding: 10rpx 10rpx;display: flex;flex-direction: column;align-items: center;justify-content: center;margin: 0 10rpx;">
+				<view>
+					<image src="../../static/积分.png" style="width: 45rpx;height: 45rpx;" mode="scaleToFill" />
+				</view>
+				<view>收货地址</view>
+			</view>
+			<view style="padding: 10rpx 10rpx;display: flex;flex-direction: column;align-items: center;justify-content: center;margin: 0 10rpx;">
+				<view>
+					<image src="../../static/订单中心icon.png" style="width: 45rpx;height: 45rpx;" mode="scaleToFill" />
+				</view>
+				<view>收货地址</view>
+			</view>
+			<view style="padding: 10rpx 10rpx;display: flex;flex-direction: column;align-items: center;justify-content: center;margin: 0 10rpx;">
+				<view>
+					<image src="../../static/帮助_o.png" style="width: 45rpx;height: 45rpx;" mode="scaleToFill" />
+				</view>
+				<view>收货地址</view>
+			</view>
+		</view>
+		<view style="width: 400rpx;height: 70rpx;border: 1px solid #282828;text-align: center;line-height: 70rpx;border-radius: 30rpx;margin: 50rpx auto;">
+			退出登录
+		</view>
+	</view>
+</template>
+
+<script>
+export default {
+	data() {
+		return {
+
+		}
+	},
+}
+</script>
+
+
+<style></style>

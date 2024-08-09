@@ -1,10 +1,7 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/business/login",
-    "pages/business/index",
-    "pages/business/profile",
-    "pages/business/demo",
+    "pages/User/User",
     "pages/shopCar/shopCar",
     "pages/search/search",
     "pages/goods/list",
@@ -46,7 +43,7 @@
         "text": "购物车"
       },
       {
-        "pagePath": "pages/business/index",
+        "pagePath": "pages/User/User",
         "iconPath": "static/tabbar/user.png",
         "selectedIconPath": "static/tabbar/user-on.png",
         "text": "我的"

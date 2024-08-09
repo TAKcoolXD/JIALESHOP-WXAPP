@@ -10,27 +10,11 @@
 			}
 		},
 		{
-			"path": "pages/business/login",
+			"path": "pages/User/User",
 			"style": {
-				"navigationBarTitleText": "授权登录"
-			}
-		},
-		{
-			"path": "pages/business/index",
-			"style": {
-				"navigationBarTitleText": "会员中心"
-			}
-		},
-		{
-			"path": "pages/business/profile",
-			"style": {
-				"navigationBarTitleText": "基本资料"
-			}
-		},
-		{
-			"path": "pages/business/demo",
-			"style": {
-				"navigationBarTitleText": "测试"
+				"navigationBarTitleText": "会员中心",
+				"navigationBarBackgroundColor":"#faf6eb"
+				
 			}
 		},
 		{
@@ -125,7 +109,7 @@
 				"text": "购物车"
 			},
 			{
-				"pagePath": "pages/business/index",
+				"pagePath": "pages/User/User",
 				"iconPath": "static/tabbar/user.png",
 	        	"selectedIconPath": "static/tabbar/user-on.png",
 				"text": "我的"

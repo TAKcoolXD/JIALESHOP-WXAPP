@@ -19,9 +19,13 @@
 					<view>x 1</view>
 				</view>
 			</view>
-			<view style="width: 400rpx;height: 130rpx;margin-top: 20rpx;margin-left: 300rpx;display: flex;flex-direction: column;align-items: center;justify-content: center;">
+			<view style="width: 500rpx;height: 130rpx;margin-top: 20rpx;margin-left: 200rpx;display: flex;flex-direction: column;align-items: center;justify-content: center;">
 				<view> 共一件商品 ，总金额 $1.00 </view>
-				<view style="border-radius: 20rpx;border: 1px solid #dedede;padding: 8rpx 20rpx;font-size: 30rpx ;margin-left: 200rpx;margin-top: 30rpx;margin-bottom: 20rpx;"> 申请取消 </view>
+			</view>
+			<view style="display: flex;justify-content: flex-end;">
+					<view style="padding: 0 20rpx;margin: 0 8rpx;border: 2px solid #ff99af;border-radius: 15rpx;">去支付</view>
+					<view style="padding: 0 20rpx;margin: 0 8rpx;border: 2px solid #dbdbdb;border-radius: 15rpx;">取消</view>
+					<view style="padding: 0 20rpx;margin: 0 8rpx;border: 2px solid #dbdbdb;border-radius: 15rpx;">申请取消</view>
 			</view>
 			<view v-show="true" style="margin-left: 20rpx;margin-bottom: 20rpx ;" >
 				取消申请中
@@ -44,7 +48,11 @@
 			</view>
 			<view style="width: 400rpx;height: 130rpx;margin-top: 20rpx;margin-left: 300rpx;display: flex;flex-direction: column;align-items: center;justify-content: center;">
 				<view> 共二件商品 ，总金额 $2.00 </view>
-				<view style="border-radius: 20rpx;border: 1px solid #dedede;padding: 8rpx 20rpx;font-size: 30rpx ;margin-left: 200rpx;margin-top: 30rpx;margin-bottom: 20rpx;"> 申请取消 </view>
+			</view>
+			<view style="display: flex;justify-content: flex-end;">
+					<view style="padding: 0 20rpx;margin: 0 8rpx;border: 2px solid #ff99af;border-radius: 15rpx;color: #ff8ea8;">去支付</view>
+					<view style="padding: 0 20rpx;margin: 0 8rpx;border: 2px solid #dbdbdb;border-radius: 15rpx;">取消</view>
+					<view style="padding: 0 20rpx;margin: 0 8rpx;border: 2px solid #dbdbdb;border-radius: 15rpx;">申请取消</view>
 			</view>
 			<view v-show="true" style="margin-left: 20rpx;margin-bottom: 20rpx ;" >
 				取消申请中
