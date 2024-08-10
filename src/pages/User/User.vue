@@ -13,25 +13,24 @@
 			<view style="background-color: #eab766;border-radius: 30rpx;padding: 5rpx 10rpx;color: white;">去绑定</view>
 		</view>
 		<view style=" height: 170rpx;display: flex;align-items: center;justify-content: center;">
-
 			<view style="width: 500rpx;height: 130rpx;display: flex;align-items: center;justify-content: center;">
-				<view
+				<view @click="goWallet"
 					style="margin: 0 35rpx;font-size: 30rpx;display: flex;flex-direction: column;align-items: center;">
 					<view style="margin-top: 10rpx;">6.97</view>
 					<view>账户余额</view>
 				</view>
-				<view
+				<view @click="goPoints"
 					style="margin: 0 35rpx;font-size: 30rpx;display: flex;flex-direction: column;align-items: center;">
 					<view style="margin-top: 10rpx;">0</view>
 					<view>积分</view>
 				</view>
-				<view
+				<view @click="goCoupon1"
 					style="margin: 0 35rpx;font-size: 30rpx;display: flex;flex-direction: column;align-items: center;">
 					<view style="margin-top: 10rpx;">0</view>
-					<view>优惠价</view>
+					<view>优惠卷</view>
 				</view>
 			</view>
-			<view
+			<view @click="goWallet"
 				style="width: 200rpx;height: 130rpx;display: flex;align-items: center;justify-content: center;flex-direction: column;">
 				<view style="margin-top: 10rpx;"><u-icon name="red-packet-fill" color="#7d7d7d" size="25"></u-icon>
 				</view>
@@ -41,26 +40,26 @@
 		</view>
 		<view
 			style="background-color: white; width: 700rpx;height: 170rpx;margin: 10rpx auto; display: flex;align-items: center;justify-content: center;">
-			<view
+			<view @click="goOrder"
 				style="height: 100rpx;margin: 10rpx 35rpx;display: flex;flex-direction: column;align-items: center;justify-content: center;">
 				<view><u-icon name="file-text" color="#7d7d7d" size="25"></u-icon></view>
 				<view>全部订单</view>
 			</view>
-			<view
+			<view @click="goOrder"
 				style="height: 100rpx;margin: 10rpx 35rpx;display: flex;flex-direction: column;align-items: center;justify-content: center;">
 				<view>
 					<image src="../../static/支付 钱包 待支付.png" style="width: 45rpx;height: 45rpx;" mode="scaleToFill" />
 				</view>
 				<view>待支付</view>
 			</view>
-			<view
+			<view @click="goOrder"
 				style="height: 100rpx;margin: 10rpx 35rpx;display: flex;flex-direction: column;align-items: center;justify-content: center;">
 				<view>
 					<image src="../../static/待发货.png" style="width: 45rpx;height: 45rpx;" mode="scaleToFill" />
 				</view>
 				<view>待发货</view>
 			</view>
-			<view
+			<view @click="goOrder"
 				style="height: 100rpx;margin: 10rpx 35rpx;display: flex;flex-direction: column;align-items: center;justify-content: center;">
 				<view>
 					<image src="../../static/待收货.png" style="width: 45rpx;height: 45rpx;" mode="scaleToFill" />
@@ -70,56 +69,56 @@
 		</view>
 		<view
 			style="background-color: white; width: 700rpx;height: 300rpx;margin: 20rpx auto; display: flex;align-items: center;justify-content: center;flex-wrap: wrap;">
-			<view style="padding: 10rpx 10rpx;display: flex;flex-direction: column;align-items: center;justify-content: center;margin: 0 10rpx;">
+			<view @click="goAddress" style="padding: 10rpx 10rpx;display: flex;flex-direction: column;align-items: center;justify-content: center;margin: 0 10rpx;">
 				<view>
 					<image src="../../static/收获地址.png" style="width: 60rpx;height: 60rpx;" mode="scaleToFill" />
 				</view>
 				<view>收货地址</view>
 			</view>
-			<view style="padding: 10rpx 10rpx;display: flex;flex-direction: column;align-items: center;justify-content: center;margin: 0 10rpx;">
+			<view @click="goCoupon" style="padding: 10rpx 10rpx;display: flex;flex-direction: column;align-items: center;justify-content: center;margin: 0 10rpx;">
 				<view>
 					<image src="../../static/领卷活动.png" style="width: 45rpx;height: 45rpx;" mode="scaleToFill" />
 				</view>
-				<view>收货地址</view>
+				<view>领卷中心</view>
 			</view>
-			<view style="padding: 10rpx 10rpx;display: flex;flex-direction: column;align-items: center;justify-content: center;margin: 0 10rpx;">
+			<view @click="goCoupon1" style="padding: 10rpx 10rpx;display: flex;flex-direction: column;align-items: center;justify-content: center;margin: 0 10rpx;">
 				<view>
 					<image src="../../static/优惠卷.png" style="width: 45rpx;height: 45rpx;" mode="scaleToFill" />
 				</view>
-				<view>收货地址</view>
+				<view>优惠卷</view>
 			</view>
-			<view style="padding: 10rpx 10rpx;display: flex;flex-direction: column;align-items: center;justify-content: center;margin: 0 10rpx;">
+			<view @click="goRefund" style="padding: 10rpx 10rpx;display: flex;flex-direction: column;align-items: center;justify-content: center;margin: 0 10rpx;">
 				<view>
 					<image src="../../static/退换货.png" style="width: 45rpx;height: 45rpx;" mode="scaleToFill" />
 				</view>
-				<view>收货地址</view>
+				<view>退还/售后</view>
 			</view>
 			<view style="padding: 10rpx 10rpx;display: flex;flex-direction: column;align-items: center;justify-content: center;margin: 0 10rpx;">
 				<view>
 					<image src="../../static/客服在线.png" style="width: 45rpx;height: 45rpx;" mode="scaleToFill" />
 				</view>
-				<view>收货地址</view>
+				<view>在线客服</view>
 			</view>
-			<view style="padding: 10rpx 10rpx;display: flex;flex-direction: column;align-items: center;justify-content: center;margin: 0 10rpx;">
+			<view @click="goPoints" style="padding: 10rpx 10rpx;display: flex;flex-direction: column;align-items: center;justify-content: center;margin: 0 10rpx;">
 				<view>
 					<image src="../../static/积分.png" style="width: 45rpx;height: 45rpx;" mode="scaleToFill" />
 				</view>
-				<view>收货地址</view>
+				<view>我的积分</view>
 			</view>
-			<view style="padding: 10rpx 10rpx;display: flex;flex-direction: column;align-items: center;justify-content: center;margin: 0 10rpx;">
+			<view @click="goOrder" style="padding: 10rpx 10rpx;display: flex;flex-direction: column;align-items: center;justify-content: center;margin: 0 10rpx;">
 				<view>
 					<image src="../../static/订单中心icon.png" style="width: 45rpx;height: 45rpx;" mode="scaleToFill" />
 				</view>
-				<view>收货地址</view>
+				<view>订单中心</view>
 			</view>
-			<view style="padding: 10rpx 10rpx;display: flex;flex-direction: column;align-items: center;justify-content: center;margin: 0 10rpx;">
+			<view @click="goHelp" style="padding: 10rpx 10rpx;display: flex;flex-direction: column;align-items: center;justify-content: center;margin: 0 10rpx;">
 				<view>
 					<image src="../../static/帮助_o.png" style="width: 45rpx;height: 45rpx;" mode="scaleToFill" />
 				</view>
-				<view>收货地址</view>
+				<view>我的帮助</view>
 			</view>
 		</view>
-		<view style="width: 400rpx;height: 70rpx;border: 1px solid #282828;text-align: center;line-height: 70rpx;border-radius: 30rpx;margin: 50rpx auto;">
+		<view @click="loginOut" style="width: 400rpx;height: 70rpx;border: 1px solid #282828;text-align: center;line-height: 70rpx;border-radius: 30rpx;margin: 50rpx auto;">
 			退出登录
 		</view>
 	</view>
@@ -132,6 +131,52 @@ export default {
 
 		}
 	},
+	methods:{
+		goWallet(){
+			uni.navigateTo({
+				url: '/pages/wallet/wallet'
+			})
+		},
+		goCoupon1(){
+			uni.navigateTo({
+				url: '/pages/my-coupon/my-coupon'
+			})
+		},
+		goPoints(){
+			uni.navigateTo({
+				url: '/pages/points/points'
+			})
+		},
+		goOrder(){
+			uni.navigateTo({
+				url: '/pages/order/order'
+			})
+		},
+		goAddress(){
+			uni.navigateTo({
+				url: '/pages/address/address'
+			})
+		},
+		goCoupon(){
+			uni.navigateTo({
+				url: '/pages/coupon/coupon'
+			})
+		},
+		goRefund(){
+			uni.navigateTo({
+				url: '/pages/refund/refund'
+			})
+		},
+		goHelp(){
+			uni.navigateTo({
+				url: '/pages/help/help'
+			})
+		},
+		loginOut(){
+			console.log('loginOut');
+			
+		}
+	}
 }
 </script>
 

@@ -9,7 +9,14 @@
     "pages/Categories/categories",
     "pages/settlement/settlement",
     "pages/settlement/cashier",
-    "pages/order/order"
+    "pages/order/order",
+    "pages/wallet/wallet",
+    "pages/my-coupon/my-coupon",
+    "pages/points/points",
+    "pages/address/address",
+    "pages/coupon/coupon",
+    "pages/refund/refund",
+    "pages/help/help"
   ],
   "subPackages": [],
   "window": {

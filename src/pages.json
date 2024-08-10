@@ -76,6 +76,62 @@
 				"navigationBarTitleText" : "我的订单",
 				"enablePullDownRefresh" : false
 			}
+		},
+		{
+			"path" : "pages/wallet/wallet",
+			"style" : 
+			{
+				"navigationBarTitleText" : "我的钱包",
+				"enablePullDownRefresh" : false
+			}
+		},
+		{
+			"path" : "pages/my-coupon/my-coupon",
+			"style" : 
+			{
+				"navigationBarTitleText" : "我的优惠卷",
+				"enablePullDownRefresh" : false
+			}
+		},
+		{
+			"path" : "pages/points/points",
+			"style" : 
+			{
+				"navigationBarTitleText" : "账单明细",
+				"enablePullDownRefresh" : false
+			}
+		},
+		{
+			"path" : "pages/address/address",
+			"style" : 
+			{
+				"navigationBarTitleText" : "收货中心",
+				"enablePullDownRefresh" : false
+			}
+		},
+		{
+			"path" : "pages/coupon/coupon",
+			"style" : 
+			{
+				"navigationBarTitleText" : "领卷中心",
+				"enablePullDownRefresh" : false
+			}
+		},
+		{
+			"path" : "pages/refund/refund",
+			"style" : 
+			{
+				"navigationBarTitleText" : "退换售后",
+				"enablePullDownRefresh" : false
+			}
+		},
+		{
+			"path" : "pages/help/help",
+			"style" : 
+			{
+				"navigationBarTitleText" : "帮助中心",
+				"enablePullDownRefresh" : false
+			}
 		}
 	],
 	"globalStyle": {

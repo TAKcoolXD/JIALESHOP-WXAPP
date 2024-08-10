@@ -1,7 +1,0 @@
-{
-  "navigationBarTitleText": "会员中心",
-  "usingComponents": {
-    "u-toast": "/node-modules/uview-ui/components/u-toast/u-toast",
-    "u-modal": "/node-modules/uview-ui/components/u-modal/u-modal"
-  }
-}
