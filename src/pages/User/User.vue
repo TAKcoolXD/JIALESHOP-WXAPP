@@ -4,7 +4,7 @@
 			<view style="display:flex;margin-left: 40rpx;align-items: center;">
 				<image src="../../static/logo.png" mode="scaleToFill"
 					style="width: 100rpx;height: 100rpx;border-radius: 50%;" />
-				<view style="margin-left: 30rpx;color: #d0af6b;">微信用户_10001</view>
+				<view @click="goLogin" style="margin-left: 30rpx;color: #d0af6b;">未登录请点击登录</view>
 			</view>
 		</view>
 		<view
@@ -175,6 +175,11 @@ export default {
 		loginOut(){
 			console.log('loginOut');
 			
+		},
+		goLogin(){
+			uni.navigateTo({
+				url: '/pages/login/login'
+			})
 		}
 	}
 }

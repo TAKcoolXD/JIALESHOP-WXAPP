@@ -16,7 +16,8 @@
     "pages/address/address",
     "pages/coupon/coupon",
     "pages/refund/refund",
-    "pages/help/help"
+    "pages/help/help",
+    "pages/login/login"
   ],
   "subPackages": [],
   "window": {

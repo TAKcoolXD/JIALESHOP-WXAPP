@@ -101,10 +101,10 @@ var components
 try {
   components = {
     uSearch: function () {
-      return Promise.all(/*! import() | node-modules/uview-ui/components/u-search/u-search */[__webpack_require__.e("common/vendor"), __webpack_require__.e("node-modules/uview-ui/components/u-search/u-search")]).then(__webpack_require__.bind(null, /*! uview-ui/components/u-search/u-search.vue */ 244))
+      return Promise.all(/*! import() | node-modules/uview-ui/components/u-search/u-search */[__webpack_require__.e("common/vendor"), __webpack_require__.e("node-modules/uview-ui/components/u-search/u-search")]).then(__webpack_require__.bind(null, /*! uview-ui/components/u-search/u-search.vue */ 274))
     },
     uNoticeBar: function () {
-      return Promise.all(/*! import() | node-modules/uview-ui/components/u-notice-bar/u-notice-bar */[__webpack_require__.e("common/vendor"), __webpack_require__.e("node-modules/uview-ui/components/u-notice-bar/u-notice-bar")]).then(__webpack_require__.bind(null, /*! uview-ui/components/u-notice-bar/u-notice-bar.vue */ 252))
+      return Promise.all(/*! import() | node-modules/uview-ui/components/u-notice-bar/u-notice-bar */[__webpack_require__.e("common/vendor"), __webpack_require__.e("node-modules/uview-ui/components/u-notice-bar/u-notice-bar")]).then(__webpack_require__.bind(null, /*! uview-ui/components/u-notice-bar/u-notice-bar.vue */ 282))
     },
   }
 } catch (e) {
@@ -171,9 +171,6 @@ exports.default = void 0;
 var _regenerator = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/regenerator */ 56));
 var _toConsumableArray2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/toConsumableArray */ 18));
 var _asyncToGenerator2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ 58));
-//
-//
-//
 //
 //
 //
@@ -356,6 +353,22 @@ var _default = exports.default = {
       this.keywords = '';
       uni.navigateTo({
         url: '/pages/search/search'
+      });
+    },
+    goGoodsDeail: function goGoodsDeail(item) {
+      console.log('商品详细信息页', item);
+      uni.navigateTo({
+        url: "/pages/goods/detail?goodsid=".concat(item.goods_id)
+      });
+    },
+    preview: function preview(index) {
+      console.log(index);
+      uni.previewImage({
+        current: index,
+        // 返回所有图片的url地址数组
+        urls: this.SwiperList.map(function (item) {
+          return item.imgUrl;
+        })
       });
     }
   }

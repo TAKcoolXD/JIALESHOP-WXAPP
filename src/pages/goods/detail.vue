@@ -1,20 +1,21 @@
 <template>
 	<view class="detail" style="position: relative;">
+
 		<!-- 輪播圖 -->
 		<view class="uni-margin-wrap">
 			<swiper class="swiper" circular :indicator-dots="indicatorDots" :autoplay="autoplay" :interval="interval"
 				:duration="duration">
-				<swiper-item v-for="(item, index) in 3" :key="index">
-					<!-- <image
-						:src="item.imgUrl" style="width: 100%;height: 100%;"/> -->
+				<swiper-item v-for="(item, index) in SwiperList" :key="index">
+					<image :src="item.external_url" style="width: 100%;height: 100%;" @click="preview(index)" />
 					<view>1</view>
 				</swiper-item>
 			</swiper>
 		</view>
 		<!-- 價格和贖買個數 -->
 		<view style="width: 100%;height: 70rpx;display: flex;justify-content: space-between;align-items: center;">
-			<view style="color: #ff547b;font-size: 40rpx;"><span style="font-size: 30rpx;">￥</span> 0.01</view>
-			<view style="color: #959595;">已售0件</view>
+			<view style="color: #ff547b;font-size: 40rpx;"><span style="font-size: 30rpx;">￥</span> {{ goods_price }}
+			</view>
+			<view style="color: #959595;">已售{{ goods_sales }}件</view>
 		</view>
 		<!-- 商品名稱和分享 -->
 		<view style="display: flex;justify-content: space-between;align-items: center;">
@@ -37,7 +38,7 @@
 		<!-- 商品的描述 -->
 		 <view style=" margin-top: 20rpx;">
 					<view>商品描述</view>
-					<view v-html="desc"></view>
+					<view v-html="content"></view>
 			</view>
 			<!-- 加入購物車 立即購買 -->
 			<view
@@ -57,7 +58,7 @@
 					<view @click="showCart"
 						style="background-color: #ffe6e9;padding: 10rpx;border-radius: 131rpx;width: 200rpx;text-align: center;margin: 0 8rpx;color: #ff547b">
 						加入購物車</view>
-					<view @click="showBuy"
+					<view @click="showBuy(goodsId)"
 						style="background-color: #ff557c;padding: 10rpx;border-radius:131rpx;width: 200rpx;text-align: center;margin: 0 8rpx;color: white">
 						立即購買</view>
 				</view>
@@ -84,11 +85,13 @@
 				<view style="height: 300rpx;">
 					<!-- 圖標 -->
 					<view style="display: flex;">
-						<view style="border-radius: 50%; width: 100rpx;height: 100rpx; background-color: #44db74;display: flex;align-items: center;justify-content: center;margin: 30rpx 60rpx">
+						<view
+							style="border-radius: 50%; width: 100rpx;height: 100rpx; background-color: #44db74;display: flex;align-items: center;justify-content: center;margin: 30rpx 60rpx">
 							<u-icon name="weixin-fill" color="white" size="40"></u-icon>
 						</view>
-						<view style="border-radius: 50%; width: 100rpx;height: 100rpx;background-color: #38beec; display: flex;align-items: center;justify-content: center;margin: 30rpx 60rpx"">
-							<u-icon name="attach" color="white" size="40"></u-icon>
+						<view
+							style="border-radius: 50%; width: 100rpx;height: 100rpx;background-color: #38beec; display: flex;align-items: center;justify-content: center;margin: 30rpx 60rpx"">
+							<u-icon name=" attach" color="white" size="40"></u-icon>
 						</view>
 					</view>
 					<!-- 發送給朋友 複製鏈接 -->
@@ -102,56 +105,60 @@
 			</u-popup>
 			<!-- 加入購物車彈出框 -->
 			<u-popup :show="shareCart" @close="closeCart" closeable="true">
-					<view style="height: 500rpx;">
-						<!-- 商品图片 价格 库存 -->
-						<view style="display: flex;align-items: center;margin-top: 20rpx;">
-							<image
-							src="../../static/logo.png"
-							mode="scaleToFill"
-							style="width: 200rpx;height: 200rpx;margin-left: 30rpx;"
-						/>
+				<view style="height: 500rpx;">
+					<!-- 商品图片 价格 库存 -->
+					<view style="display: flex;align-items: center;margin-top: 20rpx;">
+						<image src="../../static/logo.png" mode="scaleToFill"
+							style="width: 200rpx;height: 200rpx;margin-left: 30rpx;" />
 						<!-- 价格 库存 -->
 						<view style="margin-left: 30rpx;">
-							<view style="color: #ff547b;"><span style="font-size: 20rpx;">￥</span> <span style="font-size: 40rpx;">0.01</span></view>
+							<view style="color: #ff547b;"><span style="font-size: 20rpx;">￥</span> <span
+									style="font-size: 40rpx;">0.01</span></view>
 							<view style="font-size: 25rpx;">库存：100</view>
 						</view>
-						</view>
-						<!-- 數量  计步器-->
-						 <view style="width: 700rpx;height: 70rpx;margin: 25rpx auto;;display: flex;justify-content: space-between;align-items: center;">
-							<view>数量</view>
-							<view><u-number-box v-model="CountValue" @change="valChange"></u-number-box></view>
-						 </view>
-						 <view style="width: 600rpx;height: 80rpx;margin: 30rpx auto;border-radius: 50rpx;text-align: center;line-height: 80rpx;background-color: #ffe6e8;color: #ff547b;">
-							加入购物车
-						 </view>
 					</view>
+					<!-- 數量  计步器-->
+					<view
+						style="width: 700rpx;height: 70rpx;margin: 25rpx auto;;display: flex;justify-content: space-between;align-items: center;">
+						<view>数量</view>
+						<view><u-number-box v-model="CountValue" @change="valChange"></u-number-box></view>
+					</view>
+					<view
+						style="width: 600rpx;height: 80rpx;margin: 30rpx auto;border-radius: 50rpx;text-align: center;line-height: 80rpx;background-color: #ffe6e8;color: #ff547b;">
+						加入购物车
+					</view>
+				</view>
 			</u-popup>
 			<!-- 立即購買彈出框 -->
 			<u-popup :show="shareBuy" @close="closeBuy" closeable="true">
 				<view style="height: 500rpx;">
-						<!-- 商品图片 价格 库存 -->
-						<view style="display: flex;align-items: center;margin-top: 20rpx;">
-							<image
-							src="../../static/logo.png"
-							mode="scaleToFill"
-							style="width: 200rpx;height: 200rpx;margin-left: 30rpx;"
-						/>
+					<!-- 商品图片 价格 库存 -->
+					<view style="display: flex;align-items: center;margin-top: 20rpx;">
+						<image src="../../static/logo.png" mode="scaleToFill"
+							style="width: 200rpx;height: 200rpx;margin-left: 30rpx;" />
 						<!-- 价格 库存 -->
 						<view style="margin-left: 30rpx;">
-							<view style="color: #ff547b;"><span style="font-size: 20rpx;">￥</span> <span style="font-size: 40rpx;">0.01</span></view>
+							<view style="color: #ff547b;"><span style="font-size: 20rpx;">￥</span> <span
+									style="font-size: 40rpx;">0.01</span></view>
 							<view style="font-size: 25rpx;">库存：100</view>
 						</view>
-						</view>
-						<!-- 數量  计步器-->
-						 <view style="width: 700rpx;height: 70rpx;margin: 25rpx auto;;display: flex;justify-content: space-between;align-items: center;">
-							<view>数量</view>
-							<view><u-number-box v-model="CountValue" @change="valChange"></u-number-box></view>
-						 </view>
-						 <view style="width: 600rpx;height: 80rpx;margin: 30rpx auto;border-radius: 50rpx;text-align: center;line-height: 80rpx;background-color: #ffe6e8;color: #ff547b;">
-							立即购买
-						 </view>
 					</view>
+					<!-- 數量  计步器-->
+					<view
+						style="width: 700rpx;height: 70rpx;margin: 25rpx auto;;display: flex;justify-content: space-between;align-items: center;">
+						<view>数量</view>
+						<view><u-number-box v-model="CountValue" @change="valChange"></u-number-box></view>
+					</view>
+					<view @click="goBuy(goodsId)"
+						style="width: 600rpx;height: 80rpx;margin: 30rpx auto;border-radius: 50rpx;text-align: center;line-height: 80rpx;background-color: #ffe6e8;color: #ff547b;">
+						立即购买
+					</view>
+				</view>
 			</u-popup>
+			<view style="z-index: 100;">
+				<u-loading-page :loading="loading">
+				</u-loading-page>
+			</view>
 		</view>
 
 </template>
@@ -159,11 +166,17 @@
 export default {
 	data() {
 		return {
-			CountValue:'',
+			SwiperList: [],
+			goodsId:'',
+			goods_price: '',
+			goods_sales: '',
+			content: '',
+			loading: true,
+			CountValue: '',//计步器
 			ServiceShow: false,
 			shareShow: false,
-			shareCart:false,
-			shareBuy:false,
+			shareCart: false,
+			shareBuy: false,
 			background: ['color1', 'color2', 'color3'],
 			indicatorDots: true,
 			autoplay: true,
@@ -187,27 +200,58 @@ export default {
 			this.shareShow = true
 
 		},
-		closeCart(){
+		closeCart() {
 			this.shareCart = false
 		},
-		showCart(){
+		showCart() {
 			this.shareCart = true
 		},
-		closeBuy(){
+		closeBuy() {
 			this.shareBuy = false
 		},
-		showBuy(){
+		showBuy(goodsId) {
+			console.log('商品ID',goodsId);
 			this.shareBuy = true
 		},
-		valChange(){
-			console.log('计步器'); 
-			
-		}
-			
-	}
+		goBuy(goodsId){
+			console.log('商品ID',goodsId);
+			uni.navigateTo({
+				url: `/pages/settlement/settlement?goodsid=${goodsId}&CountValue=${this.CountValue}`
+			})
+			this.shareBuy = false
+		},
+		valChange() {
+			console.log('计步器');
+		},
+		preview(index) {
+			console.log(index);
+			uni.previewImage({
+				current: index,
+				// 返回所有图片的url地址数组
+				urls: this.SwiperList.map((item) => item.external_url)
+			});
 
-	}
-	
+		},
+
+
+	},
+	onLoad(option) {
+		this.loading = true
+		console.log('传过来的ID', option.goodsid);
+		this.goodsId = option.goodsid
+		uni.$u.http.get(`goods/detail&goodsId=${option.goodsid}&verifyStatus=1`,).then(res => {
+			console.log(res, '打印结果');
+			if (res.status == 200) {
+				this.loading = false
+				this.SwiperList = res.data.detail.goods_images
+				this.goods_price = res.data.detail.goods_price_max
+				this.goods_sales = res.data.detail.goods_sales
+				this.content = res.data.detail.content
+			}
+		})
+	},
+}
+// https://yoshop-test.azhuquq.com/index.php?s=/api/goods/detail&goodsId=10002&verifyStatus=1
 
 </script>
 

@@ -99,10 +99,13 @@ var components
 try {
   components = {
     uIcon: function () {
-      return Promise.all(/*! import() | node-modules/uview-ui/components/u-icon/u-icon */[__webpack_require__.e("common/vendor"), __webpack_require__.e("node-modules/uview-ui/components/u-icon/u-icon")]).then(__webpack_require__.bind(null, /*! uview-ui/components/u-icon/u-icon.vue */ 260))
+      return Promise.all(/*! import() | node-modules/uview-ui/components/u-icon/u-icon */[__webpack_require__.e("common/vendor"), __webpack_require__.e("node-modules/uview-ui/components/u-icon/u-icon")]).then(__webpack_require__.bind(null, /*! uview-ui/components/u-icon/u-icon.vue */ 290))
     },
     "u-Input": function () {
-      return Promise.all(/*! import() | node-modules/uview-ui/components/u--input/u--input */[__webpack_require__.e("common/vendor"), __webpack_require__.e("node-modules/uview-ui/components/u--input/u--input")]).then(__webpack_require__.bind(null, /*! uview-ui/components/u--input/u--input.vue */ 316))
+      return Promise.all(/*! import() | node-modules/uview-ui/components/u--input/u--input */[__webpack_require__.e("common/vendor"), __webpack_require__.e("node-modules/uview-ui/components/u--input/u--input")]).then(__webpack_require__.bind(null, /*! uview-ui/components/u--input/u--input.vue */ 346))
+    },
+    uLoadingPage: function () {
+      return Promise.all(/*! import() | node-modules/uview-ui/components/u-loading-page/u-loading-page */[__webpack_require__.e("common/vendor"), __webpack_require__.e("node-modules/uview-ui/components/u-loading-page/u-loading-page")]).then(__webpack_require__.bind(null, /*! uview-ui/components/u-loading-page/u-loading-page.vue */ 338))
     },
   }
 } catch (e) {
@@ -228,10 +231,15 @@ exports.default = void 0;
 //
 //
 //
+//
+//
+//
+//
 var _default = exports.default = {
   data: function data() {
     return {
-      value: ''
+      value: '',
+      goodsId: ''
     };
   },
   methods: {
@@ -243,6 +251,24 @@ var _default = exports.default = {
         url: '/pages/settlement/cashier'
       });
     }
+  },
+  onLoad: function onLoad(option) {
+    //https://yoshop-test.azhuquq.com/index.php?s=/api/checkout/order&mode=buyNow&delivery=0&couponId=0&isUsePoints=0&goodsId=10002&goodsNum=2&goodsSkuId=0
+    this.loading = true;
+    console.log(option, '页面参数');
+    console.log('传过来的商品个数', option.CountValue);
+    console.log('传过来的ID', option.goodsid);
+    this.goodsId = option.goodsid;
+    uni.$u.http.get("checkout/order&mode=buyNow&delivery=0&couponId=0&isUsePoints=0&goodsId=".concat(option.goodsid, "&goodsNum=").concat(option.CountValue, "&goodsSkuId=0")).then(function (res) {
+      console.log(res, '打印结果');
+      // if (res.status == 200) {
+      // 	this.loading = false
+      // 	this.SwiperList = res.data.detail.goods_images
+      // 	this.goods_price = res.data.detail.goods_price_max
+      // 	this.goods_sales = res.data.detail.goods_sales
+      // 	this.content = res.data.detail.content
+      // }
+    });
   }
 };
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 2)["default"]))

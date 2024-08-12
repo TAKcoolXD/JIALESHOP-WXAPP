@@ -99,7 +99,7 @@ var components
 try {
   components = {
     uIcon: function () {
-      return Promise.all(/*! import() | node-modules/uview-ui/components/u-icon/u-icon */[__webpack_require__.e("common/vendor"), __webpack_require__.e("node-modules/uview-ui/components/u-icon/u-icon")]).then(__webpack_require__.bind(null, /*! uview-ui/components/u-icon/u-icon.vue */ 260))
+      return Promise.all(/*! import() | node-modules/uview-ui/components/u-icon/u-icon */[__webpack_require__.e("common/vendor"), __webpack_require__.e("node-modules/uview-ui/components/u-icon/u-icon")]).then(__webpack_require__.bind(null, /*! uview-ui/components/u-icon/u-icon.vue */ 290))
     },
   }
 } catch (e) {
@@ -335,6 +335,11 @@ var _default = exports.default = {
     },
     loginOut: function loginOut() {
       console.log('loginOut');
+    },
+    goLogin: function goLogin() {
+      uni.navigateTo({
+        url: '/pages/login/login'
+      });
     }
   }
 };

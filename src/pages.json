@@ -132,6 +132,14 @@
 				"navigationBarTitleText" : "帮助中心",
 				"enablePullDownRefresh" : false
 			}
+		},
+		{
+			"path" : "pages/login/login",
+			"style" : 
+			{
+				"navigationBarTitleText" : "会员登录",
+				"enablePullDownRefresh" : false
+			}
 		}
 	],
 	"globalStyle": {

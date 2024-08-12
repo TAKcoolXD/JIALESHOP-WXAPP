@@ -101,13 +101,16 @@ var components
 try {
   components = {
     uIcon: function () {
-      return Promise.all(/*! import() | node-modules/uview-ui/components/u-icon/u-icon */[__webpack_require__.e("common/vendor"), __webpack_require__.e("node-modules/uview-ui/components/u-icon/u-icon")]).then(__webpack_require__.bind(null, /*! uview-ui/components/u-icon/u-icon.vue */ 260))
+      return Promise.all(/*! import() | node-modules/uview-ui/components/u-icon/u-icon */[__webpack_require__.e("common/vendor"), __webpack_require__.e("node-modules/uview-ui/components/u-icon/u-icon")]).then(__webpack_require__.bind(null, /*! uview-ui/components/u-icon/u-icon.vue */ 290))
     },
     uPopup: function () {
-      return Promise.all(/*! import() | node-modules/uview-ui/components/u-popup/u-popup */[__webpack_require__.e("common/vendor"), __webpack_require__.e("node-modules/uview-ui/components/u-popup/u-popup")]).then(__webpack_require__.bind(null, /*! uview-ui/components/u-popup/u-popup.vue */ 300))
+      return Promise.all(/*! import() | node-modules/uview-ui/components/u-popup/u-popup */[__webpack_require__.e("common/vendor"), __webpack_require__.e("node-modules/uview-ui/components/u-popup/u-popup")]).then(__webpack_require__.bind(null, /*! uview-ui/components/u-popup/u-popup.vue */ 330))
     },
     uNumberBox: function () {
-      return Promise.all(/*! import() | node-modules/uview-ui/components/u-number-box/u-number-box */[__webpack_require__.e("common/vendor"), __webpack_require__.e("node-modules/uview-ui/components/u-number-box/u-number-box")]).then(__webpack_require__.bind(null, /*! uview-ui/components/u-number-box/u-number-box.vue */ 285))
+      return Promise.all(/*! import() | node-modules/uview-ui/components/u-number-box/u-number-box */[__webpack_require__.e("common/vendor"), __webpack_require__.e("node-modules/uview-ui/components/u-number-box/u-number-box")]).then(__webpack_require__.bind(null, /*! uview-ui/components/u-number-box/u-number-box.vue */ 315))
+    },
+    uLoadingPage: function () {
+      return Promise.all(/*! import() | node-modules/uview-ui/components/u-loading-page/u-loading-page */[__webpack_require__.e("common/vendor"), __webpack_require__.e("node-modules/uview-ui/components/u-loading-page/u-loading-page")]).then(__webpack_require__.bind(null, /*! uview-ui/components/u-loading-page/u-loading-page.vue */ 338))
     },
   }
 } catch (e) {
@@ -164,7 +167,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-
+/* WEBPACK VAR INJECTION */(function(uni) {
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -327,10 +330,24 @@ exports.default = void 0;
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 var _default = exports.default = {
   data: function data() {
     return {
+      SwiperList: [],
+      goodsId: '',
+      goods_price: '',
+      goods_sales: '',
+      content: '',
+      loading: true,
       CountValue: '',
+      //计步器
       ServiceShow: false,
       shareShow: false,
       shareCart: false,
@@ -366,14 +383,49 @@ var _default = exports.default = {
     closeBuy: function closeBuy() {
       this.shareBuy = false;
     },
-    showBuy: function showBuy() {
+    showBuy: function showBuy(goodsId) {
+      console.log('商品ID', goodsId);
       this.shareBuy = true;
+    },
+    goBuy: function goBuy(goodsId) {
+      console.log('商品ID', goodsId);
+      uni.navigateTo({
+        url: "/pages/settlement/settlement?goodsid=".concat(goodsId, "&CountValue=").concat(this.CountValue)
+      });
+      this.shareBuy = false;
     },
     valChange: function valChange() {
       console.log('计步器');
+    },
+    preview: function preview(index) {
+      console.log(index);
+      uni.previewImage({
+        current: index,
+        // 返回所有图片的url地址数组
+        urls: this.SwiperList.map(function (item) {
+          return item.external_url;
+        })
+      });
     }
+  },
+  onLoad: function onLoad(option) {
+    var _this = this;
+    this.loading = true;
+    console.log('传过来的ID', option.goodsid);
+    this.goodsId = option.goodsid;
+    uni.$u.http.get("goods/detail&goodsId=".concat(option.goodsid, "&verifyStatus=1")).then(function (res) {
+      console.log(res, '打印结果');
+      if (res.status == 200) {
+        _this.loading = false;
+        _this.SwiperList = res.data.detail.goods_images;
+        _this.goods_price = res.data.detail.goods_price_max;
+        _this.goods_sales = res.data.detail.goods_sales;
+        _this.content = res.data.detail.content;
+      }
+    });
   }
-};
+}; // https://yoshop-test.azhuquq.com/index.php?s=/api/goods/detail&goodsId=10002&verifyStatus=1
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 2)["default"]))
 
 /***/ }),
 

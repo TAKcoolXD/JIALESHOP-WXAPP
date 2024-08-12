@@ -4,8 +4,8 @@
     "miniprogram": {
       "list": [
         {
-          "name": "pages/address/address",
-          "pathName": "pages/address/address",
+          "name": "pages/goods/detail",
+          "pathName": "pages/goods/detail",
           "query": "",
           "launchMode": "default",
           "scene": null

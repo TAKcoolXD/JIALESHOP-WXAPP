@@ -4,8 +4,8 @@
 		<view class='header'>
 			<!-- 搜索框 -->
 			<view class='search' @click="goSearch">
-				<u-search style="height: 45rpx;background-color: white;" :showAction="false"
-					placeholder="请输入您搜索的商品" v-model="keywords"  @search="search"></u-search>
+				<u-search style="height: 45rpx;background-color: white;" :showAction="false" placeholder="请输入您搜索的商品"
+					v-model="keywords" @search="search"></u-search>
 			</view>
 		</view>
 		<!-- 店鋪通告 -->
@@ -17,22 +17,19 @@
 			<swiper class="swiper" circular :indicator-dots="indicatorDots" :autoplay="autoplay" :interval="interval"
 				:duration="duration">
 				<swiper-item v-for="(item, index) in SwiperList" :key="index">
-					<image
-						:src="item.imgUrl" style="width: 100%;height: 100%;"/>
+					<image :src="item.imgUrl" style="width: 100%;height: 100%;" @click="preview(index)"/>
 				</swiper-item>
 			</swiper>
 		</view>
 		<!-- 商品内容展示 -->
-		<view class="goods" style="margin-top: 10rpx;display: flex;flex-wrap: wrap;align-items: center;justify-content: center;">
+		<view class="goods"
+			style="margin-top: 10rpx;display: flex;flex-wrap: wrap;align-items: center;justify-content: center;">
 
-				<view v-for="item in goods" :key="item" style="">
-					<image
-						:src="item.goods_image" style="width: 355rpx;height: 400rpx;margin: 8rpx;"
-						mode="scaleToFill"
-					/>
-					<view>{{item.goods_name}}</view>
-					<view style="color: palevioletred;">￥{{ item.goods_price_max }}</view>
-				</view>
+			<view v-for="item in goods" :key="item" style="" @click="goGoodsDeail(item)">
+				<image :src="item.goods_image" style="width: 355rpx;height: 400rpx;margin: 8rpx;" mode="scaleToFill" />
+				<view>{{ item.goods_name }}</view>
+				<view style="color: palevioletred;">￥{{ item.goods_price_max }}</view>
+			</view>
 		</view>
 
 		<!-- <view class="list" v-if="post.length > 0">
@@ -72,8 +69,8 @@ export default {
 			console.log(res, '打印结果');
 			if (res.status == 200) {
 				this.SwiperList = res.data.pageData.items[2].data
-				this.goods=res.data.pageData.items[3].data
-				this.noticeText=res.data.pageData.items[1].params.text
+				this.goods = res.data.pageData.items[3].data
+				this.noticeText = res.data.pageData.items[1].params.text
 				console.log("🚀 店鋪公告", this.noticeText)
 				console.log("🚀 商品列表", this.goods)
 				console.log("🚀 轮播图列表", this.SwiperList)
@@ -94,7 +91,7 @@ export default {
 			interval: 2000,
 			duration: 500,
 			SwiperList: [],
-			goods:[],
+			goods: [],
 			noticeText: ''
 		}
 	},
@@ -145,23 +142,38 @@ export default {
 			// this.post = []
 			// this.PostData()
 			console.log(111);
-			
+
 		},
-		goSearch(){
+		goSearch() {
 			console.log(222);
-			this.keywords=''
+			this.keywords = ''
 			uni.navigateTo({
 				url: '/pages/search/search'
 			})
+		},
+		goGoodsDeail(item) {
+			console.log('商品详细信息页', item);
+			uni.navigateTo({
+				url: `/pages/goods/detail?goodsid=${item.goods_id}`
+			})
+		},
+		preview(index) {
+			console.log(index);
+			uni.previewImage({
+				current: index,
+				// 返回所有图片的url地址数组
+				urls: this.SwiperList.map((item) => item.imgUrl)
+			});
+
 		}
-	}
+	},
+
 
 }
 </script>
 
 
 <style lang="scss">
-
 .content {
 	width: 100%;
 	overflow-x: hidden;
@@ -175,34 +187,41 @@ export default {
 	/* background-color: #0e0ea5; */
 	/* padding: 0 28rpx; */
 }
+
 .uni-margin-wrap {
-		width: 690rpx;
-		width: 100%;
-		height: 600rpx;
-	}
-	.swiper {
-		height: 600rpx;
-	}
-	.swiper-item {
-		display: block;
-		// height: 600rpx;
-		line-height: 300rpx;
-		text-align: center;
-	}
-	.swiper-list {
-		margin-top: 40rpx;
-		margin-bottom: 0;
-	}
-	.uni-common-mt {
-		margin-top: 60rpx;
-		position: relative;
-	}
-	.info {
-		position: absolute;
-		right: 20rpx;
-	}
-	.uni-padding-wrap {
-		width: 550rpx;
-		padding: 0 100rpx;
-	}
+	width: 690rpx;
+	width: 100%;
+	height: 600rpx;
+}
+
+.swiper {
+	height: 600rpx;
+}
+
+.swiper-item {
+	display: block;
+	// height: 600rpx;
+	line-height: 300rpx;
+	text-align: center;
+}
+
+.swiper-list {
+	margin-top: 40rpx;
+	margin-bottom: 0;
+}
+
+.uni-common-mt {
+	margin-top: 60rpx;
+	position: relative;
+}
+
+.info {
+	position: absolute;
+	right: 20rpx;
+}
+
+.uni-padding-wrap {
+	width: 550rpx;
+	padding: 0 100rpx;
+}
 </style>

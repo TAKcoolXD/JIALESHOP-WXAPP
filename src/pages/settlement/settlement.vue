@@ -58,6 +58,10 @@
 			</view>
 
 		</view>
+		<view style="z-index: 100;">
+				<u-loading-page :loading="loading">
+				</u-loading-page>
+			</view>
 	</view>
 </template>
 
@@ -66,6 +70,7 @@ export default {
 	data() {
 		return {
 			value:'',
+			goodsId:'',
 		}
 	},
 	methods: {
@@ -79,7 +84,25 @@ export default {
 				url:'/pages/settlement/cashier'
 			})
 		}
-	}
+	},
+	onLoad(option) {
+		//https://yoshop-test.azhuquq.com/index.php?s=/api/checkout/order&mode=buyNow&delivery=0&couponId=0&isUsePoints=0&goodsId=10002&goodsNum=2&goodsSkuId=0
+		this.loading = true
+		console.log(option,'页面参数');
+		console.log('传过来的商品个数', option.CountValue);
+		console.log('传过来的ID', option.goodsid);
+		this.goodsId = option.goodsid
+		uni.$u.http.get(`checkout/order&mode=buyNow&delivery=0&couponId=0&isUsePoints=0&goodsId=${option.goodsid}&goodsNum=${option.CountValue}&goodsSkuId=0`,).then(res => {
+			console.log(res, '打印结果');
+			// if (res.status == 200) {
+			// 	this.loading = false
+			// 	this.SwiperList = res.data.detail.goods_images
+			// 	this.goods_price = res.data.detail.goods_price_max
+			// 	this.goods_sales = res.data.detail.goods_sales
+			// 	this.content = res.data.detail.content
+			// }
+		})
+	},
 }
 </script>
 
