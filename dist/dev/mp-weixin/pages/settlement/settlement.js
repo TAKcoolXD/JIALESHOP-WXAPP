@@ -99,13 +99,13 @@ var components
 try {
   components = {
     uIcon: function () {
-      return Promise.all(/*! import() | node-modules/uview-ui/components/u-icon/u-icon */[__webpack_require__.e("common/vendor"), __webpack_require__.e("node-modules/uview-ui/components/u-icon/u-icon")]).then(__webpack_require__.bind(null, /*! uview-ui/components/u-icon/u-icon.vue */ 290))
+      return Promise.all(/*! import() | node-modules/uview-ui/components/u-icon/u-icon */[__webpack_require__.e("common/vendor"), __webpack_require__.e("node-modules/uview-ui/components/u-icon/u-icon")]).then(__webpack_require__.bind(null, /*! uview-ui/components/u-icon/u-icon.vue */ 296))
     },
     "u-Input": function () {
-      return Promise.all(/*! import() | node-modules/uview-ui/components/u--input/u--input */[__webpack_require__.e("common/vendor"), __webpack_require__.e("node-modules/uview-ui/components/u--input/u--input")]).then(__webpack_require__.bind(null, /*! uview-ui/components/u--input/u--input.vue */ 346))
+      return Promise.all(/*! import() | node-modules/uview-ui/components/u--input/u--input */[__webpack_require__.e("common/vendor"), __webpack_require__.e("node-modules/uview-ui/components/u--input/u--input")]).then(__webpack_require__.bind(null, /*! uview-ui/components/u--input/u--input.vue */ 352))
     },
     uLoadingPage: function () {
-      return Promise.all(/*! import() | node-modules/uview-ui/components/u-loading-page/u-loading-page */[__webpack_require__.e("common/vendor"), __webpack_require__.e("node-modules/uview-ui/components/u-loading-page/u-loading-page")]).then(__webpack_require__.bind(null, /*! uview-ui/components/u-loading-page/u-loading-page.vue */ 338))
+      return Promise.all(/*! import() | node-modules/uview-ui/components/u-loading-page/u-loading-page */[__webpack_require__.e("common/vendor"), __webpack_require__.e("node-modules/uview-ui/components/u-loading-page/u-loading-page")]).then(__webpack_require__.bind(null, /*! uview-ui/components/u-loading-page/u-loading-page.vue */ 344))
     },
   }
 } catch (e) {
@@ -239,7 +239,14 @@ var _default = exports.default = {
   data: function data() {
     return {
       value: '',
-      goodsId: ''
+      goodsId: '',
+      goodsList: [],
+      orderTotalNum: '',
+      orderTotalPrice: '',
+      expressPrice: '',
+      orderPayPrice: '',
+      address: {},
+      loading: true
     };
   },
   methods: {
@@ -253,6 +260,7 @@ var _default = exports.default = {
     }
   },
   onLoad: function onLoad(option) {
+    var _this = this;
     //https://yoshop-test.azhuquq.com/index.php?s=/api/checkout/order&mode=buyNow&delivery=0&couponId=0&isUsePoints=0&goodsId=10002&goodsNum=2&goodsSkuId=0
     this.loading = true;
     console.log(option, '页面参数');
@@ -261,13 +269,15 @@ var _default = exports.default = {
     this.goodsId = option.goodsid;
     uni.$u.http.get("checkout/order&mode=buyNow&delivery=0&couponId=0&isUsePoints=0&goodsId=".concat(option.goodsid, "&goodsNum=").concat(option.CountValue, "&goodsSkuId=0")).then(function (res) {
       console.log(res, '打印结果');
-      // if (res.status == 200) {
-      // 	this.loading = false
-      // 	this.SwiperList = res.data.detail.goods_images
-      // 	this.goods_price = res.data.detail.goods_price_max
-      // 	this.goods_sales = res.data.detail.goods_sales
-      // 	this.content = res.data.detail.content
-      // }
+      if (res.status == 200) {
+        _this.loading = false;
+        _this.goodsList = res.data.order.goodsList;
+        _this.orderTotalNum = res.data.order.orderTotalNum;
+        _this.orderTotalPrice = res.data.order.orderTotalPrice;
+        _this.orderPayPrice = res.data.order.orderPayPrice;
+        _this.expressPrice = res.data.order.expressPrice;
+        _this.address = res.data.order.address;
+      }
     });
   }
 };

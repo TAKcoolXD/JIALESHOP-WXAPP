@@ -172,7 +172,7 @@ export default {
 			goods_sales: '',
 			content: '',
 			loading: true,
-			CountValue: '',//计步器
+			CountValue: '1',//计步器
 			ServiceShow: false,
 			shareShow: false,
 			shareCart: false,

@@ -18,7 +18,11 @@ module.exports = (vm) => {
 
   //请求头
   config.header = {
-    'X-Requested-With': 'XMLHttpRequest'
+    'X-Requested-With': 'XMLHttpRequest',
+   
+    // 'storeId':10001,
+    // 'Access-Token':uni.getStorageSync('token')?uni.getStorageSync('token'):''
+
   }
   
       return config
@@ -26,6 +30,8 @@ module.exports = (vm) => {
 
   // 请求拦截
   uni.$u.http.interceptors.request.use((config) => { 
+      console.log(config,'请求参数');
+      
     // 可使用async await 做异步操作
       // 初始化请求拦截器时，会执行此方法，此时data为undefined，赋予默认{}
       config.data = config.data || {}
@@ -34,6 +40,10 @@ module.exports = (vm) => {
     // 	// 可以在此通过vm引用vuex中的变量，具体值在vm.$store.state中
     // 	config.header.token = vm.$store.state.userInfo.token
     // }
+    
+      config.header.storeId=10001,
+      config.header.platform='MP-WEIXIN'
+      config.header['Access-Token'] = uni.getStorageSync('token') ? uni.getStorageSync('token') : '';
       return config 
   }, config => { // 可使用async await 做异步操作
       return Promise.reject(config)

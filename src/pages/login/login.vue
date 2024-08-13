@@ -39,7 +39,7 @@ export default {
 	methods: {
 		goLogin() {
 			console.log('登录');
-			this.show =true
+			this.show = true
 			uni.login({
 				provider: 'weixin', //使用微信登录
 				success: (loginRes) => {
@@ -75,16 +75,18 @@ export default {
 									this.show = false
 									this.$refs.uToast.show({
 										message: '登录成功',
+										position: 'top',
 										type: 'default',
 										duration: 1000,
+										complete() {
+											uni.switchTab({
+												url: `/pages/User/User`
+											})
+										}
 									})
+
 									uni.setStorageSync('token', res.data.token);
-									// this.SwiperList = res.data.pageData.items[2].data
-									// this.goods = res.data.pageData.items[3].data
-									// this.noticeText = res.data.pageData.items[1].params.text
-									// console.log("🚀 店鋪公告", this.noticeText)
-									// console.log("🚀 商品列表", this.goods)
-									// console.log("🚀 轮播图列表", this.SwiperList)
+
 								}
 							})
 						}

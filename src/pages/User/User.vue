@@ -2,9 +2,12 @@
 	<view class="User" style="background: #e9e9e9;height: 1200rpx;">
 		<view style="background-color: #faf6eb;height: 150rpx;">
 			<view style="display:flex;margin-left: 40rpx;align-items: center;">
-				<image src="../../static/logo.png" mode="scaleToFill"
+				<image v-if="!UserInfo" src="../../static/logo.png" mode="scaleToFill"
 					style="width: 100rpx;height: 100rpx;border-radius: 50%;" />
-				<view @click="goLogin" style="margin-left: 30rpx;color: #d0af6b;">未登录请点击登录</view>
+				<image v-else :src="UserInfo.avatarUrl" mode="scaleToFill"
+					style="width: 100rpx;height: 100rpx;border-radius: 50%;" />
+				<view v-if="!UserInfo" @click="goLogin" style="margin-left: 30rpx;color: #d0af6b;">未登录请点击登录</view>
+				<view v-else @click="goLogin" style="margin-left: 30rpx;color: #d0af6b;">{{ UserInfo.nickName }}</view>
 			</view>
 		</view>
 		<view
@@ -69,58 +72,68 @@
 		</view>
 		<view
 			style="background-color: white; width: 700rpx;height: 300rpx;margin: 20rpx auto; display: flex;align-items: center;justify-content: center;flex-wrap: wrap;">
-			<view @click="goAddress" style="padding: 10rpx 10rpx;display: flex;flex-direction: column;align-items: center;justify-content: center;margin: 0 10rpx;">
+			<view @click="goAddress"
+				style="padding: 10rpx 10rpx;display: flex;flex-direction: column;align-items: center;justify-content: center;margin: 0 10rpx;">
 				<view>
 					<image src="../../static/收获地址.png" style="width: 60rpx;height: 60rpx;" mode="scaleToFill" />
 				</view>
 				<view>收货地址</view>
 			</view>
-			<view @click="goCoupon" style="padding: 10rpx 10rpx;display: flex;flex-direction: column;align-items: center;justify-content: center;margin: 0 10rpx;">
+			<view @click="goCoupon"
+				style="padding: 10rpx 10rpx;display: flex;flex-direction: column;align-items: center;justify-content: center;margin: 0 10rpx;">
 				<view>
 					<image src="../../static/领卷活动.png" style="width: 45rpx;height: 45rpx;" mode="scaleToFill" />
 				</view>
 				<view>领卷中心</view>
 			</view>
-			<view @click="goCoupon1" style="padding: 10rpx 10rpx;display: flex;flex-direction: column;align-items: center;justify-content: center;margin: 0 10rpx;">
+			<view @click="goCoupon1"
+				style="padding: 10rpx 10rpx;display: flex;flex-direction: column;align-items: center;justify-content: center;margin: 0 10rpx;">
 				<view>
 					<image src="../../static/优惠卷.png" style="width: 45rpx;height: 45rpx;" mode="scaleToFill" />
 				</view>
 				<view>优惠卷</view>
 			</view>
-			<view @click="goRefund" style="padding: 10rpx 10rpx;display: flex;flex-direction: column;align-items: center;justify-content: center;margin: 0 10rpx;">
+			<view @click="goRefund"
+				style="padding: 10rpx 10rpx;display: flex;flex-direction: column;align-items: center;justify-content: center;margin: 0 10rpx;">
 				<view>
 					<image src="../../static/退换货.png" style="width: 45rpx;height: 45rpx;" mode="scaleToFill" />
 				</view>
 				<view>退还/售后</view>
 			</view>
-			<view style="padding: 10rpx 10rpx;display: flex;flex-direction: column;align-items: center;justify-content: center;margin: 0 10rpx;">
+			<view
+				style="padding: 10rpx 10rpx;display: flex;flex-direction: column;align-items: center;justify-content: center;margin: 0 10rpx;">
 				<view>
 					<image src="../../static/客服在线.png" style="width: 45rpx;height: 45rpx;" mode="scaleToFill" />
 				</view>
 				<view>在线客服</view>
 			</view>
-			<view @click="goPoints" style="padding: 10rpx 10rpx;display: flex;flex-direction: column;align-items: center;justify-content: center;margin: 0 10rpx;">
+			<view @click="goPoints"
+				style="padding: 10rpx 10rpx;display: flex;flex-direction: column;align-items: center;justify-content: center;margin: 0 10rpx;">
 				<view>
 					<image src="../../static/积分.png" style="width: 45rpx;height: 45rpx;" mode="scaleToFill" />
 				</view>
 				<view>我的积分</view>
 			</view>
-			<view @click="goOrder" style="padding: 10rpx 10rpx;display: flex;flex-direction: column;align-items: center;justify-content: center;margin: 0 10rpx;">
+			<view @click="goOrder"
+				style="padding: 10rpx 10rpx;display: flex;flex-direction: column;align-items: center;justify-content: center;margin: 0 10rpx;">
 				<view>
 					<image src="../../static/订单中心icon.png" style="width: 45rpx;height: 45rpx;" mode="scaleToFill" />
 				</view>
 				<view>订单中心</view>
 			</view>
-			<view @click="goHelp" style="padding: 10rpx 10rpx;display: flex;flex-direction: column;align-items: center;justify-content: center;margin: 0 10rpx;">
+			<view @click="goHelp"
+				style="padding: 10rpx 10rpx;display: flex;flex-direction: column;align-items: center;justify-content: center;margin: 0 10rpx;">
 				<view>
 					<image src="../../static/帮助_o.png" style="width: 45rpx;height: 45rpx;" mode="scaleToFill" />
 				</view>
 				<view>我的帮助</view>
 			</view>
 		</view>
-		<view @click="loginOut" style="width: 400rpx;height: 70rpx;border: 1px solid #282828;text-align: center;line-height: 70rpx;border-radius: 30rpx;margin: 50rpx auto;">
+		<view @click="loginOut" v-show="UserInfo" 
+			style="width: 400rpx;height: 70rpx;border: 1px solid #282828;text-align: center;line-height: 70rpx;border-radius: 30rpx;margin: 50rpx auto;">
 			退出登录
 		</view>
+		<u-modal @cancel="cancel" :show="show" :title="title" :content='content' showCancelButton="true" @confirm="confirm"></u-modal>
 	</view>
 </template>
 
@@ -128,62 +141,108 @@
 export default {
 	data() {
 		return {
-
+			UserInfo:{},
+			show:false,
+			title:'友情提示',
+			content:'你确定要退出登录吗？'
 		}
 	},
-	methods:{
-		goWallet(){
+	methods: {
+		goWallet() {
 			uni.navigateTo({
 				url: '/pages/wallet/wallet'
 			})
 		},
-		goCoupon1(){
+		goCoupon1() {
 			uni.navigateTo({
 				url: '/pages/my-coupon/my-coupon'
 			})
 		},
-		goPoints(){
+		goPoints() {
 			uni.navigateTo({
 				url: '/pages/points/points'
 			})
 		},
-		goOrder(){
+		goOrder() {
 			uni.navigateTo({
 				url: '/pages/order/order'
 			})
 		},
-		goAddress(){
+		goAddress() {
 			uni.navigateTo({
 				url: '/pages/address/address'
 			})
 		},
-		goCoupon(){
+		goCoupon() {
 			uni.navigateTo({
 				url: '/pages/coupon/coupon'
 			})
 		},
-		goRefund(){
+		goRefund() {
 			uni.navigateTo({
 				url: '/pages/refund/refund'
 			})
 		},
-		goHelp(){
+		goHelp() {
 			uni.navigateTo({
 				url: '/pages/help/help'
 			})
 		},
-		loginOut(){
+		loginOut() {
 			console.log('loginOut');
+			this.show=true
 			
 		},
-		goLogin(){
+		confirm(){
+			console.log('提示框确认按钮');
+			uni.removeStorageSync('token')
+			uni.removeStorageSync('UserInfo')
+			this.UserInfo=null
+			this.show=false
+		},
+		cancel(){
+			this.show=false
+		},
+		goLogin() {
 			uni.navigateTo({
 				url: '/pages/login/login'
 			})
 		}
+	},
+	computed: {
+		// UserInfo() {
+		// 	return uni.getStorageSync('UserInfo')
+		// }
+
+
+	},
+	onLoad() {
+		
+	},
+	onShow() {
+		uni.$u.http.post('user/info',).then(res => {
+			console.log(res, '打印结果');
+			// if (res.status == 200) {
+			// 	this.show = false
+			// 	uni.switchTab({
+			// 		url: `/pages/User/User`
+			// 	})
+			// 	uni.setStorageSync('token', res.data.token);
+
+			// }
+		})
+		this.UserInfo = uni.getStorageSync('UserInfo')
+		console.log(this.UserInfo, 'onshow2');
+		
 	}
+
 }
 </script>
 
 
-<style></style>
+<style>
+.u-modal__content.data-v-713d0fd3 {
+	text-align: center;
+}
+
+</style>
