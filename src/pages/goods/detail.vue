@@ -1,6 +1,5 @@
 <template>
 	<view class="detail" style="position: relative;">
-
 		<!-- 輪播圖 -->
 		<view class="uni-margin-wrap">
 			<swiper class="swiper" circular :indicator-dots="indicatorDots" :autoplay="autoplay" :interval="interval"
@@ -167,7 +166,7 @@ export default {
 	data() {
 		return {
 			SwiperList: [],
-			goodsId:'',
+			goodsId: '',
 			goods_price: '',
 			goods_sales: '',
 			content: '',
@@ -210,14 +209,14 @@ export default {
 			this.shareBuy = false
 		},
 		showBuy(goodsId) {
-			console.log('商品ID',goodsId);
+			console.log('商品ID', goodsId);
 			this.shareBuy = true
 		},
-		goBuy(goodsId){
-			console.log('商品ID',goodsId);
+		goBuy(goodsId) {
+			console.log('商品ID', goodsId);
 			uni.navigateTo({
-				url: `/pages/settlement/settlement?goodsid=${goodsId}&CountValue=${this.CountValue}`
-			})
+					url: `/pages/settlement/settlement?goodsid=${goodsId}&CountValue=${this.CountValue}`
+				})
 			this.shareBuy = false
 		},
 		valChange() {
@@ -232,6 +231,7 @@ export default {
 			});
 
 		},
+
 
 
 	},
@@ -291,5 +291,9 @@ export default {
 .uni-padding-wrap {
 	width: 550rpx;
 	padding: 0 100rpx;
+}
+
+.u-modal__content.data-v-713d0fd3 {
+	text-align: center;
 }
 </style>

@@ -79,9 +79,22 @@ export default {
 										type: 'default',
 										duration: 1000,
 										complete() {
-											uni.switchTab({
-												url: `/pages/User/User`
-											})
+											var pages = getCurrentPages();
+											var page = pages[pages.length - 1];
+											var page1 = pages[pages.length - pages.length];
+											console.log('获取所有页面', pages);
+											console.log('获取当前页面', page.$page.fullPath);
+											console.log('从哪个页面过来', page1.$page.fullPath);
+											if (page1.$page.fullPath == '/pages/User/User' ) {
+												console.log('1');
+												uni.navigateBack({
+													delta: 1
+												});
+											} else if (page1.$page.fullPath == '/pages/index/index') {
+												uni.navigateBack({
+													delta: 2
+												});
+											}
 										}
 									})
 

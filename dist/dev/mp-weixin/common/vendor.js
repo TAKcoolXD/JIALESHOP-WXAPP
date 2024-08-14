@@ -1556,7 +1556,7 @@ function initData(vueOptions, context) {
     try {
       data = data.call(context); // 支持 Vue.prototype 上挂的数据
     } catch (e) {
-      if (Object({"NODE_ENV":"development","VUE_APP_DARK_MODE":"false","VUE_APP_NAME":"知识社区论坛","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
+      if (Object({"VUE_APP_DARK_MODE":"false","VUE_APP_NAME":"知识社区论坛","VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
         console.warn('根据 Vue 的 data 函数初始化小程序 data 失败，请尽量确保 data 函数中不访问 vm 对象，否则可能影响首次数据渲染速度。', data);
       }
     }
@@ -8889,7 +8889,7 @@ function type(obj) {
 
 function flushCallbacks$1(vm) {
     if (vm.__next_tick_callbacks && vm.__next_tick_callbacks.length) {
-        if (Object({"NODE_ENV":"development","VUE_APP_DARK_MODE":"false","VUE_APP_NAME":"知识社区论坛","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
+        if (Object({"VUE_APP_DARK_MODE":"false","VUE_APP_NAME":"知识社区论坛","VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
             var mpInstance = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:flushCallbacks[' + vm.__next_tick_callbacks.length + ']');
@@ -8910,14 +8910,14 @@ function nextTick$1(vm, cb) {
     //1.nextTick 之前 已 setData 且 setData 还未回调完成
     //2.nextTick 之前存在 render watcher
     if (!vm.__next_tick_pending && !hasRenderWatcher(vm)) {
-        if(Object({"NODE_ENV":"development","VUE_APP_DARK_MODE":"false","VUE_APP_NAME":"知识社区论坛","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"VUE_APP_DARK_MODE":"false","VUE_APP_NAME":"知识社区论坛","VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:nextVueTick');
         }
         return nextTick(cb, vm)
     }else{
-        if(Object({"NODE_ENV":"development","VUE_APP_DARK_MODE":"false","VUE_APP_NAME":"知识社区论坛","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"VUE_APP_DARK_MODE":"false","VUE_APP_NAME":"知识社区论坛","VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance$1 = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance$1.is || mpInstance$1.route) + '][' + vm._uid +
                 ']:nextMPTick');
@@ -9013,7 +9013,7 @@ var patch = function(oldVnode, vnode) {
     });
     var diffData = this.$shouldDiffData === false ? data : diff(data, mpData);
     if (Object.keys(diffData).length) {
-      if (Object({"NODE_ENV":"development","VUE_APP_DARK_MODE":"false","VUE_APP_NAME":"知识社区论坛","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
+      if (Object({"VUE_APP_DARK_MODE":"false","VUE_APP_NAME":"知识社区论坛","VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
         console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + this._uid +
           ']差量更新',
           JSON.stringify(diffData));
@@ -19309,7 +19309,11 @@ module.exports = function (vm) {
 /* 282 */,
 /* 283 */,
 /* 284 */,
-/* 285 */
+/* 285 */,
+/* 286 */,
+/* 287 */,
+/* 288 */,
+/* 289 */
 /*!************************************************************!*\
   !*** ./node_modules/uview-ui/components/u-search/props.js ***!
   \************************************************************/
@@ -19444,14 +19448,14 @@ var _default = exports.default = {
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 2)["default"]))
 
 /***/ }),
-/* 286 */,
-/* 287 */,
-/* 288 */,
-/* 289 */,
 /* 290 */,
 /* 291 */,
 /* 292 */,
-/* 293 */
+/* 293 */,
+/* 294 */,
+/* 295 */,
+/* 296 */,
+/* 297 */
 /*!****************************************************************!*\
   !*** ./node_modules/uview-ui/components/u-notice-bar/props.js ***!
   \****************************************************************/
@@ -19538,14 +19542,14 @@ var _default = exports.default = {
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 2)["default"]))
 
 /***/ }),
-/* 294 */,
-/* 295 */,
-/* 296 */,
-/* 297 */,
 /* 298 */,
 /* 299 */,
 /* 300 */,
-/* 301 */
+/* 301 */,
+/* 302 */,
+/* 303 */,
+/* 304 */,
+/* 305 */
 /*!**********************************************************!*\
   !*** ./node_modules/uview-ui/components/u-icon/icons.js ***!
   \**********************************************************/
@@ -19775,7 +19779,7 @@ var _default = exports.default = {
 };
 
 /***/ }),
-/* 302 */
+/* 306 */
 /*!**********************************************************!*\
   !*** ./node_modules/uview-ui/components/u-icon/props.js ***!
   \**********************************************************/
@@ -19881,14 +19885,122 @@ var _default = exports.default = {
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 2)["default"]))
 
 /***/ }),
-/* 303 */,
-/* 304 */,
-/* 305 */,
-/* 306 */,
 /* 307 */,
 /* 308 */,
 /* 309 */,
-/* 310 */
+/* 310 */,
+/* 311 */,
+/* 312 */,
+/* 313 */,
+/* 314 */
+/*!***********************************************************!*\
+  !*** ./node_modules/uview-ui/components/u-modal/props.js ***!
+  \***********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(uni) {
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+var _default = exports.default = {
+  props: {
+    // 是否展示modal
+    show: {
+      type: Boolean,
+      default: uni.$u.props.modal.show
+    },
+    // 标题
+    title: {
+      type: [String],
+      default: uni.$u.props.modal.title
+    },
+    // 弹窗内容
+    content: {
+      type: String,
+      default: uni.$u.props.modal.content
+    },
+    // 确认文案
+    confirmText: {
+      type: String,
+      default: uni.$u.props.modal.confirmText
+    },
+    // 取消文案
+    cancelText: {
+      type: String,
+      default: uni.$u.props.modal.cancelText
+    },
+    // 是否显示确认按钮
+    showConfirmButton: {
+      type: Boolean,
+      default: uni.$u.props.modal.showConfirmButton
+    },
+    // 是否显示取消按钮
+    showCancelButton: {
+      type: Boolean,
+      default: uni.$u.props.modal.showCancelButton
+    },
+    // 确认按钮颜色
+    confirmColor: {
+      type: String,
+      default: uni.$u.props.modal.confirmColor
+    },
+    // 取消文字颜色
+    cancelColor: {
+      type: String,
+      default: uni.$u.props.modal.cancelColor
+    },
+    // 对调确认和取消的位置
+    buttonReverse: {
+      type: Boolean,
+      default: uni.$u.props.modal.buttonReverse
+    },
+    // 是否开启缩放效果
+    zoom: {
+      type: Boolean,
+      default: uni.$u.props.modal.zoom
+    },
+    // 是否异步关闭，只对确定按钮有效
+    asyncClose: {
+      type: Boolean,
+      default: uni.$u.props.modal.asyncClose
+    },
+    // 是否允许点击遮罩关闭modal
+    closeOnClickOverlay: {
+      type: Boolean,
+      default: uni.$u.props.modal.closeOnClickOverlay
+    },
+    // 给一个负的margin-top，往上偏移，避免和键盘重合的情况
+    negativeTop: {
+      type: [String, Number],
+      default: uni.$u.props.modal.negativeTop
+    },
+    // modal宽度，不支持百分比，可以数值，px，rpx单位
+    width: {
+      type: [String, Number],
+      default: uni.$u.props.modal.width
+    },
+    // 确认按钮的样式，circle-圆形，square-方形，如设置，将不会显示取消按钮
+    confirmButtonShape: {
+      type: String,
+      default: uni.$u.props.modal.confirmButtonShape
+    }
+  }
+};
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 2)["default"]))
+
+/***/ }),
+/* 315 */,
+/* 316 */,
+/* 317 */,
+/* 318 */,
+/* 319 */,
+/* 320 */,
+/* 321 */,
+/* 322 */
 /*!********************************************************************!*\
   !*** ./node_modules/uview-ui/components/u-checkbox-group/props.js ***!
   \********************************************************************/
@@ -19984,14 +20096,14 @@ var _default = exports.default = {
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 2)["default"]))
 
 /***/ }),
-/* 311 */,
-/* 312 */,
-/* 313 */,
-/* 314 */,
-/* 315 */,
-/* 316 */,
-/* 317 */,
-/* 318 */
+/* 323 */,
+/* 324 */,
+/* 325 */,
+/* 326 */,
+/* 327 */,
+/* 328 */,
+/* 329 */,
+/* 330 */
 /*!**************************************************************!*\
   !*** ./node_modules/uview-ui/components/u-checkbox/props.js ***!
   \**************************************************************/
@@ -20077,14 +20189,14 @@ var _default = exports.default = {
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 2)["default"]))
 
 /***/ }),
-/* 319 */,
-/* 320 */,
-/* 321 */,
-/* 322 */,
-/* 323 */,
-/* 324 */,
-/* 325 */,
-/* 326 */
+/* 331 */,
+/* 332 */,
+/* 333 */,
+/* 334 */,
+/* 335 */,
+/* 336 */,
+/* 337 */,
+/* 338 */
 /*!****************************************************************!*\
   !*** ./node_modules/uview-ui/components/u-number-box/props.js ***!
   \****************************************************************/
@@ -20210,21 +20322,21 @@ var _default = exports.default = {
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 2)["default"]))
 
 /***/ }),
-/* 327 */,
-/* 328 */,
-/* 329 */,
-/* 330 */,
-/* 331 */,
-/* 332 */,
-/* 333 */,
-/* 334 */,
-/* 335 */,
-/* 336 */,
-/* 337 */,
-/* 338 */,
 /* 339 */,
 /* 340 */,
-/* 341 */
+/* 341 */,
+/* 342 */,
+/* 343 */,
+/* 344 */,
+/* 345 */,
+/* 346 */,
+/* 347 */,
+/* 348 */,
+/* 349 */,
+/* 350 */,
+/* 351 */,
+/* 352 */,
+/* 353 */
 /*!***********************************************************!*\
   !*** ./node_modules/uview-ui/components/u-popup/props.js ***!
   \***********************************************************/
@@ -20320,14 +20432,14 @@ var _default = exports.default = {
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 2)["default"]))
 
 /***/ }),
-/* 342 */,
-/* 343 */,
-/* 344 */,
-/* 345 */,
-/* 346 */,
-/* 347 */,
-/* 348 */,
-/* 349 */
+/* 354 */,
+/* 355 */,
+/* 356 */,
+/* 357 */,
+/* 358 */,
+/* 359 */,
+/* 360 */,
+/* 361 */
 /*!******************************************************************!*\
   !*** ./node_modules/uview-ui/components/u-loading-page/props.js ***!
   \******************************************************************/
@@ -20393,14 +20505,14 @@ var _default = exports.default = {
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 2)["default"]))
 
 /***/ }),
-/* 350 */,
-/* 351 */,
-/* 352 */,
-/* 353 */,
-/* 354 */,
-/* 355 */,
-/* 356 */,
-/* 357 */
+/* 362 */,
+/* 363 */,
+/* 364 */,
+/* 365 */,
+/* 366 */,
+/* 367 */,
+/* 368 */,
+/* 369 */
 /*!***********************************************************!*\
   !*** ./node_modules/uview-ui/components/u-input/props.js ***!
   \***********************************************************/
@@ -20604,12 +20716,12 @@ var _default = exports.default = {
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 2)["default"]))
 
 /***/ }),
-/* 358 */,
-/* 359 */,
-/* 360 */,
-/* 361 */,
-/* 362 */,
-/* 363 */
+/* 370 */,
+/* 371 */,
+/* 372 */,
+/* 373 */,
+/* 374 */,
+/* 375 */
 /*!**********************************************************!*\
   !*** ./node_modules/uview-ui/components/u-tabs/props.js ***!
   \**********************************************************/
@@ -20690,14 +20802,14 @@ var _default = exports.default = {
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 2)["default"]))
 
 /***/ }),
-/* 364 */,
-/* 365 */,
-/* 366 */,
-/* 367 */,
-/* 368 */,
-/* 369 */,
-/* 370 */,
-/* 371 */
+/* 376 */,
+/* 377 */,
+/* 378 */,
+/* 379 */,
+/* 380 */,
+/* 381 */,
+/* 382 */,
+/* 383 */
 /*!*******************************************************************!*\
   !*** ./node_modules/uview-ui/components/u-column-notice/props.js ***!
   \*******************************************************************/
@@ -20769,14 +20881,14 @@ var _default = exports.default = {
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 2)["default"]))
 
 /***/ }),
-/* 372 */,
-/* 373 */,
-/* 374 */,
-/* 375 */,
-/* 376 */,
-/* 377 */,
-/* 378 */,
-/* 379 */
+/* 384 */,
+/* 385 */,
+/* 386 */,
+/* 387 */,
+/* 388 */,
+/* 389 */,
+/* 390 */,
+/* 391 */
 /*!****************************************************************!*\
   !*** ./node_modules/uview-ui/components/u-row-notice/props.js ***!
   \****************************************************************/
@@ -20832,17 +20944,17 @@ var _default = exports.default = {
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 2)["default"]))
 
 /***/ }),
-/* 380 */,
-/* 381 */,
-/* 382 */,
-/* 383 */,
-/* 384 */,
-/* 385 */,
-/* 386 */,
-/* 387 */
-/*!*************************************************************!*\
-  !*** ./node_modules/uview-ui/components/u-overlay/props.js ***!
-  \*************************************************************/
+/* 392 */,
+/* 393 */,
+/* 394 */,
+/* 395 */,
+/* 396 */,
+/* 397 */,
+/* 398 */,
+/* 399 */
+/*!**********************************************************!*\
+  !*** ./node_modules/uview-ui/components/u-line/props.js ***!
+  \**********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -20855,39 +20967,48 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = void 0;
 var _default = exports.default = {
   props: {
-    // 是否显示遮罩
-    show: {
+    color: {
+      type: String,
+      default: uni.$u.props.line.color
+    },
+    // 长度，竖向时表现为高度，横向时表现为长度，可以为百分比，带px单位的值等
+    length: {
+      type: [String, Number],
+      default: uni.$u.props.line.length
+    },
+    // 线条方向，col-竖向，row-横向
+    direction: {
+      type: String,
+      default: uni.$u.props.line.direction
+    },
+    // 是否显示细边框
+    hairline: {
       type: Boolean,
-      default: uni.$u.props.overlay.show
+      default: uni.$u.props.line.hairline
     },
-    // 层级z-index
-    zIndex: {
+    // 线条与上下左右元素的间距，字符串形式，如"30px"、"20px 30px"
+    margin: {
       type: [String, Number],
-      default: uni.$u.props.overlay.zIndex
+      default: uni.$u.props.line.margin
     },
-    // 遮罩的过渡时间，单位为ms
-    duration: {
-      type: [String, Number],
-      default: uni.$u.props.overlay.duration
-    },
-    // 不透明度值，当做rgba的第四个参数
-    opacity: {
-      type: [String, Number],
-      default: uni.$u.props.overlay.opacity
+    // 是否虚线，true-虚线，false-实线
+    dashed: {
+      type: Boolean,
+      default: uni.$u.props.line.dashed
     }
   }
 };
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 2)["default"]))
 
 /***/ }),
-/* 388 */,
-/* 389 */,
-/* 390 */,
-/* 391 */,
-/* 392 */,
-/* 393 */,
-/* 394 */,
-/* 395 */
+/* 400 */,
+/* 401 */,
+/* 402 */,
+/* 403 */,
+/* 404 */,
+/* 405 */,
+/* 406 */,
+/* 407 */
 /*!******************************************************************!*\
   !*** ./node_modules/uview-ui/components/u-loading-icon/props.js ***!
   \******************************************************************/
@@ -20963,14 +21084,62 @@ var _default = exports.default = {
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 2)["default"]))
 
 /***/ }),
-/* 396 */,
-/* 397 */,
-/* 398 */,
-/* 399 */,
-/* 400 */,
-/* 401 */,
-/* 402 */,
-/* 403 */
+/* 408 */,
+/* 409 */,
+/* 410 */,
+/* 411 */,
+/* 412 */,
+/* 413 */,
+/* 414 */,
+/* 415 */
+/*!*************************************************************!*\
+  !*** ./node_modules/uview-ui/components/u-overlay/props.js ***!
+  \*************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(uni) {
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+var _default = exports.default = {
+  props: {
+    // 是否显示遮罩
+    show: {
+      type: Boolean,
+      default: uni.$u.props.overlay.show
+    },
+    // 层级z-index
+    zIndex: {
+      type: [String, Number],
+      default: uni.$u.props.overlay.zIndex
+    },
+    // 遮罩的过渡时间，单位为ms
+    duration: {
+      type: [String, Number],
+      default: uni.$u.props.overlay.duration
+    },
+    // 不透明度值，当做rgba的第四个参数
+    opacity: {
+      type: [String, Number],
+      default: uni.$u.props.overlay.opacity
+    }
+  }
+};
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 2)["default"]))
+
+/***/ }),
+/* 416 */,
+/* 417 */,
+/* 418 */,
+/* 419 */,
+/* 420 */,
+/* 421 */,
+/* 422 */,
+/* 423 */
 /*!*********************************************************!*\
   !*** ./node_modules/uview-ui/components/u-gap/props.js ***!
   \*********************************************************/
@@ -21011,14 +21180,14 @@ var _default = exports.default = {
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 2)["default"]))
 
 /***/ }),
-/* 404 */,
-/* 405 */,
-/* 406 */,
-/* 407 */,
-/* 408 */,
-/* 409 */,
-/* 410 */,
-/* 411 */
+/* 424 */,
+/* 425 */,
+/* 426 */,
+/* 427 */,
+/* 428 */,
+/* 429 */,
+/* 430 */,
+/* 431 */
 /*!****************************************************************!*\
   !*** ./node_modules/uview-ui/components/u-transition/props.js ***!
   \****************************************************************/
@@ -21059,7 +21228,7 @@ var _default = exports.default = {
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 2)["default"]))
 
 /***/ }),
-/* 412 */
+/* 432 */
 /*!*********************************************************************!*\
   !*** ./node_modules/uview-ui/components/u-transition/transition.js ***!
   \*********************************************************************/
@@ -21076,7 +21245,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = void 0;
 var _regenerator = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/regenerator */ 56));
 var _asyncToGenerator2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ 58));
-var _nvueAniMap = _interopRequireDefault(__webpack_require__(/*! ./nvue.ani-map.js */ 413));
+var _nvueAniMap = _interopRequireDefault(__webpack_require__(/*! ./nvue.ani-map.js */ 433));
 // 定义一个一定时间后自动成功的promise，让调用nextTick方法处，进入下一个then方法
 var nextTick = function nextTick() {
   return new Promise(function (resolve) {
@@ -21165,7 +21334,7 @@ var _default = exports.default = {
 };
 
 /***/ }),
-/* 413 */
+/* 433 */
 /*!***********************************************************************!*\
   !*** ./node_modules/uview-ui/components/u-transition/nvue.ani-map.js ***!
   \***********************************************************************/
@@ -21357,14 +21526,14 @@ var _default = exports.default = {
 };
 
 /***/ }),
-/* 414 */,
-/* 415 */,
-/* 416 */,
-/* 417 */,
-/* 418 */,
-/* 419 */,
-/* 420 */,
-/* 421 */
+/* 434 */,
+/* 435 */,
+/* 436 */,
+/* 437 */,
+/* 438 */,
+/* 439 */,
+/* 440 */,
+/* 441 */
 /*!****************************************************************!*\
   !*** ./node_modules/uview-ui/components/u-status-bar/props.js ***!
   \****************************************************************/
@@ -21389,14 +21558,14 @@ var _default = exports.default = {
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 2)["default"]))
 
 /***/ }),
-/* 422 */,
-/* 423 */,
-/* 424 */,
-/* 425 */,
-/* 426 */,
-/* 427 */,
-/* 428 */,
-/* 429 */
+/* 442 */,
+/* 443 */,
+/* 444 */,
+/* 445 */,
+/* 446 */,
+/* 447 */,
+/* 448 */,
+/* 449 */
 /*!*****************************************************************!*\
   !*** ./node_modules/uview-ui/components/u-safe-bottom/props.js ***!
   \*****************************************************************/
@@ -21415,21 +21584,21 @@ var _default = exports.default = {
 };
 
 /***/ }),
-/* 430 */,
-/* 431 */,
-/* 432 */,
-/* 433 */,
-/* 434 */,
-/* 435 */,
-/* 436 */,
-/* 437 */,
-/* 438 */,
-/* 439 */,
-/* 440 */,
-/* 441 */,
-/* 442 */,
-/* 443 */,
-/* 444 */
+/* 450 */,
+/* 451 */,
+/* 452 */,
+/* 453 */,
+/* 454 */,
+/* 455 */,
+/* 456 */,
+/* 457 */,
+/* 458 */,
+/* 459 */,
+/* 460 */,
+/* 461 */,
+/* 462 */,
+/* 463 */,
+/* 464 */
 /*!***********************************************************!*\
   !*** ./node_modules/uview-ui/components/u-badge/props.js ***!
   \***********************************************************/
@@ -21512,198 +21681,6 @@ var _default = exports.default = {
     absolute: {
       type: Boolean,
       default: uni.$u.props.badge.absolute
-    }
-  }
-};
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 2)["default"]))
-
-/***/ }),
-/* 445 */,
-/* 446 */,
-/* 447 */,
-/* 448 */,
-/* 449 */,
-/* 450 */,
-/* 451 */,
-/* 452 */,
-/* 453 */,
-/* 454 */,
-/* 455 */,
-/* 456 */,
-/* 457 */,
-/* 458 */,
-/* 459 */,
-/* 460 */,
-/* 461 */,
-/* 462 */,
-/* 463 */,
-/* 464 */,
-/* 465 */,
-/* 466 */,
-/* 467 */,
-/* 468 */,
-/* 469 */,
-/* 470 */,
-/* 471 */,
-/* 472 */,
-/* 473 */,
-/* 474 */,
-/* 475 */,
-/* 476 */,
-/* 477 */,
-/* 478 */,
-/* 479 */
-/*!***********************************************************!*\
-  !*** ./node_modules/uview-ui/components/u-modal/props.js ***!
-  \***********************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-var _default = exports.default = {
-  props: {
-    // 是否展示modal
-    show: {
-      type: Boolean,
-      default: uni.$u.props.modal.show
-    },
-    // 标题
-    title: {
-      type: [String],
-      default: uni.$u.props.modal.title
-    },
-    // 弹窗内容
-    content: {
-      type: String,
-      default: uni.$u.props.modal.content
-    },
-    // 确认文案
-    confirmText: {
-      type: String,
-      default: uni.$u.props.modal.confirmText
-    },
-    // 取消文案
-    cancelText: {
-      type: String,
-      default: uni.$u.props.modal.cancelText
-    },
-    // 是否显示确认按钮
-    showConfirmButton: {
-      type: Boolean,
-      default: uni.$u.props.modal.showConfirmButton
-    },
-    // 是否显示取消按钮
-    showCancelButton: {
-      type: Boolean,
-      default: uni.$u.props.modal.showCancelButton
-    },
-    // 确认按钮颜色
-    confirmColor: {
-      type: String,
-      default: uni.$u.props.modal.confirmColor
-    },
-    // 取消文字颜色
-    cancelColor: {
-      type: String,
-      default: uni.$u.props.modal.cancelColor
-    },
-    // 对调确认和取消的位置
-    buttonReverse: {
-      type: Boolean,
-      default: uni.$u.props.modal.buttonReverse
-    },
-    // 是否开启缩放效果
-    zoom: {
-      type: Boolean,
-      default: uni.$u.props.modal.zoom
-    },
-    // 是否异步关闭，只对确定按钮有效
-    asyncClose: {
-      type: Boolean,
-      default: uni.$u.props.modal.asyncClose
-    },
-    // 是否允许点击遮罩关闭modal
-    closeOnClickOverlay: {
-      type: Boolean,
-      default: uni.$u.props.modal.closeOnClickOverlay
-    },
-    // 给一个负的margin-top，往上偏移，避免和键盘重合的情况
-    negativeTop: {
-      type: [String, Number],
-      default: uni.$u.props.modal.negativeTop
-    },
-    // modal宽度，不支持百分比，可以数值，px，rpx单位
-    width: {
-      type: [String, Number],
-      default: uni.$u.props.modal.width
-    },
-    // 确认按钮的样式，circle-圆形，square-方形，如设置，将不会显示取消按钮
-    confirmButtonShape: {
-      type: String,
-      default: uni.$u.props.modal.confirmButtonShape
-    }
-  }
-};
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 2)["default"]))
-
-/***/ }),
-/* 480 */,
-/* 481 */,
-/* 482 */,
-/* 483 */,
-/* 484 */,
-/* 485 */,
-/* 486 */,
-/* 487 */
-/*!**********************************************************!*\
-  !*** ./node_modules/uview-ui/components/u-line/props.js ***!
-  \**********************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-var _default = exports.default = {
-  props: {
-    color: {
-      type: String,
-      default: uni.$u.props.line.color
-    },
-    // 长度，竖向时表现为高度，横向时表现为长度，可以为百分比，带px单位的值等
-    length: {
-      type: [String, Number],
-      default: uni.$u.props.line.length
-    },
-    // 线条方向，col-竖向，row-横向
-    direction: {
-      type: String,
-      default: uni.$u.props.line.direction
-    },
-    // 是否显示细边框
-    hairline: {
-      type: Boolean,
-      default: uni.$u.props.line.hairline
-    },
-    // 线条与上下左右元素的间距，字符串形式，如"30px"、"20px 30px"
-    margin: {
-      type: [String, Number],
-      default: uni.$u.props.line.margin
-    },
-    // 是否虚线，true-虚线，false-实线
-    dashed: {
-      type: Boolean,
-      default: uni.$u.props.line.dashed
     }
   }
 };

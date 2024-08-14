@@ -1,12 +1,13 @@
 <template>
 	<view class="settlement" style="background-color: #fafafa;position: relative;">
-		<view
-			style="display: flex;justify-content: space-around;height: 150rpx;color: #b1b1b2;">
+		<view style="display: flex;justify-content: space-around;height: 150rpx;color: #b1b1b2;">
 			<view style="display: flex;align-items: center;">
 				<view style="margin-right: 60rpx;"><u-icon name="map" color="#b1b1b2" size="20"></u-icon></view>
 				<view>
-					<view>{{address.name}} {{address.phone}}</view>
-					<view>{{address.region.province}}{{address.region.city}}{{address.region.region}}{{address.detail}}</view>
+					<view>{{ address.name }} {{ address.phone }}</view>
+					<view>{{ address.region.province }}{{ address.region.city }}{{ address.region.region }}{{
+						address.detail }}
+					</view>
 				</view>
 			</view>
 			<view style="display: flex;align-items: center;">
@@ -21,16 +22,16 @@
 						style="width: 200rpx;height: 200rpx;margin-right: 20rpx;" />
 					<view>
 						<view>{{ item.goods_name }}</view>
-						<view style="color: #ff91ab;">X {{orderTotalNum}}</view>
+						<view style="color: #ff91ab;">X {{ orderTotalNum }}</view>
 					</view>
 				</view>
-				<view style="margin-right: 10rpx;color: #ff91ab;">￥{{item.goods_price}}</view>
+				<view style="margin-right: 10rpx;color: #ff91ab;">￥{{ item.goods_price }}</view>
 			</view>
 		</view>
 		<view>
 			<view style="display: flex; justify-content: space-between;margin: 20rpx 0">
 				<view>订单总金额</view>
-				<view style="color: #ff91ab;">￥{{orderTotalPrice}}</view>
+				<view style="color: #ff91ab;">￥{{ orderTotalPrice }}</view>
 			</view>
 			<view style="display: flex;justify-content: space-between;margin: 20rpx 0">
 				<view>优惠卷</view>
@@ -38,30 +39,36 @@
 			</view>
 			<view style="display: flex;justify-content: space-between;margin: 20rpx 0">
 				<view>配送费用</view>
-				<view style="color: #ff91ab;" >￥{{expressPrice}}</view>
+				<view style="color: #ff91ab;">￥{{ expressPrice }}</view>
 			</view>
 		</view>
 		<view>
-			<u--input  placeholder="选填 买家留言 (50字以内)" border="surround" v-model="value" @change="change"></u--input>
+			<u--input placeholder="选填 买家留言 (50字以内)" border="surround" v-model="value" @change="change"></u--input>
 		</view>
-		<view style="width: 750rpx;display: flex;justify-content: space-between;align-items: center;background: white;position: sticky;bottom: 0;height: 100rpx;position: fixed;bottom: 25rpx;">
+		<view
+			style="width: 750rpx;display: flex;justify-content: space-between;align-items: center;background: white;position: sticky;bottom: 0;height: 100rpx;position: fixed;bottom: 25rpx;">
 			<view style="margin-left: 30rpx;">
 				<view>
-					实付款： <span style="color: #ff91ab;">￥{{orderPayPrice}}</span>
+					实付款： <span style="color: #ff91ab;">￥{{ orderPayPrice }}</span>
 				</view>
 			</view>
 			<view style="display: flex;align-items: center;margin-right: 20rpx;">
-				
-				<view @click="goCashier" style="padding: 10rpx 40rpx;background-color: #ff91ab;border-radius: 35rpx;color: white;">
+
+				<view @click="goCashier"
+					style="padding: 10rpx 40rpx;background-color: #ff91ab;border-radius: 35rpx;color: white;">
 					提交订单
 				</view>
 			</view>
 
 		</view>
 		<view style="z-index: 100;">
-				<u-loading-page :loading="loading">
-				</u-loading-page>
-			</view>
+			<u-loading-page :loading="loading">
+			</u-loading-page>
+		</view>
+		<view>
+			<u-modal :show="show" @confirm="confirm" @cancel="cancel" :title="title" :content='content1'
+				confirmText="去登陆" cancelText="在逛会" showCancelButton="true"></u-modal>
+		</view>
 	</view>
 </template>
 
@@ -69,50 +76,72 @@
 export default {
 	data() {
 		return {
-			value:'',
-			goodsId:'',
-			goodsList:[],
-			orderTotalNum:'',
-			orderTotalPrice:'',
-			expressPrice:'',
-			orderPayPrice:'',
-			address:{},
+			show: false,
+			title: '温馨提示',
+			content1: '此时此刻需要您登录哦',
+			value: '',
+			goodsId: '',
+			goodsList: [],
+			orderTotalNum: '',
+			orderTotalPrice: '',
+			expressPrice: '',
+			orderPayPrice: '',
+			address: {},
 			loading: true,
 		}
 	},
 	methods: {
-		change(){
+		change() {
 			console.log('change');
-			
+
 		},
-		goCashier(){
-			
+		goCashier() {
+
 			uni.navigateTo({
-				url:'/pages/settlement/cashier'
+				url: '/pages/settlement/cashier'
 			})
+		},
+		confirm() {
+			console.log('11');
+			uni.navigateTo({
+				url: '/pages/login/login'
+			})
+		},
+		cancel() {
+			console.log('22');
+			uni.navigateBack()
 		}
 	},
 	onLoad(option) {
 		//https://yoshop-test.azhuquq.com/index.php?s=/api/checkout/order&mode=buyNow&delivery=0&couponId=0&isUsePoints=0&goodsId=10002&goodsNum=2&goodsSkuId=0
 		this.loading = true
-		console.log(option,'页面参数');
-		console.log('传过来的商品个数', option.CountValue);
-		console.log('传过来的ID', option.goodsid);
-		this.goodsId = option.goodsid
-		uni.$u.http.get(`checkout/order&mode=buyNow&delivery=0&couponId=0&isUsePoints=0&goodsId=${option.goodsid}&goodsNum=${option.CountValue}&goodsSkuId=0`,).then(res => {
-			console.log(res, '打印结果');
-			if (res.status == 200) {
-				this.loading = false
-				this.goodsList=res.data.order.goodsList
-				this.orderTotalNum=res.data.order.orderTotalNum
-				this.orderTotalPrice=res.data.order.orderTotalPrice	
-				this.orderPayPrice=res.data.order.orderPayPrice
-				this.expressPrice=res.data.order.expressPrice
-				this.address=res.data.order.address
-			}
-		})
+		if (uni.getStorageSync('token')) {
+			console.log(option, '页面参数');
+			console.log('传过来的商品个数', option.CountValue);
+			console.log('传过来的ID', option.goodsid);
+			this.goodsId = option.goodsid
+			uni.$u.http.get(`checkout/order&mode=buyNow&delivery=0&couponId=0&isUsePoints=0&goodsId=${option.goodsid}&goodsNum=${option.CountValue}&goodsSkuId=0`,).then(res => {
+				console.log(res, '打印结果');
+				if (res.status == 200) {
+					this.loading = false
+					this.goodsList = res.data.order.goodsList
+					this.orderTotalNum = res.data.order.orderTotalNum
+					this.orderTotalPrice = res.data.order.orderTotalPrice
+					this.orderPayPrice = res.data.order.orderPayPrice
+					this.expressPrice = res.data.order.expressPrice
+					this.address = res.data.order.address
+				}
+			})
+		} else {
+			this.show = true
+		}
+
 	},
 }
 </script>
 
-<style></style>
+<style>
+.u-modal__content.data-v-713d0fd3 {
+	text-align: center;
+}
+</style>
