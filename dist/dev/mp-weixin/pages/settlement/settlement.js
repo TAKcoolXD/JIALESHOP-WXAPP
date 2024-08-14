@@ -250,11 +250,13 @@ exports.default = void 0;
 var _default = exports.default = {
   data: function data() {
     return {
+      orderId: '',
       show: false,
       title: '温馨提示',
       content1: '此时此刻需要您登录哦',
       value: '',
       goodsId: '',
+      CountValue: '',
       goodsList: [],
       orderTotalNum: '',
       orderTotalPrice: '',
@@ -269,8 +271,25 @@ var _default = exports.default = {
       console.log('change');
     },
     goCashier: function goCashier() {
-      uni.navigateTo({
-        url: '/pages/settlement/cashier'
+      var _this = this;
+      var data = {
+        couponId: 0,
+        delivery: 10,
+        goodsId: this.goodsId,
+        goodsNum: this.CountValue,
+        goodsSkuId: "0",
+        isUsePoints: 0,
+        mode: "buyNow",
+        remark: ""
+      };
+      uni.$u.http.post("checkout/submit", data).then(function (res) {
+        console.log(res, '打印结果');
+        if (res.status == 200) {
+          _this.orderId = res.data.orderId;
+          uni.navigateTo({
+            url: "/pages/settlement/cashier?goodsId=".concat(_this.goodsId, "&CountValue=").concat(_this.CountValue, "&orderId=").concat(_this.orderId)
+          });
+        }
       });
     },
     confirm: function confirm() {
@@ -285,7 +304,7 @@ var _default = exports.default = {
     }
   },
   onLoad: function onLoad(option) {
-    var _this = this;
+    var _this2 = this;
     //https://yoshop-test.azhuquq.com/index.php?s=/api/checkout/order&mode=buyNow&delivery=0&couponId=0&isUsePoints=0&goodsId=10002&goodsNum=2&goodsSkuId=0
     this.loading = true;
     if (uni.getStorageSync('token')) {
@@ -293,16 +312,17 @@ var _default = exports.default = {
       console.log('传过来的商品个数', option.CountValue);
       console.log('传过来的ID', option.goodsid);
       this.goodsId = option.goodsid;
+      this.CountValue = option.CountValue;
       uni.$u.http.get("checkout/order&mode=buyNow&delivery=0&couponId=0&isUsePoints=0&goodsId=".concat(option.goodsid, "&goodsNum=").concat(option.CountValue, "&goodsSkuId=0")).then(function (res) {
         console.log(res, '打印结果');
         if (res.status == 200) {
-          _this.loading = false;
-          _this.goodsList = res.data.order.goodsList;
-          _this.orderTotalNum = res.data.order.orderTotalNum;
-          _this.orderTotalPrice = res.data.order.orderTotalPrice;
-          _this.orderPayPrice = res.data.order.orderPayPrice;
-          _this.expressPrice = res.data.order.expressPrice;
-          _this.address = res.data.order.address;
+          _this2.loading = false;
+          _this2.goodsList = res.data.order.goodsList;
+          _this2.orderTotalNum = res.data.order.orderTotalNum;
+          _this2.orderTotalPrice = res.data.order.orderTotalPrice;
+          _this2.orderPayPrice = res.data.order.orderPayPrice;
+          _this2.expressPrice = res.data.order.expressPrice;
+          _this2.address = res.data.order.address;
         }
       });
     } else {

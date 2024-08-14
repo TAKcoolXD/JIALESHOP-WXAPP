@@ -76,11 +76,13 @@
 export default {
 	data() {
 		return {
+			orderId:'',
 			show: false,
 			title: '温馨提示',
 			content1: '此时此刻需要您登录哦',
 			value: '',
 			goodsId: '',
+			CountValue: '',
 			goodsList: [],
 			orderTotalNum: '',
 			orderTotalPrice: '',
@@ -96,10 +98,26 @@ export default {
 
 		},
 		goCashier() {
-
-			uni.navigateTo({
-				url: '/pages/settlement/cashier'
+			let data = {
+				couponId: 0,
+				delivery: 10,
+				goodsId: this.goodsId,
+				goodsNum: this.CountValue,
+				goodsSkuId: "0",
+				isUsePoints: 0,
+				mode: "buyNow",
+				remark: ""
+			}
+			uni.$u.http.post(`checkout/submit`, data).then(res => {
+				console.log(res, '打印结果');
+				if (res.status == 200) {
+					this.orderId = res.data.orderId
+					uni.navigateTo({
+						url: `/pages/settlement/cashier?goodsId=${this.goodsId}&CountValue=${this.CountValue}&orderId=${this.orderId}`
+					})
+				}
 			})
+
 		},
 		confirm() {
 			console.log('11');
@@ -120,6 +138,7 @@ export default {
 			console.log('传过来的商品个数', option.CountValue);
 			console.log('传过来的ID', option.goodsid);
 			this.goodsId = option.goodsid
+			this.CountValue = option.CountValue
 			uni.$u.http.get(`checkout/order&mode=buyNow&delivery=0&couponId=0&isUsePoints=0&goodsId=${option.goodsid}&goodsNum=${option.CountValue}&goodsSkuId=0`,).then(res => {
 				console.log(res, '打印结果');
 				if (res.status == 200) {
