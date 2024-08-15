@@ -293,7 +293,5 @@ export default {
 	padding: 0 100rpx;
 }
 
-.u-modal__content.data-v-713d0fd3 {
-	text-align: center;
-}
+
 </style>

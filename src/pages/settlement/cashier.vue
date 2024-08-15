@@ -20,8 +20,10 @@
 			<view style="margin-left: 60rpx;"><u-icon name="rmb-circle-fill" color="#ff9700" size="28"></u-icon></view>
 			<view>余额支付 （可用￥{{ balance }}）</view>
 			<view style="margin-left: 130rpx;">
-				<u-checkbox-group>
-					<u-checkbox shape="circle" activeColor="#ff547b"></u-checkbox>
+				<u-checkbox-group v-model="checkboxValue1" placement="row" @change="checkboxChange">
+					<u-checkbox :customStyle="{ marginBottom: '8px' }" v-for="(item, index) in checkboxList1"
+						:key="index" activeColor="#ff547b" :label="item.name" :name="item.name">
+					</u-checkbox>
 				</u-checkbox-group>
 			</view>
 		</view>
@@ -31,6 +33,12 @@
 				style="width: 700rpx;height: 70rpx;border-radius: 50rpx;text-align: center;line-height: 70rpx;background-color: #ff547b;color: white;">
 				确认支付</view>
 		</view>
+		<view>
+			<u-toast ref="uToast"></u-toast>
+		</view>
+		<view>
+			<u-loading-page :loading="show"></u-loading-page>
+		</view>
 	</view>
 </template>
 
@@ -38,9 +46,18 @@
 export default {
 	data() {
 		return {
+			show: false,
+			length: '',
+			checkboxValue1: [],
+			checkboxList1: [{
+				name: '',
+				disabled: false
+			},
+			],
 			balance: '',
 			pay_price: '',
 			goodsId: '',
+			orderId: '',
 			CountValue: '',
 			timeData: {},
 			expirationTime: '',  // 添加expirationTime变量
@@ -50,11 +67,36 @@ export default {
 	methods: {
 		goOrder() {
 			console.log('去我的订单');
-			uni.navigateTo({ url: '/pages/order/order' })
+			let data={
+					client: "MP-WEIXIN",
+					extra: {},
+					method: "balance",
+					orderId: this.orderId
+				}
+			if (this.length != 0) {
+				this.show = true
+				uni.$u.http.post(`cashier/orderPay`,data).then(res => {
+				console.log(res, '打印结果');
+				if (res.status == 200) {
+					this.show = false
+					this.$refs.uToast.show({
+						message: res.message,
+						position: 'top',
+						type: 'default',
+						duration: 1000,
+						complete() {
+							uni.navigateTo({ url: '/pages/order/order' })
+						}
+					})
+					
+				}
+			})
+			}
+
+
 		},
 		onChange(e) {
 			// console.log(e);
-
 			this.timeData = e
 		},
 		calculateRemainingTime(expirationTime) {
@@ -63,6 +105,10 @@ export default {
 			const remaining = expiration - now;  // 计算剩余时间
 			return remaining > 0 ? remaining : 0;  // 如果剩余时间为负数，返回0
 		},
+		checkboxChange(e) {
+			console.log('change', e);
+			this.length = e.length
+		}
 	},
 	onLoad(option) {
 		console.log('订单结算台传过来的商品ID和商品个数', option);
@@ -79,7 +125,7 @@ export default {
 				this.remainingTime = this.calculateRemainingTime(this.expirationTime);  // 计算剩余时间
 			}
 		})
-	}
+	},
 }
 </script>
 
@@ -94,4 +140,7 @@ export default {
 		text-align: center;
 	}
 }
-</style>
+
+// .u-checkbox__icon-wrap--square.data-v-532d01c7 {
+// 	background-color: #ff547b !important;
+// }</style>
