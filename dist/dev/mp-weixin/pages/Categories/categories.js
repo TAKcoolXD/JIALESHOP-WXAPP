@@ -284,6 +284,12 @@ var _default = exports.default = {
     },
     showAll: function showAll() {
       this.index = 0;
+    },
+    goGoodDetails: function goGoodDetails(goodsitem) {
+      console.log('111', goodsitem);
+      uni.navigateTo({
+        url: "/pages/goods/detail?goodsid=".concat(goodsitem.goods_id)
+      });
     }
   }
 };

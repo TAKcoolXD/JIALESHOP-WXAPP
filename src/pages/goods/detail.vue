@@ -49,7 +49,7 @@
 					<view style="margin:  0 10rpx;">
 						<u-icon name="kefu-ermai" color="#5b5b5d" size="28"></u-icon>
 					</view>
-					<view style="margin:  0 10rpx;">
+					<view style="margin:  0 10rpx;" @click=goShopCar>
 						<u-icon name="shopping-cart" color="#5b5b5d" size="28"></u-icon>
 					</view>
 				</view>
@@ -122,7 +122,7 @@
 						<view>数量</view>
 						<view><u-number-box v-model="CountValue" @change="valChange"></u-number-box></view>
 					</view>
-					<view
+					<view @click="addCart"
 						style="width: 600rpx;height: 80rpx;margin: 30rpx auto;border-radius: 50rpx;text-align: center;line-height: 80rpx;background-color: #ffe6e8;color: #ff547b;">
 						加入购物车
 					</view>
@@ -158,6 +158,12 @@
 				<u-loading-page :loading="loading">
 				</u-loading-page>
 			</view>
+			<view>
+				<u-toast ref="uToast"></u-toast>
+			</view>
+			<view>
+				<u-loading-page :loading="show"></u-loading-page>
+			</view>
 		</view>
 
 </template>
@@ -165,6 +171,7 @@
 export default {
 	data() {
 		return {
+			show: false,
 			SwiperList: [],
 			goodsId: '',
 			goods_price: '',
@@ -231,6 +238,39 @@ export default {
 			});
 
 		},
+		addCart() {
+			console.log('加入购物车');
+			let data = {
+				goodsId: this.goodsId,
+				goodsNum: this.CountValue,
+				goodsSkuId: 0
+			}
+
+			this.show = true
+			uni.$u.http.post('cart/add', data).then(res => {
+				console.log(res, '打印结果');
+
+				if (res.status == 200) {
+					this.show = false
+					this.shareCart = false
+					this.$refs.uToast.show({
+						message: res.message,
+						position: 'top',
+						type: 'default',
+						duration: 1000,
+						// complete() {
+						// 	uni.navigateTo({ url: '/pages/order/order' })
+						// }
+					})
+
+				}
+			})
+		},
+		goShopCar() {
+			uni.switchTab({
+				url: `/pages/shopCar/shopCar`
+			})
+		}
 
 
 

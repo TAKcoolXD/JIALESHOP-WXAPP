@@ -22,7 +22,7 @@
 			<view style="width: 520rpx;height: 1330rpx;margin-left: 20rpx;overflow: scroll;">
 				<!-- 全部商品数据展示 -->
 				<view v-if="index == 0" style="width: 490rpx;height: 1330rpx;margin:10rpx 15rpx;overflow: scroll;">
-					<view v-for="goodsitem in goodsList" :key="goodsitem.goods_id" style="display: flex;padding: 20rpx;">
+					<view @click="goGoodDetails(goodsitem)" v-for="goodsitem in goodsList" :key="goodsitem.goods_id" style="display: flex;padding: 20rpx;">
 						<image :src="goodsitem.goods_image" mode="scaleToFill" style="width: 150rpx;height: 150rpx;" />
 						<view style="width: 350rpx;">
 							<view style="margin-left: 10rpx;">{{ goodsitem.goods_name }}</view>
@@ -37,7 +37,7 @@
 				<view v-if="categoitem.category_id == index" v-for="categoitem in categoriesList"
 					:key="categoitem.category_id"
 					style="width: 490rpx;height: 1330rpx;margin:10rpx 15rpx;overflow: scroll;">
-					<view v-for="item1 in goodsListDetail" :key="item1.goods_id" style="display: flex;padding: 20rpx;">
+					<view @click="goGoodDetails(item1)" v-for="item1 in goodsListDetail" :key="item1.goods_id" style="display: flex;padding: 20rpx;">
 						<image :src="item1.goods_image" mode="scaleToFill" style="width: 150rpx;height: 150rpx;" />
 						<view style="width: 350rpx;">
 							<view style="margin-left: 10rpx;">{{ item1.goods_name }}</view>
@@ -116,6 +116,12 @@ export default {
 		},
 		showAll() {
 			this.index = 0
+		},
+		goGoodDetails(goodsitem){
+			console.log('111',goodsitem);
+			uni.navigateTo({
+				url: `/pages/goods/detail?goodsid=${goodsitem.goods_id}`
+			})
 		}
 	}
 }

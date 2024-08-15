@@ -12,7 +12,7 @@
 			</view>
 		</view>
 		<!-- 商品列表 计步器 -->
-		<view v-for="item in 10" :key="item"
+		<view v-for="item in shopCarList" :key="item"
 			style="width: 700rpx;height: 270rpx;margin: 20rpx auto;border-radius: 15rpx;background-color: white;">
 			<view style="display: flex;justify-content: space-around;align-items: center;height: 100%;">
 				<view>
@@ -20,7 +20,7 @@
 						<u-checkbox v-model="checked" shape="circle" activeColor="#ff547b"></u-checkbox>
 					</u-checkbox-group>
 				</view>
-				<image src="../../static/logo.png" style="width: 200rpx;height: 200rpx;" mode="scaleToFill" />
+				<image :src="item.goods.goods_image" style="width: 200rpx;height: 200rpx;" mode="scaleToFill" />
 				<view>
 					<u-number-box v-model="CountValue" @change="valChange"></u-number-box>
 				</view>
@@ -55,6 +55,8 @@ export default {
 			checked: '',
 			CountValue: '',
 			showhandle: true,
+			cartTotal: '',
+			shopCarList: [],
 		}
 	},
 	methods: {
@@ -72,6 +74,16 @@ export default {
 				url: '/pages/settlement/settlement'
 			})
 		}
+	},
+	onShow() {
+		uni.$u.http.get(`cart/list`,).then(res => {
+			console.log(res, '打印结果');
+			if (res.status == 200) {
+				this.cartTotal = res.data.cartTotal
+				this.shopCarList = res.data.list
+
+			}
+		})
 	}
 }
 </script>

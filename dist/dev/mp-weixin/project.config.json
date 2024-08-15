@@ -18,7 +18,7 @@
     }
   },
   "compileType": "miniprogram",
-  "libVersion": "3.5.2",
+  "libVersion": "3.5.3",
   "appid": "wx3f929b5dfbc84ee7",
   "projectname": "知识社区论坛",
   "condition": {},

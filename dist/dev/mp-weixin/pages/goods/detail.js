@@ -112,6 +112,9 @@ try {
     uLoadingPage: function () {
       return Promise.all(/*! import() | node-modules/uview-ui/components/u-loading-page/u-loading-page */[__webpack_require__.e("common/vendor"), __webpack_require__.e("node-modules/uview-ui/components/u-loading-page/u-loading-page")]).then(__webpack_require__.bind(null, /*! uview-ui/components/u-loading-page/u-loading-page.vue */ 358))
     },
+    uToast: function () {
+      return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-toast/u-toast */ "node-modules/uview-ui/components/u-toast/u-toast").then(__webpack_require__.bind(null, /*! uview-ui/components/u-toast/u-toast.vue */ 343))
+    },
   }
 } catch (e) {
   if (
@@ -336,9 +339,16 @@ exports.default = void 0;
 //
 //
 //
+//
+//
+//
+//
+//
+//
 var _default = exports.default = {
   data: function data() {
     return {
+      show: false,
       SwiperList: [],
       goodsId: '',
       goods_price: '',
@@ -405,21 +415,52 @@ var _default = exports.default = {
           return item.external_url;
         })
       });
+    },
+    addCart: function addCart() {
+      var _this = this;
+      console.log('加入购物车');
+      var data = {
+        goodsId: this.goodsId,
+        goodsNum: this.CountValue,
+        goodsSkuId: 0
+      };
+      this.show = true;
+      uni.$u.http.post('cart/add', data).then(function (res) {
+        console.log(res, '打印结果');
+        if (res.status == 200) {
+          _this.show = false;
+          _this.shareCart = false;
+          _this.$refs.uToast.show({
+            message: res.message,
+            position: 'top',
+            type: 'default',
+            duration: 1000
+            // complete() {
+            // 	uni.navigateTo({ url: '/pages/order/order' })
+            // }
+          });
+        }
+      });
+    },
+    goShopCar: function goShopCar() {
+      uni.switchTab({
+        url: "/pages/shopCar/shopCar"
+      });
     }
   },
   onLoad: function onLoad(option) {
-    var _this = this;
+    var _this2 = this;
     this.loading = true;
     console.log('传过来的ID', option.goodsid);
     this.goodsId = option.goodsid;
     uni.$u.http.get("goods/detail&goodsId=".concat(option.goodsid, "&verifyStatus=1")).then(function (res) {
       console.log(res, '打印结果');
       if (res.status == 200) {
-        _this.loading = false;
-        _this.SwiperList = res.data.detail.goods_images;
-        _this.goods_price = res.data.detail.goods_price_max;
-        _this.goods_sales = res.data.detail.goods_sales;
-        _this.content = res.data.detail.content;
+        _this2.loading = false;
+        _this2.SwiperList = res.data.detail.goods_images;
+        _this2.goods_price = res.data.detail.goods_price_max;
+        _this2.goods_sales = res.data.detail.goods_sales;
+        _this2.content = res.data.detail.content;
       }
     });
   }

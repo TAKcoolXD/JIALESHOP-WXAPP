@@ -226,7 +226,9 @@ var _default = exports.default = {
     return {
       checked: '',
       CountValue: '',
-      showhandle: true
+      showhandle: true,
+      cartTotal: '',
+      shopCarList: []
     };
   },
   methods: {
@@ -243,6 +245,16 @@ var _default = exports.default = {
         url: '/pages/settlement/settlement'
       });
     }
+  },
+  onShow: function onShow() {
+    var _this = this;
+    uni.$u.http.get("cart/list").then(function (res) {
+      console.log(res, '打印结果');
+      if (res.status == 200) {
+        _this.cartTotal = res.data.cartTotal;
+        _this.shopCarList = res.data.list;
+      }
+    });
   }
 };
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 2)["default"]))
