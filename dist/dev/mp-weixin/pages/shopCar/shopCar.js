@@ -99,16 +99,10 @@ var components
 try {
   components = {
     uIcon: function () {
-      return Promise.all(/*! import() | node-modules/uview-ui/components/u-icon/u-icon */[__webpack_require__.e("common/vendor"), __webpack_require__.e("node-modules/uview-ui/components/u-icon/u-icon")]).then(__webpack_require__.bind(null, /*! uview-ui/components/u-icon/u-icon.vue */ 302))
-    },
-    uCheckboxGroup: function () {
-      return Promise.all(/*! import() | node-modules/uview-ui/components/u-checkbox-group/u-checkbox-group */[__webpack_require__.e("common/vendor"), __webpack_require__.e("node-modules/uview-ui/components/u-checkbox-group/u-checkbox-group")]).then(__webpack_require__.bind(null, /*! uview-ui/components/u-checkbox-group/u-checkbox-group.vue */ 319))
-    },
-    uCheckbox: function () {
-      return Promise.all(/*! import() | node-modules/uview-ui/components/u-checkbox/u-checkbox */[__webpack_require__.e("common/vendor"), __webpack_require__.e("node-modules/uview-ui/components/u-checkbox/u-checkbox")]).then(__webpack_require__.bind(null, /*! uview-ui/components/u-checkbox/u-checkbox.vue */ 327))
+      return Promise.all(/*! import() | node-modules/uview-ui/components/u-icon/u-icon */[__webpack_require__.e("common/vendor"), __webpack_require__.e("node-modules/uview-ui/components/u-icon/u-icon")]).then(__webpack_require__.bind(null, /*! uview-ui/components/u-icon/u-icon.vue */ 307))
     },
     uNumberBox: function () {
-      return Promise.all(/*! import() | node-modules/uview-ui/components/u-number-box/u-number-box */[__webpack_require__.e("common/vendor"), __webpack_require__.e("node-modules/uview-ui/components/u-number-box/u-number-box")]).then(__webpack_require__.bind(null, /*! uview-ui/components/u-number-box/u-number-box.vue */ 335))
+      return Promise.all(/*! import() | node-modules/uview-ui/components/u-number-box/u-number-box */[__webpack_require__.e("common/vendor"), __webpack_require__.e("node-modules/uview-ui/components/u-number-box/u-number-box")]).then(__webpack_require__.bind(null, /*! uview-ui/components/u-number-box/u-number-box.vue */ 324))
     },
   }
 } catch (e) {
@@ -167,10 +161,16 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 /* WEBPACK VAR INJECTION */(function(uni) {
 
+var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ 4);
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
+var _tags = __webpack_require__(/*! @dcloudio/vue-cli-plugin-uni/packages/postcss/tags */ 182);
+var _value = _interopRequireDefault(__webpack_require__(/*! ../../uni_modules/uv-text/components/uv-text/value */ 183));
+var _test = __webpack_require__(/*! ../../uni_modules/uv-ui-tools/libs/function/test */ 184);
+//
+//
 //
 //
 //
@@ -224,7 +224,7 @@ exports.default = void 0;
 var _default = exports.default = {
   data: function data() {
     return {
-      checked: '',
+      checked: false,
       CountValue: '',
       showhandle: true,
       cartTotal: '',
@@ -244,6 +244,34 @@ var _default = exports.default = {
       uni.navigateTo({
         url: '/pages/settlement/settlement'
       });
+    },
+    checkClick: function checkClick(item) {
+      console.log(item);
+      item.checked = !item.checked;
+    },
+    checkClickAll: function checkClickAll() {
+      console.log('点击全选');
+      var a;
+      if (this.checkedAll == true) {
+        a = this.shopCarList.map(function (item) {
+          item.checked = false;
+          return item;
+        });
+        this.shopCarList = a;
+      } else {
+        a = this.shopCarList.map(function (item) {
+          item.checked = true;
+          return item;
+        });
+        this.shopCarList = a;
+      }
+    }
+  },
+  computed: {
+    checkedAll: function checkedAll() {
+      return this.shopCarList.every(function (item) {
+        return item.checked;
+      });
     }
   },
   onShow: function onShow() {
@@ -252,7 +280,12 @@ var _default = exports.default = {
       console.log(res, '打印结果');
       if (res.status == 200) {
         _this.cartTotal = res.data.cartTotal;
-        _this.shopCarList = res.data.list;
+        var list = res.data.list;
+        _this.shopCarList = list.map(function (item) {
+          item.checked = false;
+          return item;
+        });
+        console.log(_this.shopCarList);
       }
     });
   }
