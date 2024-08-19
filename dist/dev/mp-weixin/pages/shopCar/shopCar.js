@@ -107,6 +107,9 @@ try {
     uEmpty: function () {
       return Promise.all(/*! import() | node-modules/uview-ui/components/u-empty/u-empty */[__webpack_require__.e("common/vendor"), __webpack_require__.e("node-modules/uview-ui/components/u-empty/u-empty")]).then(__webpack_require__.bind(null, /*! uview-ui/components/u-empty/u-empty.vue */ 332))
     },
+    uToast: function () {
+      return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-toast/u-toast */ "node-modules/uview-ui/components/u-toast/u-toast").then(__webpack_require__.bind(null, /*! uview-ui/components/u-toast/u-toast.vue */ 340))
+    },
   }
 } catch (e) {
   if (
@@ -129,6 +132,15 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
+  var g0 = _vm.token && _vm.shopCarList.length > 0
+  _vm.$mp.data = Object.assign(
+    {},
+    {
+      $root: {
+        g0: g0,
+      },
+    }
+  )
 }
 var recyclableRender = false
 var staticRenderFns = []
@@ -231,6 +243,14 @@ var _test = __webpack_require__(/*! ../../uni_modules/uv-ui-tools/libs/function/
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 var _default = exports.default = {
   data: function data() {
     return {
@@ -239,12 +259,35 @@ var _default = exports.default = {
       showhandle: true,
       cartTotal: '',
       shopCarList: [],
-      token: ''
+      token: '',
+      value: ''
     };
   },
   methods: {
-    valChange: function valChange(e) {
-      console.log(e);
+    goUpdata: function goUpdata() {
+      console.log('点击数量');
+    },
+    valChange: function valChange(item) {
+      var _this = this;
+      console.log(item);
+      var data = {
+        goodsId: item.goods_id,
+        goodsNum: item.goods_num,
+        goodsSkuId: item.goods_sku_id
+      };
+      console.log("🚀 ~ valChange ~ obj:", data);
+      uni.$u.http.post("cart/update", data).then(function (res) {
+        console.log(res, '打印结果');
+        if (res.status == 200) {
+          _this.$refs.uToast.show({
+            message: '修改商品数量成功',
+            type: 'success',
+            position: 'center',
+            duration: 1000
+          });
+          _this.cartTotal = res.data.cartTotal;
+        }
+      });
     },
     change: function change() {
       console.log('sad ');
@@ -289,26 +332,31 @@ var _default = exports.default = {
       return this.shopCarList.every(function (item) {
         return item.checked;
       });
+    },
+    isCheck: function isCheck() {
+      return this.shopCarList.some(function (item) {
+        return item.checked;
+      });
     }
   },
   onShow: function onShow() {
-    var _this = this;
+    var _this2 = this;
     this.loading = true;
     this.token = uni.getStorageSync('token');
     if (this.token) {
       uni.$u.http.get("cart/list").then(function (res) {
         console.log(res, '打印结果');
         if (res.status == 200) {
-          _this.loading = false;
-          _this.cartTotal = res.data.cartTotal;
+          _this2.loading = false;
+          _this2.cartTotal = res.data.cartTotal;
           var list = res.data.list;
-          _this.shopCarList = list.map(function (item) {
+          _this2.shopCarList = list.map(function (item) {
             item.checked = false;
             return item;
           });
-          console.log(_this.shopCarList);
+          console.log(_this2.shopCarList);
         } else {
-          _this.show = true;
+          _this2.show = true;
         }
       });
     }

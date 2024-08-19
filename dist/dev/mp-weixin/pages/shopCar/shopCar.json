@@ -3,6 +3,7 @@
   "usingComponents": {
     "u-icon": "/node-modules/uview-ui/components/u-icon/u-icon",
     "u-number-box": "/node-modules/uview-ui/components/u-number-box/u-number-box",
-    "u-empty": "/node-modules/uview-ui/components/u-empty/u-empty"
+    "u-empty": "/node-modules/uview-ui/components/u-empty/u-empty",
+    "u-toast": "/node-modules/uview-ui/components/u-toast/u-toast"
   }
 }

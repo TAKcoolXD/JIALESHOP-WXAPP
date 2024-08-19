@@ -349,6 +349,8 @@ exports.default = void 0;
 var _default = exports.default = {
   data: function data() {
     return {
+      goods_image: '',
+      stock_total: '',
       token: '',
       show: false,
       title: '温馨提示',
@@ -476,6 +478,8 @@ var _default = exports.default = {
         _this2.goods_price = res.data.detail.goods_price_max;
         _this2.goods_sales = res.data.detail.goods_sales;
         _this2.content = res.data.detail.content;
+        _this2.stock_total = res.data.detail.stock_total;
+        _this2.goods_image = res.data.detail.goods_image;
       }
     });
   },
@@ -490,6 +494,8 @@ var _default = exports.default = {
         _this3.goods_price = res.data.detail.goods_price_max;
         _this3.goods_sales = res.data.detail.goods_sales;
         _this3.content = res.data.detail.content;
+        _this3.stock_total = res.data.detail.stock_total;
+        _this3.preview_url = res.data.detail.goods_images.preview_url;
       }
     });
   }

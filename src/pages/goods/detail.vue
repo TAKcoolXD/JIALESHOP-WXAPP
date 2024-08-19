@@ -107,13 +107,13 @@
 				<view style="height: 500rpx;">
 					<!-- 商品图片 价格 库存 -->
 					<view style="display: flex;align-items: center;margin-top: 20rpx;">
-						<image src="../../static/logo.png" mode="scaleToFill"
+						<image :src="goods_image" mode="scaleToFill"
 							style="width: 200rpx;height: 200rpx;margin-left: 30rpx;" />
 						<!-- 价格 库存 -->
 						<view style="margin-left: 30rpx;">
 							<view style="color: #ff547b;"><span style="font-size: 20rpx;">￥</span> <span
-									style="font-size: 40rpx;">0.01</span></view>
-							<view style="font-size: 25rpx;">库存：100</view>
+									style="font-size: 40rpx;">{{goods_price}}</span></view>
+							<view style="font-size: 25rpx;">库存：{{stock_total}}</view>
 						</view>
 					</view>
 					<!-- 數量  计步器-->
@@ -133,13 +133,13 @@
 				<view style="height: 500rpx;">
 					<!-- 商品图片 价格 库存 -->
 					<view style="display: flex;align-items: center;margin-top: 20rpx;">
-						<image src="../../static/logo.png" mode="scaleToFill"
+						<image :src="goods_image" mode="scaleToFill"
 							style="width: 200rpx;height: 200rpx;margin-left: 30rpx;" />
 						<!-- 价格 库存 -->
 						<view style="margin-left: 30rpx;">
 							<view style="color: #ff547b;"><span style="font-size: 20rpx;">￥</span> <span
-									style="font-size: 40rpx;">0.01</span></view>
-							<view style="font-size: 25rpx;">库存：100</view>
+									style="font-size: 40rpx;">{{goods_price}}</span></view>
+							<view style="font-size: 25rpx;">库存：{{stock_total}}</view>
 						</view>
 					</view>
 					<!-- 數量  计步器-->
@@ -172,6 +172,8 @@
 export default {
 	data() {
 		return {
+			goods_image:'',
+			stock_total:'',
 			token: '',
 			show: false,
 			title: '温馨提示',
@@ -301,6 +303,8 @@ export default {
 				this.goods_price = res.data.detail.goods_price_max
 				this.goods_sales = res.data.detail.goods_sales
 				this.content = res.data.detail.content
+				this.stock_total=res.data.detail.stock_total
+				this.goods_image=res.data.detail.goods_image
 			}
 		})
 	},
@@ -314,6 +318,8 @@ export default {
 				this.goods_price = res.data.detail.goods_price_max
 				this.goods_sales = res.data.detail.goods_sales
 				this.content = res.data.detail.content
+				this.stock_total=res.data.detail.stock_total
+				this.preview_url=res.data.detail.goods_images.preview_url 
 			}
 		})
 	}
