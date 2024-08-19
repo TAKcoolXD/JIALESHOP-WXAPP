@@ -104,16 +104,16 @@ try {
       return Promise.all(/*! import() | node-modules/uview-ui/components/u-icon/u-icon */[__webpack_require__.e("common/vendor"), __webpack_require__.e("node-modules/uview-ui/components/u-icon/u-icon")]).then(__webpack_require__.bind(null, /*! uview-ui/components/u-icon/u-icon.vue */ 307))
     },
     uPopup: function () {
-      return Promise.all(/*! import() | node-modules/uview-ui/components/u-popup/u-popup */[__webpack_require__.e("common/vendor"), __webpack_require__.e("node-modules/uview-ui/components/u-popup/u-popup")]).then(__webpack_require__.bind(null, /*! uview-ui/components/u-popup/u-popup.vue */ 339))
+      return Promise.all(/*! import() | node-modules/uview-ui/components/u-popup/u-popup */[__webpack_require__.e("common/vendor"), __webpack_require__.e("node-modules/uview-ui/components/u-popup/u-popup")]).then(__webpack_require__.bind(null, /*! uview-ui/components/u-popup/u-popup.vue */ 347))
     },
     uNumberBox: function () {
       return Promise.all(/*! import() | node-modules/uview-ui/components/u-number-box/u-number-box */[__webpack_require__.e("common/vendor"), __webpack_require__.e("node-modules/uview-ui/components/u-number-box/u-number-box")]).then(__webpack_require__.bind(null, /*! uview-ui/components/u-number-box/u-number-box.vue */ 324))
     },
     uLoadingPage: function () {
-      return Promise.all(/*! import() | node-modules/uview-ui/components/u-loading-page/u-loading-page */[__webpack_require__.e("common/vendor"), __webpack_require__.e("node-modules/uview-ui/components/u-loading-page/u-loading-page")]).then(__webpack_require__.bind(null, /*! uview-ui/components/u-loading-page/u-loading-page.vue */ 347))
+      return Promise.all(/*! import() | node-modules/uview-ui/components/u-loading-page/u-loading-page */[__webpack_require__.e("common/vendor"), __webpack_require__.e("node-modules/uview-ui/components/u-loading-page/u-loading-page")]).then(__webpack_require__.bind(null, /*! uview-ui/components/u-loading-page/u-loading-page.vue */ 355))
     },
-    uToast: function () {
-      return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-toast/u-toast */ "node-modules/uview-ui/components/u-toast/u-toast").then(__webpack_require__.bind(null, /*! uview-ui/components/u-toast/u-toast.vue */ 332))
+    uModal: function () {
+      return Promise.all(/*! import() | node-modules/uview-ui/components/u-modal/u-modal */[__webpack_require__.e("common/vendor"), __webpack_require__.e("node-modules/uview-ui/components/u-modal/u-modal")]).then(__webpack_require__.bind(null, /*! uview-ui/components/u-modal/u-modal.vue */ 316))
     },
   }
 } catch (e) {
@@ -345,16 +345,20 @@ exports.default = void 0;
 //
 //
 //
+//
 var _default = exports.default = {
   data: function data() {
     return {
+      token: '',
       show: false,
+      title: '温馨提示',
+      content1: '此时此刻需要您登录哦',
       SwiperList: [],
       goodsId: '',
       goods_price: '',
       goods_sales: '',
       content: '',
-      loading: true,
+      loading: false,
       CountValue: '1',
       //计步器
       ServiceShow: false,
@@ -424,32 +428,43 @@ var _default = exports.default = {
         goodsNum: this.CountValue,
         goodsSkuId: 0
       };
-      this.show = true;
-      uni.$u.http.post('cart/add', data).then(function (res) {
-        console.log(res, '打印结果');
-        if (res.status == 200) {
-          _this.show = false;
-          _this.shareCart = false;
-          _this.$refs.uToast.show({
-            message: res.message,
-            position: 'top',
-            type: 'default',
-            duration: 1000
-            // complete() {
-            // 	uni.navigateTo({ url: '/pages/order/order' })
-            // }
-          });
-        }
-      });
+      this.loading = true;
+      if (this.token) {
+        uni.$u.http.post('cart/add', data).then(function (res) {
+          console.log(res, '打印结果');
+          if (res.status == 200) {
+            _this.loading = false;
+            _this.shareCart = false;
+            uni.switchTab({
+              url: "/pages/shopCar/shopCar"
+            });
+          }
+        });
+      } else {
+        this.show = true;
+        this.shareCart = false;
+      }
     },
     goShopCar: function goShopCar() {
       uni.switchTab({
         url: "/pages/shopCar/shopCar"
       });
+    },
+    confirm: function confirm() {
+      console.log('去登陆');
+      uni.navigateTo({
+        url: '/pages/login/login'
+      });
+      this.show = false;
+    },
+    cancel: function cancel() {
+      console.log('在逛会');
+      uni.navigateBack();
     }
   },
   onLoad: function onLoad(option) {
     var _this2 = this;
+    this.token = uni.getStorageSync('token');
     this.loading = true;
     console.log('传过来的ID', option.goodsid);
     this.goodsId = option.goodsid;
@@ -461,6 +476,20 @@ var _default = exports.default = {
         _this2.goods_price = res.data.detail.goods_price_max;
         _this2.goods_sales = res.data.detail.goods_sales;
         _this2.content = res.data.detail.content;
+      }
+    });
+  },
+  onShow: function onShow() {
+    var _this3 = this;
+    this.token = uni.getStorageSync('token');
+    uni.$u.http.get("goods/detail&goodsId=".concat(this.goodsId, "&verifyStatus=1")).then(function (res) {
+      console.log(res, '打印结果');
+      if (res.status == 200) {
+        _this3.loading = false;
+        _this3.SwiperList = res.data.detail.goods_images;
+        _this3.goods_price = res.data.detail.goods_price_max;
+        _this3.goods_sales = res.data.detail.goods_sales;
+        _this3.content = res.data.detail.content;
       }
     });
   }

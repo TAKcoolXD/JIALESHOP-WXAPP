@@ -79,9 +79,9 @@ export default {
 										type: 'default',
 										duration: 1000,
 										complete() {
-											var pages = getCurrentPages();
-											var page = pages[pages.length - 1];
-											var page1 = pages[pages.length - pages.length];
+											let pages = getCurrentPages();
+											let page = pages[pages.length - 1];
+											let page1 = pages[pages.length - pages.length];
 											console.log('获取所有页面', pages);
 											console.log('获取当前页面', page.$page.fullPath);
 											console.log('从哪个页面过来', page1.$page.fullPath);
@@ -91,9 +91,17 @@ export default {
 													delta: 1
 												});
 											} else if (page1.$page.fullPath == '/pages/index/index') {
-												uni.navigateBack({
+												if(pages.length==4){
+													uni.navigateBack({
 													delta: 2
 												});
+												}
+												if(pages.length==3){
+													uni.navigateBack({
+													delta: 1
+												});
+												}
+												
 											}
 										}
 									})

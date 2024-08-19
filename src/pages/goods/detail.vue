@@ -159,7 +159,8 @@
 				</u-loading-page>
 			</view>
 			<view>
-				<u-toast ref="uToast"></u-toast>
+				<u-modal :show="show" @confirm="confirm" @cancel="cancel" :title="title" :content='content1'
+					confirmText="去登陆" cancelText="在逛会" showCancelButton="true"></u-modal>
 			</view>
 			<view>
 				<u-loading-page :loading="show"></u-loading-page>
@@ -171,13 +172,16 @@
 export default {
 	data() {
 		return {
+			token: '',
 			show: false,
+			title: '温馨提示',
+			content1: '此时此刻需要您登录哦',
 			SwiperList: [],
 			goodsId: '',
 			goods_price: '',
 			goods_sales: '',
 			content: '',
-			loading: true,
+			loading:false,
 			CountValue: '1',//计步器
 			ServiceShow: false,
 			shareShow: false,
@@ -222,8 +226,8 @@ export default {
 		goBuy(goodsId) {
 			console.log('商品ID', goodsId);
 			uni.navigateTo({
-					url: `/pages/settlement/settlement?goodsid=${goodsId}&CountValue=${this.CountValue}`
-				})
+				url: `/pages/settlement/settlement?goodsid=${goodsId}&CountValue=${this.CountValue}`
+			})
 			this.shareBuy = false
 		},
 		valChange() {
@@ -245,37 +249,47 @@ export default {
 				goodsNum: this.CountValue,
 				goodsSkuId: 0
 			}
+			this.loading = true
+			if (this.token) {
+				uni.$u.http.post('cart/add', data).then(res => {
+					console.log(res, '打印结果');
 
-			this.show = true
-			uni.$u.http.post('cart/add', data).then(res => {
-				console.log(res, '打印结果');
+					if (res.status == 200) {
+						this.loading = false
+						this.shareCart = false
+						uni.switchTab({
+							url: `/pages/shopCar/shopCar`
+						})
 
-				if (res.status == 200) {
-					this.show = false
-					this.shareCart = false
-					this.$refs.uToast.show({
-						message: res.message,
-						position: 'top',
-						type: 'default',
-						duration: 1000,
-						// complete() {
-						// 	uni.navigateTo({ url: '/pages/order/order' })
-						// }
-					})
+					}
+				})
+			} else {
 
-				}
-			})
+				this.show = true
+				this.shareCart = false
+			}
+
 		},
 		goShopCar() {
 			uni.switchTab({
 				url: `/pages/shopCar/shopCar`
 			})
+		},
+		confirm() {
+			console.log('去登陆');
+			uni.navigateTo({
+				url: '/pages/login/login'
+			})
+			this.show=false
+		},
+		cancel() {
+			console.log('在逛会');
+			uni.navigateBack()
+		
 		}
-
-
-
 	},
 	onLoad(option) {
+		this.token = uni.getStorageSync('token')
 		this.loading = true
 		console.log('传过来的ID', option.goodsid);
 		this.goodsId = option.goodsid
@@ -290,6 +304,19 @@ export default {
 			}
 		})
 	},
+	onShow(){
+		this.token = uni.getStorageSync('token')
+		uni.$u.http.get(`goods/detail&goodsId=${this.goodsId}&verifyStatus=1`,).then(res => {
+			console.log(res, '打印结果');
+			if (res.status == 200) {
+				this.loading = false
+				this.SwiperList = res.data.detail.goods_images
+				this.goods_price = res.data.detail.goods_price_max
+				this.goods_sales = res.data.detail.goods_sales
+				this.content = res.data.detail.content
+			}
+		})
+	}
 }
 // https://yoshop-test.azhuquq.com/index.php?s=/api/goods/detail&goodsId=10002&verifyStatus=1
 
@@ -332,6 +359,4 @@ export default {
 	width: 550rpx;
 	padding: 0 100rpx;
 }
-
-
 </style>

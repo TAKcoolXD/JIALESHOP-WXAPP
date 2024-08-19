@@ -104,6 +104,9 @@ try {
     uNumberBox: function () {
       return Promise.all(/*! import() | node-modules/uview-ui/components/u-number-box/u-number-box */[__webpack_require__.e("common/vendor"), __webpack_require__.e("node-modules/uview-ui/components/u-number-box/u-number-box")]).then(__webpack_require__.bind(null, /*! uview-ui/components/u-number-box/u-number-box.vue */ 324))
     },
+    uEmpty: function () {
+      return Promise.all(/*! import() | node-modules/uview-ui/components/u-empty/u-empty */[__webpack_require__.e("common/vendor"), __webpack_require__.e("node-modules/uview-ui/components/u-empty/u-empty")]).then(__webpack_require__.bind(null, /*! uview-ui/components/u-empty/u-empty.vue */ 332))
+    },
   }
 } catch (e) {
   if (
@@ -221,6 +224,13 @@ var _test = __webpack_require__(/*! ../../uni_modules/uv-ui-tools/libs/function/
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 var _default = exports.default = {
   data: function data() {
     return {
@@ -228,7 +238,8 @@ var _default = exports.default = {
       CountValue: '',
       showhandle: true,
       cartTotal: '',
-      shopCarList: []
+      shopCarList: [],
+      token: ''
     };
   },
   methods: {
@@ -265,6 +276,12 @@ var _default = exports.default = {
         });
         this.shopCarList = a;
       }
+    },
+    goIndex: function goIndex() {
+      console.log('去首页');
+      uni.switchTab({
+        url: '/pages/index/index'
+      });
     }
   },
   computed: {
@@ -276,18 +293,25 @@ var _default = exports.default = {
   },
   onShow: function onShow() {
     var _this = this;
-    uni.$u.http.get("cart/list").then(function (res) {
-      console.log(res, '打印结果');
-      if (res.status == 200) {
-        _this.cartTotal = res.data.cartTotal;
-        var list = res.data.list;
-        _this.shopCarList = list.map(function (item) {
-          item.checked = false;
-          return item;
-        });
-        console.log(_this.shopCarList);
-      }
-    });
+    this.loading = true;
+    this.token = uni.getStorageSync('token');
+    if (this.token) {
+      uni.$u.http.get("cart/list").then(function (res) {
+        console.log(res, '打印结果');
+        if (res.status == 200) {
+          _this.loading = false;
+          _this.cartTotal = res.data.cartTotal;
+          var list = res.data.list;
+          _this.shopCarList = list.map(function (item) {
+            item.checked = false;
+            return item;
+          });
+          console.log(_this.shopCarList);
+        } else {
+          _this.show = true;
+        }
+      });
+    }
   }
 };
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 2)["default"]))

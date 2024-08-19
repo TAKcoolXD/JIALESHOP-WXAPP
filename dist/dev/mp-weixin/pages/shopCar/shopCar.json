@@ -2,6 +2,7 @@
   "navigationBarTitleText": "购物车",
   "usingComponents": {
     "u-icon": "/node-modules/uview-ui/components/u-icon/u-icon",
-    "u-number-box": "/node-modules/uview-ui/components/u-number-box/u-number-box"
+    "u-number-box": "/node-modules/uview-ui/components/u-number-box/u-number-box",
+    "u-empty": "/node-modules/uview-ui/components/u-empty/u-empty"
   }
 }
