@@ -337,6 +337,20 @@ var _default = exports.default = {
       return this.shopCarList.some(function (item) {
         return item.checked;
       });
+    },
+    totalPrice: function totalPrice() {
+      // return this.shopCarList.forEach(item=>{
+      // 	item.goods_num
+      // 	console.log(item.goods_num,'商品个数');
+      // 	console.log(item.goods.goods_price_max,'商品价格');
+      // 	console.log(item.goods_num*item.goods.goods_price_max,'商品总价');
+
+      // })
+      return this.shopCarList.filter(function (item) {
+        return item.checked;
+      }).reduce(function (total, item) {
+        return total + item.goods_num * item.goods.goods_price_max;
+      }, 0).toFixed(2);
     }
   },
   onShow: function onShow() {

@@ -41,13 +41,13 @@
 				<view style="display: flex;align-items: center;margin-right: 20rpx;">
 					<view style="margin-right: 20rpx;">
 						合计：<span style="font-size: 20rpx;color: #ff91ab;">￥</span><span
-							style="color: #ff91ab;">0.00</span>
+							style="color: #ff91ab;">{{ totalPrice }}</span>
 					</view>
 
 					<button v-if="!isCheck" @click="goSettleMent"
 						style="padding: 10rpx 40rpx;background-color: #ff91ab;border-radius: 35rpx;color: white;">去结算</button>
 					<button v-else @click="goSettleMent"
-						style="padding: 10rpx 40rpx;background-color: #ff547b;border-radius: 35rpx;color: white;">去结算{{cartTotal}}</button>
+						style="padding: 10rpx 40rpx;background-color: #ff547b;border-radius: 35rpx;color: white;">去结算{{ cartTotal }}</button>
 					<!-- <view @click="goSettleMent"
 					style="padding: 10rpx 40rpx;background-color: #ff91ab;border-radius: 35rpx;color: white;">
 					去结算
@@ -150,8 +150,23 @@ export default {
 		checkedAll() {
 			return this.shopCarList.every(item => item.checked)
 		},
-		isCheck(){
+		isCheck() {
 			return this.shopCarList.some(item => item.checked)
+		},
+		totalPrice() {
+			// return this.shopCarList.forEach(item=>{
+			// 	item.goods_num
+			// 	console.log(item.goods_num,'商品个数');
+			// 	console.log(item.goods.goods_price_max,'商品价格');
+			// 	console.log(item.goods_num*item.goods.goods_price_max,'商品总价');
+				
+				
+			// })
+			return this.shopCarList
+                .filter(item => item.checked)
+                .reduce((total, item) => {
+                    return total + (item.goods_num * item.goods.goods_price_max);
+                }, 0).toFixed(2);
 		}
 	},
 	onShow() {

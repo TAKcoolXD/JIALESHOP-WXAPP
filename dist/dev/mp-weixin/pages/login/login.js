@@ -256,7 +256,7 @@ var _default = exports.default = {
                         uni.navigateBack({
                           delta: 1
                         });
-                      } else if (page1.$page.fullPath == '/pages/index/index') {
+                      } else if (page1.$page.fullPath == '/pages/index/index' || page1.$page.fullPath == '/pages/Categories/categories') {
                         if (pages.length == 4) {
                           uni.navigateBack({
                             delta: 2
