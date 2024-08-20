@@ -251,6 +251,7 @@ var _test = __webpack_require__(/*! ../../uni_modules/uv-ui-tools/libs/function/
 //
 //
 //
+//
 var _default = exports.default = {
   data: function data() {
     return {
@@ -260,7 +261,8 @@ var _default = exports.default = {
       cartTotal: '',
       shopCarList: [],
       token: '',
-      value: ''
+      value: '',
+      cartId: []
     };
   },
   methods: {
@@ -294,9 +296,33 @@ var _default = exports.default = {
       this.showhandle = !this.showhandle;
     },
     goSettleMent: function goSettleMent() {
+      var _this2 = this;
       console.log('去结算');
+      this.cartId = [];
+      this.shopCarList.forEach(function (item) {
+        console.log(item.checked, '勾选状态');
+        if (item.checked == true) {
+          _this2.cartId.push(item.id);
+        }
+      });
+      console.log('整理完毕的购物车ID', this.cartId);
+      var cartID = this.cartId.join(',');
+      console.log('数组转化字符串', cartID);
+
+      // uni.navigateTo({
+      // 	url: '/pages/settlement/settlement'
+      // })
       uni.navigateTo({
-        url: '/pages/settlement/settlement'
+        url: "/pages/settlement/settlement?cartIds=".concat(cartID) // 将 cartID 添加到 URL 中
+      });
+    },
+    goSettleMent1: function goSettleMent1() {
+      console.log('请选择商品');
+      this.$refs.uToast.show({
+        message: '请选择商品',
+        type: 'error',
+        position: 'center',
+        duration: 1000
       });
     },
     checkClick: function checkClick(item) {
@@ -339,13 +365,6 @@ var _default = exports.default = {
       });
     },
     totalPrice: function totalPrice() {
-      // return this.shopCarList.forEach(item=>{
-      // 	item.goods_num
-      // 	console.log(item.goods_num,'商品个数');
-      // 	console.log(item.goods.goods_price_max,'商品价格');
-      // 	console.log(item.goods_num*item.goods.goods_price_max,'商品总价');
-
-      // })
       return this.shopCarList.filter(function (item) {
         return item.checked;
       }).reduce(function (total, item) {
@@ -354,23 +373,23 @@ var _default = exports.default = {
     }
   },
   onShow: function onShow() {
-    var _this2 = this;
+    var _this3 = this;
     this.loading = true;
     this.token = uni.getStorageSync('token');
     if (this.token) {
       uni.$u.http.get("cart/list").then(function (res) {
         console.log(res, '打印结果');
         if (res.status == 200) {
-          _this2.loading = false;
-          _this2.cartTotal = res.data.cartTotal;
+          _this3.loading = false;
+          _this3.cartTotal = res.data.cartTotal;
           var list = res.data.list;
-          _this2.shopCarList = list.map(function (item) {
+          _this3.shopCarList = list.map(function (item) {
             item.checked = false;
             return item;
           });
-          console.log(_this2.shopCarList);
+          console.log(_this3.shopCarList);
         } else {
-          _this2.show = true;
+          _this3.show = true;
         }
       });
     }

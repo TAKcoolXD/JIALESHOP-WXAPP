@@ -40,14 +40,15 @@
 				</view>
 				<view style="display: flex;align-items: center;margin-right: 20rpx;">
 					<view style="margin-right: 20rpx;">
-						合计：<span style="font-size: 20rpx;color: #ff91ab;">￥</span><span
-							style="color: #ff91ab;">{{ totalPrice }}</span>
+						合计：<span style="font-size: 20rpx;color: #ff91ab;">￥</span><span style="color: #ff91ab;">{{
+							totalPrice }}</span>
 					</view>
 
-					<button v-if="!isCheck" @click="goSettleMent"
+					<button v-if="!isCheck" @click="goSettleMent1"
 						style="padding: 10rpx 40rpx;background-color: #ff91ab;border-radius: 35rpx;color: white;">去结算</button>
 					<button v-else @click="goSettleMent"
-						style="padding: 10rpx 40rpx;background-color: #ff547b;border-radius: 35rpx;color: white;">去结算{{ cartTotal }}</button>
+						style="padding: 10rpx 40rpx;background-color: #ff547b;border-radius: 35rpx;color: white;">去结算{{
+							cartTotal }}</button>
 					<!-- <view @click="goSettleMent"
 					style="padding: 10rpx 40rpx;background-color: #ff91ab;border-radius: 35rpx;color: white;">
 					去结算
@@ -79,6 +80,7 @@ export default {
 			shopCarList: [],
 			token: '',
 			value: '',
+			cartId: [],
 		}
 	},
 	methods: {
@@ -113,9 +115,33 @@ export default {
 		},
 		goSettleMent() {
 			console.log('去结算');
-			uni.navigateTo({
-				url: '/pages/settlement/settlement'
+			this.cartId = []
+			this.shopCarList.forEach(item => {
+				console.log(item.checked, '勾选状态');
+
+				if (item.checked == true) {
+					this.cartId.push(item.id)
+				}
 			})
+			console.log('整理完毕的购物车ID', this.cartId);
+			let cartID = this.cartId.join(',')
+			console.log('数组转化字符串', cartID);
+
+			// uni.navigateTo({
+			// 	url: '/pages/settlement/settlement'
+			// })
+			uni.navigateTo({
+				url: `/pages/settlement/settlement?cartIds=${cartID}` // 将 cartID 添加到 URL 中
+			});
+		},
+		goSettleMent1() {
+			console.log('请选择商品');
+			this.$refs.uToast.show({
+				message: '请选择商品',
+				type: 'error',
+				position: 'center',
+				duration: 1000
+			});
 		},
 		checkClick(item) {
 			console.log(item);
@@ -155,10 +181,10 @@ export default {
 		},
 		totalPrice() {
 			return this.shopCarList
-                .filter(item => item.checked)
-                .reduce((total, item) => {
-                    return total + (item.goods_num * item.goods.goods_price_max);
-                }, 0).toFixed(2);
+				.filter(item => item.checked)
+				.reduce((total, item) => {
+					return total + (item.goods_num * item.goods.goods_price_max);
+				}, 0).toFixed(2);
 		}
 	},
 	onShow() {
@@ -176,7 +202,6 @@ export default {
 						return item
 					})
 					console.log(this.shopCarList);
-
 				} else {
 					this.show = true
 				}
