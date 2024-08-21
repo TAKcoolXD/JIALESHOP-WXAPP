@@ -264,7 +264,8 @@ var _default = exports.default = {
       orderPayPrice: '',
       address: {},
       loading: true,
-      cartIds: ''
+      cartIds: '',
+      encodedCartID: ''
     };
   },
   methods: {
@@ -273,25 +274,53 @@ var _default = exports.default = {
     },
     goCashier: function goCashier() {
       var _this = this;
-      var data = {
-        couponId: 0,
-        delivery: 10,
-        goodsId: this.goodsId,
-        goodsNum: this.CountValue,
-        goodsSkuId: "0",
-        isUsePoints: 0,
-        mode: "buyNow",
-        remark: ""
-      };
-      uni.$u.http.post("checkout/submit", data).then(function (res) {
-        console.log(res, '打印结果');
-        if (res.status == 200) {
-          _this.orderId = res.data.orderId;
-          uni.navigateTo({
-            url: "/pages/settlement/cashier?goodsId=".concat(_this.goodsId, "&CountValue=").concat(_this.CountValue, "&orderId=").concat(_this.orderId)
-          });
-        }
-      });
+      var pages = getCurrentPages();
+      var page = pages[pages.length - 1];
+      var page1 = pages[pages.length - pages.length];
+      console.log('获取所有页面', pages);
+      console.log('获取当前页面', page.$page.fullPath);
+      if (page.$page.fullPath == "/pages/settlement/settlement?cartIds=".concat(this.cartIds)) {
+        console.log('购物车结算');
+        var data = {
+          cartIds: this.cartIds,
+          couponId: 0,
+          delivery: 10,
+          isUsePoints: 0,
+          mode: "cart",
+          remark: ""
+        };
+        uni.$u.http.post("checkout/submit", data).then(function (res) {
+          console.log(res, '打印结果');
+          if (res.status == 200) {
+            _this.orderId = res.data.orderId;
+            uni.navigateTo({
+              url: "/pages/settlement/cashier?goodsId=".concat(_this.goodsId, "&CountValue=").concat(_this.CountValue, "&orderId=").concat(_this.orderId)
+            });
+          }
+        });
+      }
+      if (page.$page.fullPath == "/pages/settlement/settlement?goodsid=".concat(this.goodsId, "&CountValue=").concat(this.CountValue)) {
+        console.log('立即购买');
+        var _data = {
+          couponId: 0,
+          delivery: 10,
+          goodsId: this.goodsId,
+          goodsNum: this.CountValue,
+          goodsSkuId: "0",
+          isUsePoints: 0,
+          mode: "buyNow",
+          remark: ""
+        };
+        uni.$u.http.post("checkout/submit", _data).then(function (res) {
+          console.log(res, '打印结果');
+          if (res.status == 200) {
+            _this.orderId = res.data.orderId;
+            uni.navigateTo({
+              url: "/pages/settlement/cashier?goodsId=".concat(_this.goodsId, "&CountValue=").concat(_this.CountValue, "&orderId=").concat(_this.orderId)
+            });
+          }
+        });
+      }
     },
     confirm: function confirm() {
       console.log('11');
@@ -339,6 +368,7 @@ var _default = exports.default = {
         console.log(option.cartIds, '页面参数传递过来的购物车ID');
         this.cartIds = option.cartIds;
         var encodedCartID = encodeURIComponent(this.cartIds);
+        this.encodedCartID = encodedCartID;
         console.log(encodedCartID, '编码转换');
         uni.$u.http.get("checkout/order&mode=cart&delivery=0&couponId=0&isUsePoints=0&cartIds=".concat(encodedCartID)).then(function (res) {
           console.log(res, '打印结果');

@@ -90,7 +90,8 @@ export default {
 			orderPayPrice: '',
 			address: {},
 			loading: true,
-			cartIds:''
+			cartIds: '',
+			encodedCartID: '',
 		}
 	},
 	methods: {
@@ -99,25 +100,54 @@ export default {
 
 		},
 		goCashier() {
-			let data = {
-				couponId: 0,
-				delivery: 10,
-				goodsId: this.goodsId,
-				goodsNum: this.CountValue,
-				goodsSkuId: "0",
-				isUsePoints: 0,
-				mode: "buyNow",
-				remark: ""
-			}
-			uni.$u.http.post(`checkout/submit`, data).then(res => {
-				console.log(res, '打印结果');
-				if (res.status == 200) {
-					this.orderId = res.data.orderId
-					uni.navigateTo({
-						url: `/pages/settlement/cashier?goodsId=${this.goodsId}&CountValue=${this.CountValue}&orderId=${this.orderId}`
-					})
+			let pages = getCurrentPages();
+			let page = pages[pages.length - 1];
+			let page1 = pages[pages.length - pages.length];
+			console.log('获取所有页面', pages);
+			console.log('获取当前页面', page.$page.fullPath);
+			if (page.$page.fullPath == `/pages/settlement/settlement?cartIds=${this.cartIds}`) {
+				console.log('购物车结算');
+				let data = {
+					cartIds: this.cartIds,
+					couponId: 0,
+					delivery: 10,
+					isUsePoints: 0,
+					mode: "cart",
+					remark: ""
 				}
-			})
+				uni.$u.http.post(`checkout/submit`, data).then(res => {
+					console.log(res, '打印结果');
+					if (res.status == 200) {
+						this.orderId = res.data.orderId
+						uni.navigateTo({
+							url: `/pages/settlement/cashier?goodsId=${this.goodsId}&CountValue=${this.CountValue}&orderId=${this.orderId}`
+						})
+					}
+				})
+			}
+			if (page.$page.fullPath == `/pages/settlement/settlement?goodsid=${this.goodsId}&CountValue=${this.CountValue}`) {
+				console.log('立即购买');
+				let data = {
+					couponId: 0,
+					delivery: 10,
+					goodsId: this.goodsId,
+					goodsNum: this.CountValue,
+					goodsSkuId: "0",
+					isUsePoints: 0,
+					mode: "buyNow",
+					remark: ""
+				}
+				uni.$u.http.post(`checkout/submit`, data).then(res => {
+					console.log(res, '打印结果');
+					if (res.status == 200) {
+						this.orderId = res.data.orderId
+						uni.navigateTo({
+							url: `/pages/settlement/cashier?goodsId=${this.goodsId}&CountValue=${this.CountValue}&orderId=${this.orderId}`
+						})
+					}
+				})
+			}
+
 
 		},
 		confirm() {
@@ -148,38 +178,39 @@ export default {
 				this.goodsId = option.goodsid
 				this.CountValue = option.CountValue
 				uni.$u.http.get(`checkout/order&mode=buyNow&delivery=0&couponId=0&isUsePoints=0&goodsId=${option.goodsid}&goodsNum=${option.CountValue}&goodsSkuId=0`,).then(res => {
-				console.log(res, '打印结果');
-				if (res.status == 200) {
-					this.loading = false
-					this.goodsList = res.data.order.goodsList
-					this.orderTotalNum = res.data.order.orderTotalNum
-					this.orderTotalPrice = res.data.order.orderTotalPrice
-					this.orderPayPrice = res.data.order.orderPayPrice
-					this.expressPrice = res.data.order.expressPrice
-					this.address = res.data.order.address
-				}
-			})
+					console.log(res, '打印结果');
+					if (res.status == 200) {
+						this.loading = false
+						this.goodsList = res.data.order.goodsList
+						this.orderTotalNum = res.data.order.orderTotalNum
+						this.orderTotalPrice = res.data.order.orderTotalPrice
+						this.orderPayPrice = res.data.order.orderPayPrice
+						this.expressPrice = res.data.order.expressPrice
+						this.address = res.data.order.address
+					}
+				})
 			}
-			if(page1.$page.fullPath == '/pages/shopCar/shopCar'){
+			if (page1.$page.fullPath == '/pages/shopCar/shopCar') {
 				console.log('1');
 				console.log(option.cartIds, '页面参数传递过来的购物车ID');
-				this.cartIds=option.cartIds
+				this.cartIds = option.cartIds
 				let encodedCartID = encodeURIComponent(this.cartIds);
-				console.log(encodedCartID,'编码转换');
-				
+				this.encodedCartID = encodedCartID
+				console.log(encodedCartID, '编码转换');
+
 				uni.$u.http.get(`checkout/order&mode=cart&delivery=0&couponId=0&isUsePoints=0&cartIds=${encodedCartID}`,).then(res => {
-				console.log(res, '打印结果');
-				if (res.status == 200) {
-					this.loading = false
-					this.goodsList = res.data.order.goodsList
-					this.orderTotalNum = res.data.order.orderTotalNum
-					this.orderTotalPrice = res.data.order.orderTotalPrice
-					this.orderPayPrice = res.data.order.orderPayPrice
-					this.expressPrice = res.data.order.expressPrice
-					this.address = res.data.order.address
-				}
-			})
-			}	
+					console.log(res, '打印结果');
+					if (res.status == 200) {
+						this.loading = false
+						this.goodsList = res.data.order.goodsList
+						this.orderTotalNum = res.data.order.orderTotalNum
+						this.orderTotalPrice = res.data.order.orderTotalPrice
+						this.orderPayPrice = res.data.order.orderPayPrice
+						this.expressPrice = res.data.order.expressPrice
+						this.address = res.data.order.address
+					}
+				})
+			}
 		} else {
 			this.show = true
 		}
