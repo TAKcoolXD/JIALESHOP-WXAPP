@@ -67,6 +67,7 @@ export default {
 	methods: {
 		goOrder() {
 			console.log('去我的订单');
+			let orderId=this.orderId
 			let data={
 					client: "MP-WEIXIN",
 					extra: {},
@@ -85,7 +86,9 @@ export default {
 						type: 'default',
 						duration: 1000,
 						complete() {
-							uni.navigateTo({ url: '/pages/order/order' })
+							console.log('orderId',orderId);
+							
+							uni.navigateTo({ url: `/pages/order/order?orderId=${orderId}`})
 						}
 					})
 					

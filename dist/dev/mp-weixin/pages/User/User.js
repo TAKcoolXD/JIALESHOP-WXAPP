@@ -312,7 +312,8 @@ var _default = exports.default = {
       UserInfo: {},
       show: false,
       title: '友情提示',
-      content: '你确定要退出登录吗？'
+      content: '你确定要退出登录吗？',
+      balance: ''
     };
   },
   methods: {
@@ -383,8 +384,12 @@ var _default = exports.default = {
   },
   onLoad: function onLoad() {},
   onShow: function onShow() {
+    var _this = this;
     uni.$u.http.post('user/info').then(function (res) {
       console.log(res, '打印结果');
+      if (res.status == 200) {
+        _this.balance = res.data.userInfo.balance;
+      }
       // if (res.status == 200) {
       // 	this.show = false
       // 	uni.switchTab({

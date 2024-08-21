@@ -2,6 +2,8 @@
   "navigationBarTitleText": "我的订单",
   "enablePullDownRefresh": false,
   "usingComponents": {
-    "u-tabs": "/node-modules/uview-ui/components/u-tabs/u-tabs"
+    "u-tabs": "/node-modules/uview-ui/components/u-tabs/u-tabs",
+    "u-modal": "/node-modules/uview-ui/components/u-modal/u-modal",
+    "u-toast": "/node-modules/uview-ui/components/u-toast/u-toast"
   }
 }

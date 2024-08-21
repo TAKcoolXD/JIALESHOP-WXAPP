@@ -248,6 +248,7 @@ var _default = exports.default = {
     goOrder: function goOrder() {
       var _this = this;
       console.log('去我的订单');
+      var orderId = this.orderId;
       var data = {
         client: "MP-WEIXIN",
         extra: {},
@@ -266,8 +267,9 @@ var _default = exports.default = {
               type: 'default',
               duration: 1000,
               complete: function complete() {
+                console.log('orderId', orderId);
                 uni.navigateTo({
-                  url: '/pages/order/order'
+                  url: "/pages/order/order?orderId=".concat(orderId)
                 });
               }
             });

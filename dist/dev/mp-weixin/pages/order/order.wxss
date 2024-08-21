@@ -2,4 +2,7 @@
 .u-tabs__wrapper__nav__item[data-v-0de61367] {
 	padding: 0 17px !important;
 }
+.u-modal__content__text.data-v-713d0fd3 {
+	text-align: center;
+}
 

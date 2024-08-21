@@ -103,6 +103,12 @@ try {
     uTabs: function () {
       return Promise.all(/*! import() | node-modules/uview-ui/components/u-tabs/u-tabs */[__webpack_require__.e("common/vendor"), __webpack_require__.e("node-modules/uview-ui/components/u-tabs/u-tabs")]).then(__webpack_require__.bind(null, /*! uview-ui/components/u-tabs/u-tabs.vue */ 394))
     },
+    uModal: function () {
+      return Promise.all(/*! import() | node-modules/uview-ui/components/u-modal/u-modal */[__webpack_require__.e("common/vendor"), __webpack_require__.e("node-modules/uview-ui/components/u-modal/u-modal")]).then(__webpack_require__.bind(null, /*! uview-ui/components/u-modal/u-modal.vue */ 316))
+    },
+    uToast: function () {
+      return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-toast/u-toast */ "node-modules/uview-ui/components/u-toast/u-toast").then(__webpack_require__.bind(null, /*! uview-ui/components/u-toast/u-toast.vue */ 340))
+    },
   }
 } catch (e) {
   if (
@@ -158,12 +164,31 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-
+/* WEBPACK VAR INJECTION */(function(uni) {
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
+var _tags = __webpack_require__(/*! @dcloudio/vue-cli-plugin-uni/packages/postcss/tags */ 182);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -241,16 +266,120 @@ var _default = exports.default = {
       }, {
         name: '待评价'
       }],
-      showIndex: 0
+      showIndex: 0,
+      orderId: '',
+      AllList: [],
+      paymentList: [],
+      deliveryList: [],
+      receivedList: [],
+      commentList: [],
+      show: false,
+      title: '友情提示',
+      content: '确认要取消该订单吗？'
     };
   },
   methods: {
     click: function click(item) {
+      var _this = this;
       console.log('item', item);
       this.showIndex = item.index;
+      if (this.showIndex == 0) {
+        console.log('全部');
+        this.getAllList();
+      }
+      if (this.showIndex == 1) {
+        console.log('待支付');
+        uni.$u.http.get("order/list&dataType=payment&page=1").then(function (res) {
+          console.log(res, '打印结果');
+          if (res.status == 200) {
+            console.log('paymentList', _this.paymentList);
+            _this.paymentList = res.data.list.data;
+          }
+        });
+      }
+      if (this.showIndex == 2) {
+        console.log('待发货');
+        uni.$u.http.get("order/list&dataType=delivery&page=1").then(function (res) {
+          console.log(res, '打印结果');
+          if (res.status == 200) {
+            console.log('this.deliveryList', _this.deliveryList);
+            _this.deliveryList = res.data.list.data;
+          }
+        });
+      }
+      if (this.showIndex == 3) {
+        console.log('待收货');
+        uni.$u.http.get("order/list&dataType=received&page=1").then(function (res) {
+          console.log(res, '打印结果');
+          if (res.status == 200) {
+            console.log('this.receivedList', _this.receivedList);
+            _this.receivedList = res.data.list;
+          }
+        });
+      }
+      if (this.showIndex == 4) {
+        console.log('待评价');
+        uni.$u.http.get("order/list&dataType=comment&page=1").then(function (res) {
+          console.log(res, '打印结果');
+          if (res.status == 200) {
+            console.log('this.commentList', _this.commentList);
+            _this.commentList = res.data.list;
+          }
+        });
+      }
+    },
+    goPayOrder: function goPayOrder() {
+      console.log('goPay');
+    },
+    goCancleOrder: function goCancleOrder() {
+      console.log('goCancleOrder');
+      this.show = true;
+    },
+    confirmCancle: function confirmCancle() {
+      console.log('confirmCancle');
+    },
+    confirm: function confirm(orderId) {
+      var _this2 = this;
+      console.log('确认', orderId);
+      var data = {
+        orderId: orderId
+      };
+      console.log('data', data);
+      uni.$u.http.post("order/cancel", data).then(function (res) {
+        console.log(res, '打印结果');
+        if (res.status == 200) {
+          _this2.show = false;
+          _this2.$refs.uToast.show({
+            message: res.message,
+            type: 'success',
+            position: 'center',
+            duration: 2000
+          });
+          _this2.getAllList();
+        }
+      });
+    },
+    cancel: function cancel() {
+      console.log('取消');
+      this.show = false;
+    },
+    getAllList: function getAllList() {
+      var _this3 = this;
+      uni.$u.http.get("order/list&dataType=all&page=1").then(function (res) {
+        console.log(res, '打印结果');
+        if (res.status == 200) {
+          _this3.AllList = res.data.list.data;
+        }
+      });
     }
+  },
+  onLoad: function onLoad(option) {
+    console.log('参数', option);
+    this.orderId = option.orderId;
+    this.getAllList();
   }
 };
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 2)["default"]))
 
 /***/ }),
 

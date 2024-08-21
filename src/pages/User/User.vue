@@ -19,7 +19,7 @@
 			<view style="width: 500rpx;height: 130rpx;display: flex;align-items: center;justify-content: center;">
 				<view @click="goWallet"
 					style="margin: 0 35rpx;font-size: 30rpx;display: flex;flex-direction: column;align-items: center;">
-					<view style="margin-top: 10rpx;">6.97</view>
+					<view style="margin-top: 10rpx;">{{balance}}</view>
 					<view>账户余额</view>
 				</view>
 				<view @click="goPoints"
@@ -144,7 +144,8 @@ export default {
 			UserInfo:{},
 			show:false,
 			title:'友情提示',
-			content:'你确定要退出登录吗？'
+			content:'你确定要退出登录吗？',
+			balance:'',
 		}
 	},
 	methods: {
@@ -222,6 +223,9 @@ export default {
 	onShow() {
 		uni.$u.http.post('user/info',).then(res => {
 			console.log(res, '打印结果');
+			if(res.status==200){
+				this.balance=res.data.userInfo.balance
+			}
 			// if (res.status == 200) {
 			// 	this.show = false
 			// 	uni.switchTab({
