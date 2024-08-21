@@ -195,7 +195,7 @@ export default {
 						position: 'center',
 						duration: 2000
 					});
-					this.getAllList()
+					this.getAllList() 
 				}
 			})
 		},
