@@ -6,8 +6,6 @@
 		</view>
 		<view v-show="showIndex == 0" v-for="(item, index) in AllList" :key="index"
 			style=" border: 1px solid #ffffff;border-radius: 20rpx;width: 700rpx;margin: 15rpx auto;background-color: #ffffff;">
-			<view><u-modal :show="show" :title="title" :content='content' showCancelButton="true"
-					@confirm="confirm(item.goods[0].order_id)" @cancel="cancel"></u-modal></view>
 			<view style="width: 100%;height: 70rpx;display: flex;align-items: center;justify-content: space-between;">
 				<view style="margin-left: 15rpx;color: #b0b0b0;">{{ item.create_time }}</view>
 				<!-- 订单的状态文字 state_text	string	待支付	订单状态文字（待支付、待发货、部分发货、待收货、已完成、已取消、待取消） -->
@@ -31,7 +29,7 @@
 				<view @click="goPayOrder" v-show="item.state_text == '待支付'"
 					style="padding: 0 20rpx;margin: 0 8rpx;border: 2px solid #ff99af;border-radius: 15rpx;color: #ff8ea8;">
 					去支付</view>
-				<view @click="goCancleOrder" v-show="item.state_text == '待支付'"
+				<view @click="goCancleOrder(item.order_id)" v-show="item.state_text == '待支付'"
 					style="padding: 0 20rpx;margin: 0 8rpx;border: 2px solid #dbdbdb;border-radius: 15rpx;">取消</view>
 				<view @click="confirmCancle" v-show="item.state_text == '待发货'"
 					style="padding: 0 20rpx;margin: 0 8rpx;border: 2px solid #dbdbdb;border-radius: 15rpx;">申请取消</view>
@@ -72,6 +70,8 @@
 			</view>
 		</view>
 		<u-toast ref="uToast"></u-toast>
+		<u-modal :show="show" :title="title" :content='content' showCancelButton="true"
+					@confirm="confirm(CancleOrderId)" @cancel="cancel"></u-modal>
 	</view>
 </template>
 
@@ -105,7 +105,8 @@ export default {
 			commentList: [],
 			show: false,
 			title: '友情提示',
-			content: '确认要取消该订单吗？'
+			content: '确认要取消该订单吗？',
+			CancleOrderId:'',
 
 		}
 	},
@@ -170,18 +171,19 @@ export default {
 			console.log('goPay');
 
 		},
-		goCancleOrder() {
-			console.log('goCancleOrder');
+		goCancleOrder(orderId) {
+			console.log('goCancleOrder',orderId);
+			this.CancleOrderId=orderId
 			this.show = true
 		},
 		confirmCancle() {
 			console.log('confirmCancle');
 
 		},
-		confirm(orderId) {
-			console.log('确认', orderId);
+		confirm(CancleOrderId) {
+			console.log('确认', CancleOrderId);
 			let data = {
-				orderId
+				orderId:CancleOrderId
 			}
 			console.log('data', data);
 

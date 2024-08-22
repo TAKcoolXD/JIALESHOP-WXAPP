@@ -103,11 +103,11 @@ try {
     uTabs: function () {
       return Promise.all(/*! import() | node-modules/uview-ui/components/u-tabs/u-tabs */[__webpack_require__.e("common/vendor"), __webpack_require__.e("node-modules/uview-ui/components/u-tabs/u-tabs")]).then(__webpack_require__.bind(null, /*! uview-ui/components/u-tabs/u-tabs.vue */ 394))
     },
-    uModal: function () {
-      return Promise.all(/*! import() | node-modules/uview-ui/components/u-modal/u-modal */[__webpack_require__.e("common/vendor"), __webpack_require__.e("node-modules/uview-ui/components/u-modal/u-modal")]).then(__webpack_require__.bind(null, /*! uview-ui/components/u-modal/u-modal.vue */ 316))
-    },
     uToast: function () {
       return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-toast/u-toast */ "node-modules/uview-ui/components/u-toast/u-toast").then(__webpack_require__.bind(null, /*! uview-ui/components/u-toast/u-toast.vue */ 340))
+    },
+    uModal: function () {
+      return Promise.all(/*! import() | node-modules/uview-ui/components/u-modal/u-modal */[__webpack_require__.e("common/vendor"), __webpack_require__.e("node-modules/uview-ui/components/u-modal/u-modal")]).then(__webpack_require__.bind(null, /*! uview-ui/components/u-modal/u-modal.vue */ 316))
     },
   }
 } catch (e) {
@@ -275,7 +275,8 @@ var _default = exports.default = {
       commentList: [],
       show: false,
       title: '友情提示',
-      content: '确认要取消该订单吗？'
+      content: '确认要取消该订单吗？',
+      CancleOrderId: ''
     };
   },
   methods: {
@@ -331,18 +332,19 @@ var _default = exports.default = {
     goPayOrder: function goPayOrder() {
       console.log('goPay');
     },
-    goCancleOrder: function goCancleOrder() {
-      console.log('goCancleOrder');
+    goCancleOrder: function goCancleOrder(orderId) {
+      console.log('goCancleOrder', orderId);
+      this.CancleOrderId = orderId;
       this.show = true;
     },
     confirmCancle: function confirmCancle() {
       console.log('confirmCancle');
     },
-    confirm: function confirm(orderId) {
+    confirm: function confirm(CancleOrderId) {
       var _this2 = this;
-      console.log('确认', orderId);
+      console.log('确认', CancleOrderId);
       var data = {
-        orderId: orderId
+        orderId: CancleOrderId
       };
       console.log('data', data);
       uni.$u.http.post("order/cancel", data).then(function (res) {
