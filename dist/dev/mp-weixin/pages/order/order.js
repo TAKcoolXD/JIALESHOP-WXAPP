@@ -139,11 +139,20 @@ var render = function () {
       g0: g0,
     }
   })
+  var l1 = _vm.__map(_vm.paymentList, function (item, index) {
+    var $orig = _vm.__get_orig(item)
+    var g1 = item.length
+    return {
+      $orig: $orig,
+      g1: g1,
+    }
+  })
   _vm.$mp.data = Object.assign(
     {},
     {
       $root: {
         l0: l0,
+        l1: l1,
       },
     }
   )
@@ -380,7 +389,21 @@ var _default = exports.default = {
             position: 'center',
             duration: 2000
           });
-          _this2.getAllList();
+          if (_this2.showIndex == 0) {
+            console.log('发送全部数据请求');
+            _this2.getAllList();
+          }
+          if (_this2.showIndex == 1) {
+            console.log('发送待支付的数据');
+            uni.$u.http.get("order/list&dataType=payment&page=1").then(function (res) {
+              console.log(res, '打印结果');
+              if (res.status == 200) {
+                console.log('paymentList', _this2.paymentList);
+                _this2.paymentList = res.data.list.data;
+              }
+            });
+          }
+          // this.getAllList()
         }
       });
     },

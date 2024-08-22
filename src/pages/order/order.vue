@@ -12,7 +12,7 @@
 				<view style="margin-right: 15rpx;color: #ff8ea8;">{{ item.state_text }}</view>
 			</view>
 			<view v-for="goodsitem in item.goods" :key="goodsitem.goods_id"
-				style=" width: 100%;height: 240rpx;margin-top: 20rpx;display: flex;justify-content: space-between;align-items: center">
+				style="width: 100%;height: 240rpx;margin-top: 20rpx;display: flex;justify-content: space-between;align-items: center">
 				<image :src="goodsitem.goods_image" mode="scaleToFill"
 					style="height: 200rpx;width: 200rpx;margin-left: 20rpx" />
 				<span style="margin-right: 102rpx;margin-bottom: 138rpx;">{{ goodsitem.goods_name }}</span>
@@ -38,7 +38,7 @@
 				取消申请中
 			</view>
 		</view>
-		
+
 		<view v-show="showIndex == 1" v-for="(item, index) in paymentList" :key="index"
 			style=" border: 1px solid #ffffff;border-radius: 20rpx;width: 700rpx;margin: 15rpx auto;background-color: #ffffff;">
 			<view style="width: 100%;height: 70rpx;display: flex;align-items: center;justify-content: space-between;">
@@ -46,19 +46,19 @@
 				<!-- 订单的状态文字 state_text	string	待支付	订单状态文字（待支付、待发货、部分发货、待收货、已完成、已取消、待取消） -->
 				<view style="margin-right: 15rpx;color: #ff8ea8;">{{ item.state_text }}</view>
 			</view>
-			<view
+			<view v-for="goodsitem in item.goods" :key="goodsitem.goods_id"
 				style="width: 100%;height: 240rpx;margin-top: 20rpx;display: flex;justify-content: space-between;align-items: center">
-				<image :src="item.goods[0].goods_image" mode="scaleToFill"
+				<image :src="goodsitem.goods_image" mode="scaleToFill"
 					style="height: 200rpx;width: 200rpx;margin-left: 20rpx" />
-				<span style="margin-right: 102rpx;margin-bottom: 138rpx;">{{ item.goods[0].goods_name }}</span>
+				<span style="margin-right: 102rpx;margin-bottom: 138rpx;">{{ goodsitem.goods_name }}</span>
 				<view style="margin-right: 20rpx;">
-					<view>￥{{ item.goods[0].goods_price }}</view>
-					<view>x {{ item.goods[0].total_num }}</view>
+					<view>￥{{ goodsitem.goods_price }}</view>
+					<view>x {{ goodsitem.total_num }}</view>
 				</view>
 			</view>
 			<view
 				style="width: 500rpx;height: 130rpx;margin-top: 20rpx;margin-left: 200rpx;display: flex;flex-direction: column;align-items: center;justify-content: center;">
-				<view> 共{{ item.goods[0].total_num }}件商品 ，总金额 ￥{{ item.goods[0].total_price }} </view>
+				<view> 共{{ item.length }}件商品 ，总金额 ￥{{ item.total_price }} </view>
 			</view>
 			<view style="display: flex;justify-content: flex-end;padding-bottom: 25rpx;">
 				<view @click="goPayOrder" v-show="item.state_text == '待支付'"
@@ -76,7 +76,7 @@
 		<u-toast ref="uToast"></u-toast>
 		<u-modal :show="show" :title="title" :content='content' showCancelButton="true"
 			@confirm="confirm(CancleOrderId)" @cancel="cancel"></u-modal>
-		
+
 	</view>
 </template>
 
@@ -182,7 +182,7 @@ export default {
 			this.show = true
 		},
 		applyCancle(orderId) {
-			console.log('applyCancle',orderId);
+			console.log('applyCancle', orderId);
 			this.CancleOrderId = orderId
 			this.show = true
 		},
@@ -203,7 +203,23 @@ export default {
 						position: 'center',
 						duration: 2000
 					});
-					this.getAllList()
+					if (this.showIndex == 0) {
+						console.log('发送全部数据请求');
+						this.getAllList()
+					}
+					if (this.showIndex == 1) {
+						console.log('发送待支付的数据');
+						uni.$u.http.get(`order/list&dataType=payment&page=1`,).then(res => {
+							console.log(res, '打印结果');
+							if (res.status == 200) {
+								console.log('paymentList', this.paymentList);
+								this.paymentList = res.data.list.data
+
+
+							}
+						})
+					}
+					// this.getAllList()
 				}
 			})
 		},
@@ -216,9 +232,9 @@ export default {
 				console.log(res, '打印结果');
 				if (res.status == 200) {
 					this.AllList = res.data.list.data
-					this.AllList= this.AllList.map(item=>{
+					this.AllList = this.AllList.map(item => {
 						console.log(item.goods.length);
-						item.length=item.goods.length
+						item.length = item.goods.length
 						return item
 					})
 				}
@@ -229,12 +245,12 @@ export default {
 		console.log('参数', option);
 		this.orderId = option.orderId
 		this.getAllList()
-				
+
 	},
-	computed:{
-		goodsTotalCount(){
-			
-			
+	computed: {
+		goodsTotalCount() {
+
+
 		},
 	}
 }
