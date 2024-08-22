@@ -147,12 +147,21 @@ var render = function () {
       g1: g1,
     }
   })
+  var l2 = _vm.__map(_vm.deliveryList, function (item, index) {
+    var $orig = _vm.__get_orig(item)
+    var g2 = item.length
+    return {
+      $orig: $orig,
+      g2: g2,
+    }
+  })
   _vm.$mp.data = Object.assign(
     {},
     {
       $root: {
         l0: l0,
         l1: l1,
+        l2: l2,
       },
     }
   )
@@ -196,6 +205,40 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 var _tags = __webpack_require__(/*! @dcloudio/vue-cli-plugin-uni/packages/postcss/tags */ 182);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -400,6 +443,16 @@ var _default = exports.default = {
               if (res.status == 200) {
                 console.log('paymentList', _this2.paymentList);
                 _this2.paymentList = res.data.list.data;
+              }
+            });
+          }
+          if (_this2.showIndex == 2) {
+            console.log('发送待发货数据请求');
+            uni.$u.http.get("order/list&dataType=delivery&page=1").then(function (res) {
+              console.log(res, '打印结果');
+              if (res.status == 200) {
+                console.log('this.deliveryList', _this2.deliveryList);
+                _this2.deliveryList = res.data.list.data;
               }
             });
           }

@@ -73,6 +73,40 @@
 				取消申请中
 			</view>
 		</view>
+		<view v-show="showIndex == 2" v-for="(item, index) in deliveryList" :key="index"
+			style=" border: 1px solid #ffffff;border-radius: 20rpx;width: 700rpx;margin: 15rpx auto;background-color: #ffffff;">
+			<view style="width: 100%;height: 70rpx;display: flex;align-items: center;justify-content: space-between;">
+				<view style="margin-left: 15rpx;color: #b0b0b0;">{{ item.create_time }}</view>
+				<!-- 订单的状态文字 state_text	string	待支付	订单状态文字（待支付、待发货、部分发货、待收货、已完成、已取消、待取消） -->
+				<view style="margin-right: 15rpx;color: #ff8ea8;">{{ item.state_text }}</view>
+			</view>
+			<view v-for="goodsitem in item.goods" :key="goodsitem.goods_id"
+				style="width: 100%;height: 240rpx;margin-top: 20rpx;display: flex;justify-content: space-between;align-items: center">
+				<image :src="goodsitem.goods_image" mode="scaleToFill"
+					style="height: 200rpx;width: 200rpx;margin-left: 20rpx" />
+				<span style="margin-right: 102rpx;margin-bottom: 138rpx;">{{ goodsitem.goods_name }}</span>
+				<view style="margin-right: 20rpx;">
+					<view>￥{{ goodsitem.goods_price }}</view>
+					<view>x {{ goodsitem.total_num }}</view>
+				</view>
+			</view>
+			<view
+				style="width: 500rpx;height: 130rpx;margin-top: 20rpx;margin-left: 200rpx;display: flex;flex-direction: column;align-items: center;justify-content: center;">
+				<view> 共{{ item.length }}件商品 ，总金额 ￥{{ item.total_price }} </view>
+			</view>
+			<view style="display: flex;justify-content: flex-end;padding-bottom: 25rpx;">
+				<view @click="goPayOrder" v-show="item.state_text == '待支付'"
+					style="padding: 0 20rpx;margin: 0 8rpx;border: 2px solid #ff99af;border-radius: 15rpx;color: #ff8ea8;">
+					去支付</view>
+				<view @click="goCancleOrder(item.order_id)" v-show="item.state_text == '待支付'"
+					style="padding: 0 20rpx;margin: 0 8rpx;border: 2px solid #dbdbdb;border-radius: 15rpx;">取消</view>
+				<view @click="applyCancle(item.order_id)" v-show="item.state_text == '待发货'"
+					style="padding: 0 20rpx;margin: 0 8rpx;border: 2px solid #dbdbdb;border-radius: 15rpx;">申请取消</view>
+			</view>
+			<view v-show="item.state_text == '待取消'" style="margin-left: 20rpx;margin-bottom: 20rpx ;">
+				取消申请中
+			</view>
+		</view>
 		<u-toast ref="uToast"></u-toast>
 		<u-modal :show="show" :title="title" :content='content' showCancelButton="true"
 			@confirm="confirm(CancleOrderId)" @cancel="cancel"></u-modal>
@@ -214,6 +248,18 @@ export default {
 							if (res.status == 200) {
 								console.log('paymentList', this.paymentList);
 								this.paymentList = res.data.list.data
+
+
+							}
+						})
+					}
+					if (this.showIndex == 2) {
+						console.log('发送待发货数据请求');
+						uni.$u.http.get(`order/list&dataType=delivery&page=1`,).then(res => {
+							console.log(res, '打印结果');
+							if (res.status == 200) {
+								console.log('this.deliveryList', this.deliveryList);
+								this.deliveryList = res.data.list.data
 
 
 							}
