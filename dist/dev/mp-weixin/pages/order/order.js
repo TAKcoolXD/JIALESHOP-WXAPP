@@ -349,13 +349,16 @@ var _default = exports.default = {
       show: false,
       title: '友情提示',
       content: '确认要取消该订单吗？',
-      CancleOrderId: ''
+      CancleOrderId: '',
+      showLogin: false,
+      Logintitle: '友情提示',
+      Logincontent: '请先登录'
     };
   },
   methods: {
     click: function click(item) {
       var _this = this;
-      console.log('item', item);
+      console.log('点击时tag触发item', item);
       this.showIndex = item.index;
       if (this.showIndex == 0) {
         console.log('全部');
@@ -401,6 +404,11 @@ var _default = exports.default = {
           }
         });
       }
+    },
+    change: function change(item) {
+      console.log('发生改变时tag触发', item);
+      this.showIndex = item.index;
+      console.log('this.showIndex', this.showIndex);
     },
     goPayOrder: function goPayOrder() {
       console.log('goPay');
@@ -456,7 +464,6 @@ var _default = exports.default = {
               }
             });
           }
-          // this.getAllList()
         }
       });
     },
@@ -477,16 +484,100 @@ var _default = exports.default = {
           });
         }
       });
+    },
+    Loginconfirm: function Loginconfirm() {
+      console.log('去登录');
+      this.showLogin = false;
+      uni.navigateTo({
+        url: '/pages/login/login'
+      });
+      // this.getAllList()
+    },
+    Logincancel: function Logincancel() {
+      console.log('再逛逛');
+      uni.navigateBack();
     }
   },
   onLoad: function onLoad(option) {
-    console.log('参数', option);
-    this.orderId = option.orderId;
-    this.getAllList();
+    if (uni.getStorageSync('token')) {
+      console.log('参数', option);
+      this.getAllList();
+    } else {
+      this.showLogin = true;
+    }
+
+    // if(option.showIndex==0){
+    // 	this.showIndex = option.showIndex
+    // 	this.change({ index: this.showIndex });
+    // 	this.getAllList()
+    // }
+    // if(option.showIndex==1){
+    // 	this.showIndex = option.showIndex
+    // 	this.change({ index: this.showIndex });
+    // 	uni.$u.http.get(`order/list&dataType=payment&page=1`,).then(res => {
+    // 			console.log(res, '打印结果');
+    // 			if (res.status == 200) {
+    // 				console.log('paymentList', this.paymentList);
+    // 				this.paymentList = res.data.list.data
+
+    // 			}
+    // 		})
+    // }
+    // if(option.showIndex==2){
+    // 	this.showIndex = option.showIndex
+    // 	uni.$u.http.get(`order/list&dataType=delivery&page=1`,).then(res => {
+    // 			console.log(res, '打印结果');
+    // 			if (res.status == 200) {
+    // 				console.log('this.deliveryList', this.deliveryList);
+    // 				this.deliveryList = res.data.list.data
+
+    // 			}
+    // 		})
+    // }
+    // if(option.showIndex==3){
+    // 	this.showIndex = option.showIndex
+    // 	uni.$u.http.get(`order/list&dataType=received&page=1`,).then(res => {
+    // 			console.log(res, '打印结果');
+    // 			if (res.status == 200) {
+    // 				console.log('this.receivedList', this.receivedList);
+    // 				this.receivedList = res.data.list
+
+    // 			}
+    // 		})
+
+    // }
+    // if(option.showIndex==4){
+    // 	this.showIndex = option.showIndex
+    // 	uni.$u.http.get(`order/list&dataType=comment&page=1`,).then(res => {
+    // 			console.log(res, '打印结果');
+    // 			if (res.status == 200) {
+    // 				console.log('this.commentList', this.commentList);
+    // 				this.commentList = res.data.list
+
+    // 			}
+    // 		})
+    // }
   },
-  computed: {
-    goodsTotalCount: function goodsTotalCount() {}
-  }
+  onShow: function onShow() {
+    if (uni.getStorageSync('token')) {
+      this.getAllList();
+    } else {
+      this.showLogin = true;
+    }
+  } // watch: {
+  // 	showIndex(newValue, oldValue) {
+  // 		console.log('watch', newValue, oldValue);
+  // 		this.change({ index: newValue });
+  // 		// if (newValue == 0) {
+  // 		// 	this.getAllList()
+  // 		// }
+  // 		// if (newValue == 1) {
+  // 		// 	uni.$u.http.get(`order/list&dataType=payment&page=1`,).then(res => {
+  // 		// 		console.log(res, '打印结果');
+  // 		// 	})
+  // 		// }
+  // 	}
+  // }
 };
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 2)["default"]))
 

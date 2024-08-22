@@ -1,7 +1,7 @@
 <template>
 	<view class="order" style="background-color:rgb(244 244 244);">
 		<view style="width: 100%; display: flex;justify-content: center;width: 730rpx;margin: 0 auto">
-			<u-tabs :list="list1" @click="click" itemStyle="width: 100rpx;height:80rpx" lineWidth="20"
+			<u-tabs @change="change" :list="list1" @click="click" itemStyle="width: 100rpx;height:80rpx" lineWidth="20"
 				lineColor="#ff5a7f"></u-tabs>
 		</view>
 		<view v-show="showIndex == 0" v-for="(item, index) in AllList" :key="index"
@@ -38,7 +38,6 @@
 				取消申请中
 			</view>
 		</view>
-
 		<view v-show="showIndex == 1" v-for="(item, index) in paymentList" :key="index"
 			style=" border: 1px solid #ffffff;border-radius: 20rpx;width: 700rpx;margin: 15rpx auto;background-color: #ffffff;">
 			<view style="width: 100%;height: 70rpx;display: flex;align-items: center;justify-content: space-between;">
@@ -110,7 +109,8 @@
 		<u-toast ref="uToast"></u-toast>
 		<u-modal :show="show" :title="title" :content='content' showCancelButton="true"
 			@confirm="confirm(CancleOrderId)" @cancel="cancel"></u-modal>
-
+		<u-modal :show="showLogin" :title="Logintitle" :content='Logincontent' showCancelButton="true"
+			@confirm="Loginconfirm" @cancel="Logincancel" confirmText="去登陆" cancelText="再逛逛"></u-modal>
 	</view>
 </template>
 
@@ -146,12 +146,16 @@ export default {
 			title: '友情提示',
 			content: '确认要取消该订单吗？',
 			CancleOrderId: '',
+			showLogin: false,
+			Logintitle: '友情提示',
+			Logincontent: '请先登录'
+
 
 		}
 	},
 	methods: {
 		click(item) {
-			console.log('item', item);
+			console.log('点击时tag触发item', item);
 			this.showIndex = item.index
 			if (this.showIndex == 0) {
 				console.log('全部');
@@ -205,6 +209,12 @@ export default {
 					}
 				})
 			}
+		},
+		change(item) {
+			console.log('发生改变时tag触发', item);
+			this.showIndex = item.index
+			console.log('this.showIndex', this.showIndex);
+
 		},
 		goPayOrder() {
 			console.log('goPay');
@@ -265,7 +275,6 @@ export default {
 							}
 						})
 					}
-					// this.getAllList()
 				}
 			})
 		},
@@ -285,20 +294,108 @@ export default {
 					})
 				}
 			})
+		},
+		Loginconfirm() {
+			console.log('去登录');
+			this.showLogin=false
+			uni.navigateTo({
+				url: '/pages/login/login'
+			})
+			// this.getAllList()
+		},
+		Logincancel() {
+			console.log('再逛逛')
+			uni.navigateBack()
 		}
 	},
 	onLoad(option) {
-		console.log('参数', option);
-		this.orderId = option.orderId
-		this.getAllList()
+		if (uni.getStorageSync('token')) {
+			console.log('参数', option);
+			this.getAllList()
+		} else {
+			this.showLogin=true
+		}
+
+		// if(option.showIndex==0){
+		// 	this.showIndex = option.showIndex
+		// 	this.change({ index: this.showIndex });
+		// 	this.getAllList()
+		// }
+		// if(option.showIndex==1){
+		// 	this.showIndex = option.showIndex
+		// 	this.change({ index: this.showIndex });
+		// 	uni.$u.http.get(`order/list&dataType=payment&page=1`,).then(res => {
+		// 			console.log(res, '打印结果');
+		// 			if (res.status == 200) {
+		// 				console.log('paymentList', this.paymentList);
+		// 				this.paymentList = res.data.list.data
+
+
+		// 			}
+		// 		})
+		// }
+		// if(option.showIndex==2){
+		// 	this.showIndex = option.showIndex
+		// 	uni.$u.http.get(`order/list&dataType=delivery&page=1`,).then(res => {
+		// 			console.log(res, '打印结果');
+		// 			if (res.status == 200) {
+		// 				console.log('this.deliveryList', this.deliveryList);
+		// 				this.deliveryList = res.data.list.data
+
+
+		// 			}
+		// 		})
+		// }
+		// if(option.showIndex==3){
+		// 	this.showIndex = option.showIndex
+		// 	uni.$u.http.get(`order/list&dataType=received&page=1`,).then(res => {
+		// 			console.log(res, '打印结果');
+		// 			if (res.status == 200) {
+		// 				console.log('this.receivedList', this.receivedList);
+		// 				this.receivedList = res.data.list
+
+
+		// 			}
+		// 		})
+
+		// }
+		// if(option.showIndex==4){
+		// 	this.showIndex = option.showIndex
+		// 	uni.$u.http.get(`order/list&dataType=comment&page=1`,).then(res => {
+		// 			console.log(res, '打印结果');
+		// 			if (res.status == 200) {
+		// 				console.log('this.commentList', this.commentList);
+		// 				this.commentList = res.data.list
+
+
+		// 			}
+		// 		})
+		// }
 
 	},
-	computed: {
-		goodsTotalCount() {
-
-
-		},
+	onShow(){
+		if (uni.getStorageSync('token')) {
+			this.getAllList()
+		} else {
+			this.showLogin=true
+		}
 	}
+	// watch: {
+	// 	showIndex(newValue, oldValue) {
+	// 		console.log('watch', newValue, oldValue);
+
+	// 		this.change({ index: newValue });
+	// 		// if (newValue == 0) {
+	// 		// 	this.getAllList()
+	// 		// }
+	// 		// if (newValue == 1) {
+	// 		// 	uni.$u.http.get(`order/list&dataType=payment&page=1`,).then(res => {
+	// 		// 		console.log(res, '打印结果');
+	// 		// 	})
+	// 		// }
+	// 	}
+	// }
+
 }
 </script>
 

@@ -306,6 +306,7 @@ exports.default = void 0;
 //
 //
 //
+//
 var _default = exports.default = {
   data: function data() {
     return {
@@ -332,9 +333,24 @@ var _default = exports.default = {
         url: '/pages/points/points'
       });
     },
-    goOrder: function goOrder() {
+    goAllOrder: function goAllOrder() {
       uni.navigateTo({
-        url: '/pages/order/order'
+        url: '/pages/order/order?showIndex=0'
+      });
+    },
+    goPaymentOrder: function goPaymentOrder() {
+      uni.navigateTo({
+        url: '/pages/order/order?showIndex=1'
+      });
+    },
+    goDeliveryOrder: function goDeliveryOrder() {
+      uni.navigateTo({
+        url: '/pages/order/order?showIndex=2'
+      });
+    },
+    goReceivedOrder: function goReceivedOrder() {
+      uni.navigateTo({
+        url: '/pages/order/order?showIndex=3'
       });
     },
     goAddress: function goAddress() {

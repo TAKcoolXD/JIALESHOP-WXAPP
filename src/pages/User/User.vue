@@ -19,7 +19,7 @@
 			<view style="width: 500rpx;height: 130rpx;display: flex;align-items: center;justify-content: center;">
 				<view @click="goWallet"
 					style="margin: 0 35rpx;font-size: 30rpx;display: flex;flex-direction: column;align-items: center;">
-					<view style="margin-top: 10rpx;">{{balance}}</view>
+					<view style="margin-top: 10rpx;">{{ balance }}</view>
 					<view>账户余额</view>
 				</view>
 				<view @click="goPoints"
@@ -43,26 +43,26 @@
 		</view>
 		<view
 			style="background-color: white; width: 700rpx;height: 170rpx;margin: 10rpx auto; display: flex;align-items: center;justify-content: center;">
-			<view @click="goOrder"
+			<view @click="goAllOrder"
 				style="height: 100rpx;margin: 10rpx 35rpx;display: flex;flex-direction: column;align-items: center;justify-content: center;">
 				<view><u-icon name="file-text" color="#7d7d7d" size="25"></u-icon></view>
 				<view>全部订单</view>
 			</view>
-			<view @click="goOrder"
+			<view @click="goPaymentOrder"
 				style="height: 100rpx;margin: 10rpx 35rpx;display: flex;flex-direction: column;align-items: center;justify-content: center;">
 				<view>
 					<image src="../../static/支付 钱包 待支付.png" style="width: 45rpx;height: 45rpx;" mode="scaleToFill" />
 				</view>
 				<view>待支付</view>
 			</view>
-			<view @click="goOrder"
+			<view @click="goDeliveryOrder"
 				style="height: 100rpx;margin: 10rpx 35rpx;display: flex;flex-direction: column;align-items: center;justify-content: center;">
 				<view>
 					<image src="../../static/待发货.png" style="width: 45rpx;height: 45rpx;" mode="scaleToFill" />
 				</view>
 				<view>待发货</view>
 			</view>
-			<view @click="goOrder"
+			<view @click="goReceivedOrder"
 				style="height: 100rpx;margin: 10rpx 35rpx;display: flex;flex-direction: column;align-items: center;justify-content: center;">
 				<view>
 					<image src="../../static/待收货.png" style="width: 45rpx;height: 45rpx;" mode="scaleToFill" />
@@ -129,11 +129,12 @@
 				<view>我的帮助</view>
 			</view>
 		</view>
-		<view @click="loginOut" v-show="UserInfo" 
+		<view @click="loginOut" v-show="UserInfo"
 			style="width: 400rpx;height: 70rpx;border: 1px solid #282828;text-align: center;line-height: 70rpx;border-radius: 30rpx;margin: 50rpx auto;">
 			退出登录
 		</view>
-		<u-modal @cancel="cancel" :show="show" :title="title" :content='content' showCancelButton="true" @confirm="confirm"></u-modal>
+		<u-modal @cancel="cancel" :show="show" :title="title" :content='content' showCancelButton="true"
+			@confirm="confirm"></u-modal>
 	</view>
 </template>
 
@@ -141,11 +142,11 @@
 export default {
 	data() {
 		return {
-			UserInfo:{},
-			show:false,
-			title:'友情提示',
-			content:'你确定要退出登录吗？',
-			balance:'',
+			UserInfo: {},
+			show: false,
+			title: '友情提示',
+			content: '你确定要退出登录吗？',
+			balance: '',
 		}
 	},
 	methods: {
@@ -164,11 +165,27 @@ export default {
 				url: '/pages/points/points'
 			})
 		},
-		goOrder() {
+		goAllOrder() {
 			uni.navigateTo({
-				url: '/pages/order/order'
+				url: '/pages/order/order?showIndex=0'
 			})
 		},
+		goPaymentOrder() {
+			uni.navigateTo({
+				url: '/pages/order/order?showIndex=1'
+			})
+		},
+		goDeliveryOrder() {
+			uni.navigateTo({
+				url: '/pages/order/order?showIndex=2'
+			})
+		},
+		goReceivedOrder() {
+			uni.navigateTo({
+				url: '/pages/order/order?showIndex=3'
+			})
+		},
+
 		goAddress() {
 			uni.navigateTo({
 				url: '/pages/address/address'
@@ -191,18 +208,18 @@ export default {
 		},
 		loginOut() {
 			console.log('loginOut');
-			this.show=true
-			
+			this.show = true
+
 		},
-		confirm(){
+		confirm() {
 			console.log('提示框确认按钮');
 			uni.removeStorageSync('token')
 			uni.removeStorageSync('UserInfo')
-			this.UserInfo=null
-			this.show=false
+			this.UserInfo = null
+			this.show = false
 		},
-		cancel(){
-			this.show=false
+		cancel() {
+			this.show = false
 		},
 		goLogin() {
 			uni.navigateTo({
@@ -218,13 +235,13 @@ export default {
 
 	},
 	onLoad() {
-		
+
 	},
 	onShow() {
 		uni.$u.http.post('user/info',).then(res => {
 			console.log(res, '打印结果');
-			if(res.status==200){
-				this.balance=res.data.userInfo.balance
+			if (res.status == 200) {
+				this.balance = res.data.userInfo.balance
 			}
 			// if (res.status == 200) {
 			// 	this.show = false
@@ -237,7 +254,7 @@ export default {
 		})
 		this.UserInfo = uni.getStorageSync('UserInfo')
 		console.log(this.UserInfo, 'onshow2');
-		
+
 	}
 
 }
@@ -248,5 +265,4 @@ export default {
 .u-modal__content.data-v-713d0fd3 {
 	text-align: center;
 }
-
 </style>
