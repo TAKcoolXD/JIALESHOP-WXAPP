@@ -131,6 +131,22 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
+  var l0 = _vm.__map(_vm.AllList, function (item, index) {
+    var $orig = _vm.__get_orig(item)
+    var g0 = item.length
+    return {
+      $orig: $orig,
+      g0: g0,
+    }
+  })
+  _vm.$mp.data = Object.assign(
+    {},
+    {
+      $root: {
+        l0: l0,
+      },
+    }
+  )
 }
 var recyclableRender = false
 var staticRenderFns = []
@@ -171,6 +187,11 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 var _tags = __webpack_require__(/*! @dcloudio/vue-cli-plugin-uni/packages/postcss/tags */ 182);
+//
+//
+//
+//
+//
 //
 //
 //
@@ -337,8 +358,10 @@ var _default = exports.default = {
       this.CancleOrderId = orderId;
       this.show = true;
     },
-    confirmCancle: function confirmCancle() {
-      console.log('confirmCancle');
+    applyCancle: function applyCancle(orderId) {
+      console.log('applyCancle', orderId);
+      this.CancleOrderId = orderId;
+      this.show = true;
     },
     confirm: function confirm(CancleOrderId) {
       var _this2 = this;
@@ -371,6 +394,11 @@ var _default = exports.default = {
         console.log(res, '打印结果');
         if (res.status == 200) {
           _this3.AllList = res.data.list.data;
+          _this3.AllList = _this3.AllList.map(function (item) {
+            console.log(item.goods.length);
+            item.length = item.goods.length;
+            return item;
+          });
         }
       });
     }
@@ -379,6 +407,9 @@ var _default = exports.default = {
     console.log('参数', option);
     this.orderId = option.orderId;
     this.getAllList();
+  },
+  computed: {
+    goodsTotalCount: function goodsTotalCount() {}
   }
 };
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 2)["default"]))
