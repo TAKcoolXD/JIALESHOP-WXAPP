@@ -109,6 +109,9 @@ try {
     uModal: function () {
       return Promise.all(/*! import() | node-modules/uview-ui/components/u-modal/u-modal */[__webpack_require__.e("common/vendor"), __webpack_require__.e("node-modules/uview-ui/components/u-modal/u-modal")]).then(__webpack_require__.bind(null, /*! uview-ui/components/u-modal/u-modal.vue */ 316))
     },
+    uLoadingPage: function () {
+      return Promise.all(/*! import() | node-modules/uview-ui/components/u-loading-page/u-loading-page */[__webpack_require__.e("common/vendor"), __webpack_require__.e("node-modules/uview-ui/components/u-loading-page/u-loading-page")]).then(__webpack_require__.bind(null, /*! uview-ui/components/u-loading-page/u-loading-page.vue */ 355))
+    },
   }
 } catch (e) {
   if (
@@ -325,6 +328,12 @@ var _tags = __webpack_require__(/*! @dcloudio/vue-cli-plugin-uni/packages/postcs
 //
 //
 //
+//
+//
+//
+//
+//
+//
 var _default = exports.default = {
   data: function data() {
     return {
@@ -339,6 +348,7 @@ var _default = exports.default = {
       }, {
         name: '待评价'
       }],
+      showLoad: false,
       showIndex: 0,
       orderId: '',
       AllList: [],
@@ -362,13 +372,16 @@ var _default = exports.default = {
       this.showIndex = item.index;
       if (this.showIndex == 0) {
         console.log('全部');
+        this.showLoad = true;
         this.getAllList();
       }
       if (this.showIndex == 1) {
         console.log('待支付');
+        this.showLoad = true;
         uni.$u.http.get("order/list&dataType=payment&page=1").then(function (res) {
           console.log(res, '打印结果');
           if (res.status == 200) {
+            _this.showLoad = false;
             console.log('paymentList', _this.paymentList);
             _this.paymentList = res.data.list.data;
           }
@@ -376,9 +389,11 @@ var _default = exports.default = {
       }
       if (this.showIndex == 2) {
         console.log('待发货');
+        this.showLoad = true;
         uni.$u.http.get("order/list&dataType=delivery&page=1").then(function (res) {
           console.log(res, '打印结果');
           if (res.status == 200) {
+            _this.showLoad = false;
             console.log('this.deliveryList', _this.deliveryList);
             _this.deliveryList = res.data.list.data;
           }
@@ -386,29 +401,28 @@ var _default = exports.default = {
       }
       if (this.showIndex == 3) {
         console.log('待收货');
+        this.showLoad = true;
         uni.$u.http.get("order/list&dataType=received&page=1").then(function (res) {
           console.log(res, '打印结果');
           if (res.status == 200) {
+            _this.showLoad = false;
             console.log('this.receivedList', _this.receivedList);
             _this.receivedList = res.data.list;
           }
         });
       }
       if (this.showIndex == 4) {
+        this.showLoad = true;
         console.log('待评价');
         uni.$u.http.get("order/list&dataType=comment&page=1").then(function (res) {
           console.log(res, '打印结果');
           if (res.status == 200) {
+            _this.showLoad = false;
             console.log('this.commentList', _this.commentList);
             _this.commentList = res.data.list;
           }
         });
       }
-    },
-    change: function change(item) {
-      console.log('发生改变时tag触发', item);
-      this.showIndex = item.index;
-      console.log('this.showIndex', this.showIndex);
     },
     goPayOrder: function goPayOrder() {
       console.log('goPay');
@@ -476,9 +490,10 @@ var _default = exports.default = {
       uni.$u.http.get("order/list&dataType=all&page=1").then(function (res) {
         console.log(res, '打印结果');
         if (res.status == 200) {
+          _this3.showLoad = false;
           _this3.AllList = res.data.list.data;
           _this3.AllList = _this3.AllList.map(function (item) {
-            console.log(item.goods.length);
+            // console.log(item.goods.length);
             item.length = item.goods.length;
             return item;
           });
@@ -499,64 +514,56 @@ var _default = exports.default = {
     }
   },
   onLoad: function onLoad(option) {
+    var _this4 = this;
+    console.log('页面参数', option);
+    console.log('this.showLoad', this.showLoad);
+    var pages = getCurrentPages();
+    var page = pages[pages.length - 1];
+    var page1 = pages[pages.length - pages.length];
+    console.log('获取所有页面', pages);
+    console.log('获取当前页面', page.$page.fullPath);
+    console.log('从哪个页面过来', page1.$page.fullPath);
     if (uni.getStorageSync('token')) {
-      console.log('参数', option);
-      this.getAllList();
+      console.log('参数showIndex', Number(option.showIndex));
+      console.log('this.showIndex', this.showIndex);
+      if (Number(option.showIndex) === 0) {
+        this.showIndex = Number(option.showIndex);
+        console.log('触发tabs的showIdex==0');
+        console.log('发全部请求');
+        this.getAllList();
+        this.showLoad = true;
+      }
+      if (Number(option.showIndex) === 1) {
+        this.showIndex = Number(option.showIndex);
+        console.log('触发tabs的showIdex==1');
+        console.log('发待支付请求');
+        this.showLoad = true;
+        uni.$u.http.get("order/list&dataType=payment&page=1").then(function (res) {
+          console.log(res, '打印结果');
+          if (res.status == 200) {
+            _this4.showLoad = false;
+            console.log('paymentList', _this4.paymentList);
+            _this4.paymentList = res.data.list.data;
+          }
+        });
+      }
+      if (Number(option.showIndex) === 2) {
+        this.showIndex = Number(option.showIndex);
+        console.log('触发tabs的showIdex==2');
+        console.log('发待发货请求');
+        this.showLoad = true;
+        uni.$u.http.get("order/list&dataType=delivery&page=1").then(function (res) {
+          console.log(res, '打印结果');
+          if (res.status == 200) {
+            _this4.showLoad = false;
+            console.log('this.deliveryList', _this4.deliveryList);
+            _this4.deliveryList = res.data.list.data;
+          }
+        });
+      }
     } else {
       this.showLogin = true;
     }
-
-    // if(option.showIndex==0){
-    // 	this.showIndex = option.showIndex
-    // 	this.change({ index: this.showIndex });
-    // 	this.getAllList()
-    // }
-    // if(option.showIndex==1){
-    // 	this.showIndex = option.showIndex
-    // 	this.change({ index: this.showIndex });
-    // 	uni.$u.http.get(`order/list&dataType=payment&page=1`,).then(res => {
-    // 			console.log(res, '打印结果');
-    // 			if (res.status == 200) {
-    // 				console.log('paymentList', this.paymentList);
-    // 				this.paymentList = res.data.list.data
-
-    // 			}
-    // 		})
-    // }
-    // if(option.showIndex==2){
-    // 	this.showIndex = option.showIndex
-    // 	uni.$u.http.get(`order/list&dataType=delivery&page=1`,).then(res => {
-    // 			console.log(res, '打印结果');
-    // 			if (res.status == 200) {
-    // 				console.log('this.deliveryList', this.deliveryList);
-    // 				this.deliveryList = res.data.list.data
-
-    // 			}
-    // 		})
-    // }
-    // if(option.showIndex==3){
-    // 	this.showIndex = option.showIndex
-    // 	uni.$u.http.get(`order/list&dataType=received&page=1`,).then(res => {
-    // 			console.log(res, '打印结果');
-    // 			if (res.status == 200) {
-    // 				console.log('this.receivedList', this.receivedList);
-    // 				this.receivedList = res.data.list
-
-    // 			}
-    // 		})
-
-    // }
-    // if(option.showIndex==4){
-    // 	this.showIndex = option.showIndex
-    // 	uni.$u.http.get(`order/list&dataType=comment&page=1`,).then(res => {
-    // 			console.log(res, '打印结果');
-    // 			if (res.status == 200) {
-    // 				console.log('this.commentList', this.commentList);
-    // 				this.commentList = res.data.list
-
-    // 			}
-    // 		})
-    // }
   },
   onShow: function onShow() {
     if (uni.getStorageSync('token')) {
@@ -564,20 +571,7 @@ var _default = exports.default = {
     } else {
       this.showLogin = true;
     }
-  } // watch: {
-  // 	showIndex(newValue, oldValue) {
-  // 		console.log('watch', newValue, oldValue);
-  // 		this.change({ index: newValue });
-  // 		// if (newValue == 0) {
-  // 		// 	this.getAllList()
-  // 		// }
-  // 		// if (newValue == 1) {
-  // 		// 	uni.$u.http.get(`order/list&dataType=payment&page=1`,).then(res => {
-  // 		// 		console.log(res, '打印结果');
-  // 		// 	})
-  // 		// }
-  // 	}
-  // }
+  }
 };
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 2)["default"]))
 

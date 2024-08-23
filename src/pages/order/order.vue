@@ -1,10 +1,11 @@
 <template>
 	<view class="order" style="background-color:rgb(244 244 244);">
 		<view style="width: 100%; display: flex;justify-content: center;width: 730rpx;margin: 0 auto">
-			<u-tabs @change="change" :list="list1" @click="click" itemStyle="width: 100rpx;height:80rpx" lineWidth="20"
-				lineColor="#ff5a7f"></u-tabs>
+			<u-tabs :current="showIndex" :list="list1" @click="click" itemStyle="width: 100rpx;height:80rpx"
+				lineWidth="20" lineColor="#ff5a7f">
+			</u-tabs>
 		</view>
-		<view v-show="showIndex == 0" v-for="(item, index) in AllList" :key="index"
+		<view v-show="showIndex === 0" v-for="(item, index) in AllList" :key="index"
 			style=" border: 1px solid #ffffff;border-radius: 20rpx;width: 700rpx;margin: 15rpx auto;background-color: #ffffff;">
 			<view style="width: 100%;height: 70rpx;display: flex;align-items: center;justify-content: space-between;">
 				<view style="margin-left: 15rpx;color: #b0b0b0;">{{ item.create_time }}</view>
@@ -38,7 +39,7 @@
 				取消申请中
 			</view>
 		</view>
-		<view v-show="showIndex == 1" v-for="(item, index) in paymentList" :key="index"
+		<view v-show="showIndex === 1" v-for="(item, index) in paymentList" :key="index"
 			style=" border: 1px solid #ffffff;border-radius: 20rpx;width: 700rpx;margin: 15rpx auto;background-color: #ffffff;">
 			<view style="width: 100%;height: 70rpx;display: flex;align-items: center;justify-content: space-between;">
 				<view style="margin-left: 15rpx;color: #b0b0b0;">{{ item.create_time }}</view>
@@ -71,8 +72,9 @@
 			<view v-show="item.state_text == '待取消'" style="margin-left: 20rpx;margin-bottom: 20rpx ;">
 				取消申请中
 			</view>
+
 		</view>
-		<view v-show="showIndex == 2" v-for="(item, index) in deliveryList" :key="index"
+		<view v-show="showIndex === 2" v-for="(item, index) in deliveryList" :key="index"
 			style=" border: 1px solid #ffffff;border-radius: 20rpx;width: 700rpx;margin: 15rpx auto;background-color: #ffffff;">
 			<view style="width: 100%;height: 70rpx;display: flex;align-items: center;justify-content: space-between;">
 				<view style="margin-left: 15rpx;color: #b0b0b0;">{{ item.create_time }}</view>
@@ -110,7 +112,11 @@
 		<u-modal :show="show" :title="title" :content='content' showCancelButton="true"
 			@confirm="confirm(CancleOrderId)" @cancel="cancel"></u-modal>
 		<u-modal :show="showLogin" :title="Logintitle" :content='Logincontent' showCancelButton="true"
-			@confirm="Loginconfirm" @cancel="Logincancel" confirmText="去登陆" cancelText="再逛逛"></u-modal>
+			@confirm="Loginconfirm" @cancel="Logincancel" confirmText="去登陆" cancelText="再逛逛">
+		</u-modal>
+		<view>
+			<u-loading-page :loading="showLoad"></u-loading-page>
+		</view>
 	</view>
 </template>
 
@@ -135,6 +141,7 @@ export default {
 			}, {
 				name: '待评价'
 			},],
+			showLoad: false,
 			showIndex: 0,
 			orderId: '',
 			AllList: [],
@@ -159,13 +166,16 @@ export default {
 			this.showIndex = item.index
 			if (this.showIndex == 0) {
 				console.log('全部');
+				this.showLoad=true
 				this.getAllList()
 			}
 			if (this.showIndex == 1) {
 				console.log('待支付');
+				this.showLoad=true
 				uni.$u.http.get(`order/list&dataType=payment&page=1`,).then(res => {
 					console.log(res, '打印结果');
 					if (res.status == 200) {
+						this.showLoad=false
 						console.log('paymentList', this.paymentList);
 						this.paymentList = res.data.list.data
 
@@ -175,9 +185,11 @@ export default {
 			}
 			if (this.showIndex == 2) {
 				console.log('待发货');
+				this.showLoad=true
 				uni.$u.http.get(`order/list&dataType=delivery&page=1`,).then(res => {
 					console.log(res, '打印结果');
 					if (res.status == 200) {
+						this.showLoad=false
 						console.log('this.deliveryList', this.deliveryList);
 						this.deliveryList = res.data.list.data
 
@@ -187,9 +199,11 @@ export default {
 			}
 			if (this.showIndex == 3) {
 				console.log('待收货');
+				this.showLoad=true
 				uni.$u.http.get(`order/list&dataType=received&page=1`,).then(res => {
 					console.log(res, '打印结果');
 					if (res.status == 200) {
+						this.showLoad=false
 						console.log('this.receivedList', this.receivedList);
 						this.receivedList = res.data.list
 
@@ -198,10 +212,12 @@ export default {
 				})
 			}
 			if (this.showIndex == 4) {
+				this.showLoad=true
 				console.log('待评价');
 				uni.$u.http.get(`order/list&dataType=comment&page=1`,).then(res => {
 					console.log(res, '打印结果');
 					if (res.status == 200) {
+						this.showLoad=false
 						console.log('this.commentList', this.commentList);
 						this.commentList = res.data.list
 
@@ -209,12 +225,6 @@ export default {
 					}
 				})
 			}
-		},
-		change(item) {
-			console.log('发生改变时tag触发', item);
-			this.showIndex = item.index
-			console.log('this.showIndex', this.showIndex);
-
 		},
 		goPayOrder() {
 			console.log('goPay');
@@ -286,9 +296,10 @@ export default {
 			uni.$u.http.get(`order/list&dataType=all&page=1`,).then(res => {
 				console.log(res, '打印结果');
 				if (res.status == 200) {
+					this.showLoad=false
 					this.AllList = res.data.list.data
 					this.AllList = this.AllList.map(item => {
-						console.log(item.goods.length);
+						// console.log(item.goods.length);
 						item.length = item.goods.length
 						return item
 					})
@@ -297,7 +308,7 @@ export default {
 		},
 		Loginconfirm() {
 			console.log('去登录');
-			this.showLogin=false
+			this.showLogin = false
 			uni.navigateTo({
 				url: '/pages/login/login'
 			})
@@ -309,93 +320,67 @@ export default {
 		}
 	},
 	onLoad(option) {
+		console.log('页面参数', option);
+		console.log('this.showLoad', this.showLoad);
+
+		let pages = getCurrentPages();
+		let page = pages[pages.length - 1];
+		let page1 = pages[pages.length - pages.length];
+		console.log('获取所有页面', pages);
+		console.log('获取当前页面', page.$page.fullPath);
+		console.log('从哪个页面过来', page1.$page.fullPath);
 		if (uni.getStorageSync('token')) {
-			console.log('参数', option);
-			this.getAllList()
+			console.log('参数showIndex', Number(option.showIndex));
+			console.log('this.showIndex', this.showIndex)
+			if (Number(option.showIndex) === 0) {
+				this.showIndex = Number(option.showIndex)
+				console.log('触发tabs的showIdex==0');
+				console.log('发全部请求');
+				this.getAllList()
+				this.showLoad = true
+			}
+			if (Number(option.showIndex) === 1) {
+				this.showIndex = Number(option.showIndex)
+				console.log('触发tabs的showIdex==1');
+				console.log('发待支付请求');
+				this.showLoad = true
+				uni.$u.http.get(`order/list&dataType=payment&page=1`,).then(res => {
+					console.log(res, '打印结果');
+					if (res.status == 200) {
+						this.showLoad = false
+						console.log('paymentList', this.paymentList);
+						this.paymentList = res.data.list.data
+					}
+				})
+
+			}
+			if (Number(option.showIndex) === 2) {
+				this.showIndex = Number(option.showIndex)
+				console.log('触发tabs的showIdex==2');
+				console.log('发待发货请求');
+				this.showLoad = true
+				uni.$u.http.get(`order/list&dataType=delivery&page=1`,).then(res => {
+					console.log(res, '打印结果');
+					if (res.status == 200) {
+						this.showLoad = false
+						console.log('this.deliveryList', this.deliveryList);
+						this.deliveryList = res.data.list.data
+					}
+				})
+
+			}
+
 		} else {
-			this.showLogin=true
+			this.showLogin = true
 		}
-
-		// if(option.showIndex==0){
-		// 	this.showIndex = option.showIndex
-		// 	this.change({ index: this.showIndex });
-		// 	this.getAllList()
-		// }
-		// if(option.showIndex==1){
-		// 	this.showIndex = option.showIndex
-		// 	this.change({ index: this.showIndex });
-		// 	uni.$u.http.get(`order/list&dataType=payment&page=1`,).then(res => {
-		// 			console.log(res, '打印结果');
-		// 			if (res.status == 200) {
-		// 				console.log('paymentList', this.paymentList);
-		// 				this.paymentList = res.data.list.data
-
-
-		// 			}
-		// 		})
-		// }
-		// if(option.showIndex==2){
-		// 	this.showIndex = option.showIndex
-		// 	uni.$u.http.get(`order/list&dataType=delivery&page=1`,).then(res => {
-		// 			console.log(res, '打印结果');
-		// 			if (res.status == 200) {
-		// 				console.log('this.deliveryList', this.deliveryList);
-		// 				this.deliveryList = res.data.list.data
-
-
-		// 			}
-		// 		})
-		// }
-		// if(option.showIndex==3){
-		// 	this.showIndex = option.showIndex
-		// 	uni.$u.http.get(`order/list&dataType=received&page=1`,).then(res => {
-		// 			console.log(res, '打印结果');
-		// 			if (res.status == 200) {
-		// 				console.log('this.receivedList', this.receivedList);
-		// 				this.receivedList = res.data.list
-
-
-		// 			}
-		// 		})
-
-		// }
-		// if(option.showIndex==4){
-		// 	this.showIndex = option.showIndex
-		// 	uni.$u.http.get(`order/list&dataType=comment&page=1`,).then(res => {
-		// 			console.log(res, '打印结果');
-		// 			if (res.status == 200) {
-		// 				console.log('this.commentList', this.commentList);
-		// 				this.commentList = res.data.list
-
-
-		// 			}
-		// 		})
-		// }
-
 	},
-	onShow(){
+	onShow() {
 		if (uni.getStorageSync('token')) {
 			this.getAllList()
 		} else {
-			this.showLogin=true
+			this.showLogin = true
 		}
 	}
-	// watch: {
-	// 	showIndex(newValue, oldValue) {
-	// 		console.log('watch', newValue, oldValue);
-
-	// 		this.change({ index: newValue });
-	// 		// if (newValue == 0) {
-	// 		// 	this.getAllList()
-	// 		// }
-	// 		// if (newValue == 1) {
-	// 		// 	uni.$u.http.get(`order/list&dataType=payment&page=1`,).then(res => {
-	// 		// 		console.log(res, '打印结果');
-	// 		// 	})
-	// 		// }
-	// 	}
-	// }
-
 }
 </script>
 

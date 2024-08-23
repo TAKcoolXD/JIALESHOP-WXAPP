@@ -4,6 +4,7 @@
   "usingComponents": {
     "u-tabs": "/node-modules/uview-ui/components/u-tabs/u-tabs",
     "u-toast": "/node-modules/uview-ui/components/u-toast/u-toast",
-    "u-modal": "/node-modules/uview-ui/components/u-modal/u-modal"
+    "u-modal": "/node-modules/uview-ui/components/u-modal/u-modal",
+    "u-loading-page": "/node-modules/uview-ui/components/u-loading-page/u-loading-page"
   }
 }

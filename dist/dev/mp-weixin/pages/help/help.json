@@ -1,5 +1,7 @@
 {
   "navigationBarTitleText": "帮助中心",
   "enablePullDownRefresh": false,
-  "usingComponents": {}
+  "usingComponents": {
+    "u-tabs": "/node-modules/uview-ui/components/u-tabs/u-tabs"
+  }
 }
