@@ -388,6 +388,18 @@ var _default = exports.default = {
             return item;
           });
           console.log(_this3.shopCarList);
+          console.log('商城数组长度', _this3.shopCarList.length);
+          if (_this3.shopCarList.length > 0) {
+            uni.setTabBarBadge({
+              index: 2,
+              // 确保索引与购物车tab一致
+              text: String(_this3.shopCarList.length) // 将长度转换为字符串
+            });
+          } else {
+            uni.removeTabBarBadge({
+              index: 2
+            });
+          }
         } else {
           _this3.show = true;
         }

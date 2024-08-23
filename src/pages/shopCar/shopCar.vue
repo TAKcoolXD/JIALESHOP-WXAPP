@@ -202,6 +202,17 @@ export default {
 						return item
 					})
 					console.log(this.shopCarList);
+					console.log('商城数组长度', this.shopCarList.length);
+					if (this.shopCarList.length > 0) {
+						uni.setTabBarBadge({
+							index: 2, // 确保索引与购物车tab一致
+							text: String(this.shopCarList.length) // 将长度转换为字符串
+						});
+					} else {
+						uni.removeTabBarBadge({
+							index: 2
+						});
+					}
 				} else {
 					this.show = true
 				}
