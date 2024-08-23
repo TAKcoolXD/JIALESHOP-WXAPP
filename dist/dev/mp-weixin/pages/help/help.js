@@ -96,29 +96,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "recyclableRender", function() { return recyclableRender; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "components", function() { return components; });
 var components
-try {
-  components = {
-    uTabs: function () {
-      return Promise.all(/*! import() | node-modules/uview-ui/components/u-tabs/u-tabs */[__webpack_require__.e("common/vendor"), __webpack_require__.e("node-modules/uview-ui/components/u-tabs/u-tabs")]).then(__webpack_require__.bind(null, /*! uview-ui/components/u-tabs/u-tabs.vue */ 394))
-    },
-  }
-} catch (e) {
-  if (
-    e.message.indexOf("Cannot find module") !== -1 &&
-    e.message.indexOf(".vue") !== -1
-  ) {
-    console.error(e.message)
-    console.error("1. 排查组件名称拼写是否正确")
-    console.error(
-      "2. 排查组件是否符合 easycom 规范，文档：https://uniapp.dcloud.net.cn/collocation/pages?id=easycom"
-    )
-    console.error(
-      "3. 若组件不符合 easycom 规范，需手动引入，并在 components 中注册该组件"
-    )
-  } else {
-    throw e
-  }
-}
 var render = function () {
   var _vm = this
   var _h = _vm.$createElement
@@ -168,46 +145,12 @@ exports.default = void 0;
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
 var _default = exports.default = {
   data: function data() {
-    return {
-      list1: [{
-        name: '全部'
-      }, {
-        name: '待支付'
-      }, {
-        name: '待发货'
-      }, {
-        name: '待收货'
-      }, {
-        name: '待评价'
-      }],
-      showIndex: 0
-    };
+    return {};
   },
-  methods: {
-    click: function click(item) {
-      console.log('点击时tag触发', item);
-      this.showIndex = item.index;
-    }
-  },
-  onLoad: function onLoad(option) {
-    console.log(option);
-    this.showIndex = Number(option.showIndex);
-    console.log(this.showIndex, '22');
-  } // watch:{
-  // 	showIndex(newValue, oldValue) {
-  // 		console.log('watch', newValue, oldValue);
-  // 		this.click({index:newValue})
-  // 	}
-  // }
+  methods: {},
+  onLoad: function onLoad(option) {}
 };
 
 /***/ })

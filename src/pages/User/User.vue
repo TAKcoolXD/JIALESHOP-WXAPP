@@ -203,7 +203,7 @@ export default {
 		},
 		goHelp() {
 			uni.navigateTo({
-				url: '/pages/help/help?showIndex=2'
+				url: '/pages/help/help'
 			})
 		},
 		loginOut() {

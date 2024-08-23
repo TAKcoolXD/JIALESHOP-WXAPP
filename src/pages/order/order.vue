@@ -246,10 +246,11 @@ export default {
 				orderId: CancleOrderId
 			}
 			console.log('data', data);
-
+			this.showLoad=true
 			uni.$u.http.post(`order/cancel`, data).then(res => {
 				console.log(res, '打印结果');
 				if (res.status == 200) {
+					this.showLoad=false
 					this.show = false
 					this.$refs.uToast.show({
 						message: res.message,
@@ -322,7 +323,6 @@ export default {
 	onLoad(option) {
 		console.log('页面参数', option);
 		console.log('this.showLoad', this.showLoad);
-
 		let pages = getCurrentPages();
 		let page = pages[pages.length - 1];
 		let page1 = pages[pages.length - pages.length];
@@ -376,8 +376,10 @@ export default {
 	},
 	onShow() {
 		if (uni.getStorageSync('token')) {
+			this.showLoad=true
 			this.getAllList()
 		} else {
+			this.showLoad=true
 			this.showLogin = true
 		}
 	}

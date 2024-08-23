@@ -370,7 +370,7 @@ var _default = exports.default = {
     },
     goHelp: function goHelp() {
       uni.navigateTo({
-        url: '/pages/help/help?showIndex=2'
+        url: '/pages/help/help'
       });
     },
     loginOut: function loginOut() {

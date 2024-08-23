@@ -444,9 +444,11 @@ var _default = exports.default = {
         orderId: CancleOrderId
       };
       console.log('data', data);
+      this.showLoad = true;
       uni.$u.http.post("order/cancel", data).then(function (res) {
         console.log(res, '打印结果');
         if (res.status == 200) {
+          _this2.showLoad = false;
           _this2.show = false;
           _this2.$refs.uToast.show({
             message: res.message,
@@ -567,8 +569,10 @@ var _default = exports.default = {
   },
   onShow: function onShow() {
     if (uni.getStorageSync('token')) {
+      this.showLoad = true;
       this.getAllList();
     } else {
+      this.showLoad = true;
       this.showLogin = true;
     }
   }

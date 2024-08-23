@@ -1,1 +1,1 @@
-<view class="help"><view style="width:730rpx;display:flex;justify-content:center;margin:0 auto;"><u-tabs vue-id="0c871fc0-1" list="{{list1}}" current="{{showIndex}}" itemStyle="width: 100rpx;height:80rpx" lineWidth="20" lineColor="#ff5a7f" data-event-opts="{{[['^click',[['click']]]]}}" bind:click="__e" bind:__l="__l"></u-tabs></view><view hidden="{{!(showIndex===0)}}">0</view><view hidden="{{!(showIndex===1)}}">1</view><view hidden="{{!(showIndex===2)}}">2</view></view>
+<view class="help"></view>
