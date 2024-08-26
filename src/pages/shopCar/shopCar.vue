@@ -312,7 +312,7 @@ export default {
 						});
 					}
 				} else {
-					this.show = true
+					this.show = true 
 				}
 			})
 		}
