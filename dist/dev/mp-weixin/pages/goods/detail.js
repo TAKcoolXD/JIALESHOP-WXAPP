@@ -349,6 +349,7 @@ exports.default = void 0;
 var _default = exports.default = {
   data: function data() {
     return {
+      goods_name: '',
       goods_image: '',
       stock_total: '',
       token: '',
@@ -474,6 +475,7 @@ var _default = exports.default = {
       console.log(res, '打印结果');
       if (res.status == 200) {
         _this2.loading = false;
+        _this2.goods_name = res.data.detail.goods_name;
         _this2.SwiperList = res.data.detail.goods_images;
         _this2.goods_price = res.data.detail.goods_price_max;
         _this2.goods_sales = res.data.detail.goods_sales;

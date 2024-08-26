@@ -18,7 +18,7 @@
 		</view>
 		<!-- 商品名稱和分享 -->
 		<view style="display: flex;justify-content: space-between;align-items: center;">
-			<view style="color: #959595;">蘋果14PRO</view>
+			<view style="color: #959595;">{{goods_name}}</view>
 			<view @click="showShare"><u-icon name="share-square" color="#ff547b" size="28"></u-icon></view>
 		</view>
 		<!-- 服務 -->
@@ -172,6 +172,7 @@
 export default {
 	data() {
 		return {
+			goods_name:'',
 			goods_image:'',
 			stock_total:'',
 			token: '',
@@ -299,6 +300,7 @@ export default {
 			console.log(res, '打印结果');
 			if (res.status == 200) {
 				this.loading = false
+				this.goods_name=res.data.detail.goods_name
 				this.SwiperList = res.data.detail.goods_images
 				this.goods_price = res.data.detail.goods_price_max
 				this.goods_sales = res.data.detail.goods_sales

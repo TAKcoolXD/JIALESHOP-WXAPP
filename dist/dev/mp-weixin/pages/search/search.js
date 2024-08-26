@@ -201,6 +201,7 @@ var _default = exports.default = {
     Search: function Search(a) {
       console.log('搜索', a);
       var text = a.trim();
+      console.log('text', text);
       if (text.length === 0) {
         this.$refs.uToast.show({
           message: '搜索内容不能爲空哦！！',
@@ -211,8 +212,9 @@ var _default = exports.default = {
         // console.log(text);
       } else {
         this.keywordList.push(text);
+        var goodsName = text;
         uni.navigateTo({
-          url: '/pages/goods/list'
+          url: "/pages/goods/list?goodsName=".concat(goodsName)
         });
         this.keyword = '';
       }
@@ -223,6 +225,13 @@ var _default = exports.default = {
     },
     search: function search(a) {
       this.Search(a);
+    },
+    gokeyword: function gokeyword(a) {
+      console.log(a);
+      var goodsName = a;
+      uni.navigateTo({
+        url: "/pages/goods/list?goodsName=".concat(goodsName)
+      });
     }
   }
 };

@@ -103,6 +103,9 @@ try {
     uSearch: function () {
       return Promise.all(/*! import() | node-modules/uview-ui/components/u-search/u-search */[__webpack_require__.e("common/vendor"), __webpack_require__.e("node-modules/uview-ui/components/u-search/u-search")]).then(__webpack_require__.bind(null, /*! uview-ui/components/u-search/u-search.vue */ 291))
     },
+    uEmpty: function () {
+      return Promise.all(/*! import() | node-modules/uview-ui/components/u-empty/u-empty */[__webpack_require__.e("common/vendor"), __webpack_require__.e("node-modules/uview-ui/components/u-empty/u-empty")]).then(__webpack_require__.bind(null, /*! uview-ui/components/u-empty/u-empty.vue */ 332))
+    },
   }
 } catch (e) {
   if (
@@ -125,6 +128,15 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
+  var g0 = _vm.goods.length
+  _vm.$mp.data = Object.assign(
+    {},
+    {
+      $root: {
+        g0: g0,
+      },
+    }
+  )
 }
 var recyclableRender = false
 var staticRenderFns = []
@@ -223,7 +235,10 @@ var _default = exports.default = {
   data: function data() {
     return {
       show: true,
-      index: 1
+      index: 1,
+      goods: [],
+      placeholder: '',
+      goodsName: ''
     };
   },
   methods: {
@@ -232,20 +247,66 @@ var _default = exports.default = {
     // 	this.show = !a
     // },
     showTatal: function showTatal() {
+      var _this = this;
       this.index = 1;
+      var goodsName = encodeURIComponent(this.goodsName);
+      uni.$u.http.get("goods/list&sortType=all&sortPrice=0&categoryId=0&goodsName=".concat(goodsName, "&page=1")).then(function (res) {
+        console.log(res, '打印结果');
+        if (res.status == 200) {
+          _this.goods = res.data.list.data;
+          console.log('goods', _this.goods);
+        } else {}
+      });
     },
     showSell: function showSell() {
+      var _this2 = this;
       this.index = 2;
+      var goodsName = encodeURIComponent(this.goodsName);
+      uni.$u.http.get("goods/list&sortType=sales&sortPrice=0&categoryId=0&goodsName=".concat(goodsName, "&page=1")).then(function (res) {
+        console.log(res, '打印结果');
+        if (res.status == 200) {
+          _this2.goods = res.data.list.data;
+          console.log('goods', _this2.goods);
+        } else {}
+      });
     },
     showPrice: function showPrice() {
+      var _this3 = this;
       this.index = 3;
-    },
-    goDetail: function goDetail() {
-      console.log('跳转详情页');
-      uni.navigateTo({
-        url: '/pages/goods/detail'
+      var goodsName = encodeURIComponent(this.goodsName);
+      uni.$u.http.get("goods/list&sortType=prices&sortPrice=0&categoryId=0&goodsName=".concat(goodsName, "&page=1")).then(function (res) {
+        console.log(res, '打印结果');
+        if (res.status == 200) {
+          _this3.goods = res.data.list.data;
+          console.log('goods', _this3.goods);
+        } else {}
       });
+    },
+    goDetail: function goDetail(id) {
+      console.log('跳转详情页', id);
+      uni.navigateTo({
+        url: "/pages/goods/detail?goodsid=".concat(id)
+      });
+    },
+    goSearch: function goSearch() {
+      uni.navigateBack();
+      // console.log('回去搜索');
     }
+  },
+  onLoad: function onLoad(option) {
+    var _this4 = this;
+    console.log('option', option);
+    this.placeholder = option.goodsName;
+    this.goodsName = option.goodsName;
+    var goodsName = encodeURIComponent(option.goodsName);
+    console.log('encodegoodsName', goodsName);
+    uni.$u.http.get("goods/list&sortType=all&sortPrice=0&categoryId=0&goodsName=".concat(goodsName, "&page=1")).then(function (res) {
+      console.log(res, '打印结果');
+      if (res.status == 200) {
+        _this4.goods = res.data.list.data;
+        console.log('goods', _this4.goods);
+      } else {}
+    });
   }
 };
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 2)["default"]))
