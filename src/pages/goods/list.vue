@@ -7,8 +7,10 @@
 		</view>
 		<view
 			style="width: 680rpx; margin: 0 auto;height: 100rpx;display: flex;justify-content: center;align-items: center;">
-			<view style=" width: 200rpx;text-align: center;" @click="showTatal()" :class="{ active: index == 1 }">綜合</view>
-			<view style=" width: 200rpx;text-align: center;" @click="showSell()" :class="{ active: index == 2, }">销量</view>
+			<view style=" width: 200rpx;text-align: center;" @click="showTatal()" :class="{ active: index == 1 }">綜合
+			</view>
+			<view style=" width: 200rpx;text-align: center;" @click="showSell()" :class="{ active: index == 2, }">销量
+			</view>
 			<view style=" width: 200rpx;text-align: center;" @click="showPrice()" :class="{ active: index == 3, }">
 				价格<span></span>
 			</view>
@@ -50,6 +52,9 @@
 			<u-empty mode="list" icon="http://cdn.uviewui.com/uview/empty/car.png">
 			</u-empty>
 		</view>
+		<view>
+			<u-loading-page :loading="showLoad"></u-loading-page>
+		</view>
 	</view>
 </template>
 
@@ -61,7 +66,8 @@ export default {
 			index: 1,
 			goods: [],
 			placeholder: '',
-			goodsName: ''
+			goodsName: '',
+			showLoad: false,
 		}
 	},
 	methods: {
@@ -73,9 +79,11 @@ export default {
 		showTatal() {
 			this.index = 1
 			let goodsName = encodeURIComponent(this.goodsName)
+			this.showLoad=true
 			uni.$u.http.get(`goods/list&sortType=all&sortPrice=0&categoryId=0&goodsName=${goodsName}&page=1`,).then(res => {
 				console.log(res, '打印结果');
 				if (res.status == 200) {
+					this.showLoad=false
 					this.goods = res.data.list.data
 					console.log('goods', this.goods);
 				} else {
@@ -86,9 +94,11 @@ export default {
 		showSell() {
 			this.index = 2
 			let goodsName = encodeURIComponent(this.goodsName)
+			this.showLoad=true
 			uni.$u.http.get(`goods/list&sortType=sales&sortPrice=0&categoryId=0&goodsName=${goodsName}&page=1`,).then(res => {
 				console.log(res, '打印结果');
 				if (res.status == 200) {
+					this.showLoad=false
 					this.goods = res.data.list.data
 					console.log('goods', this.goods);
 				} else {
@@ -99,9 +109,11 @@ export default {
 		showPrice() {
 			this.index = 3
 			let goodsName = encodeURIComponent(this.goodsName)
+			this.showLoad=true
 			uni.$u.http.get(`goods/list&sortType=prices&sortPrice=0&categoryId=0&goodsName=${goodsName}&page=1`,).then(res => {
 				console.log(res, '打印结果');
 				if (res.status == 200) {
+					this.showLoad=false
 					this.goods = res.data.list.data
 					console.log('goods', this.goods);
 				} else {
@@ -128,9 +140,11 @@ export default {
 		this.goodsName = option.goodsName
 		let goodsName = encodeURIComponent(option.goodsName)
 		console.log('encodegoodsName', goodsName);
+		this.showLoad=true
 		uni.$u.http.get(`goods/list&sortType=all&sortPrice=0&categoryId=0&goodsName=${goodsName}&page=1`,).then(res => {
 			console.log(res, '打印结果');
 			if (res.status == 200) {
+				this.showLoad=false
 				this.goods = res.data.list.data
 				console.log('goods', this.goods);
 			} else {

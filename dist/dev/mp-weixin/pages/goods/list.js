@@ -106,6 +106,9 @@ try {
     uEmpty: function () {
       return Promise.all(/*! import() | node-modules/uview-ui/components/u-empty/u-empty */[__webpack_require__.e("common/vendor"), __webpack_require__.e("node-modules/uview-ui/components/u-empty/u-empty")]).then(__webpack_require__.bind(null, /*! uview-ui/components/u-empty/u-empty.vue */ 332))
     },
+    uLoadingPage: function () {
+      return Promise.all(/*! import() | node-modules/uview-ui/components/u-loading-page/u-loading-page */[__webpack_require__.e("common/vendor"), __webpack_require__.e("node-modules/uview-ui/components/u-loading-page/u-loading-page")]).then(__webpack_require__.bind(null, /*! uview-ui/components/u-loading-page/u-loading-page.vue */ 355))
+    },
   }
 } catch (e) {
   if (
@@ -231,6 +234,11 @@ exports.default = void 0;
 //
 //
 //
+//
+//
+//
+//
+//
 var _default = exports.default = {
   data: function data() {
     return {
@@ -238,7 +246,8 @@ var _default = exports.default = {
       index: 1,
       goods: [],
       placeholder: '',
-      goodsName: ''
+      goodsName: '',
+      showLoad: false
     };
   },
   methods: {
@@ -250,9 +259,11 @@ var _default = exports.default = {
       var _this = this;
       this.index = 1;
       var goodsName = encodeURIComponent(this.goodsName);
+      this.showLoad = true;
       uni.$u.http.get("goods/list&sortType=all&sortPrice=0&categoryId=0&goodsName=".concat(goodsName, "&page=1")).then(function (res) {
         console.log(res, '打印结果');
         if (res.status == 200) {
+          _this.showLoad = false;
           _this.goods = res.data.list.data;
           console.log('goods', _this.goods);
         } else {}
@@ -262,9 +273,11 @@ var _default = exports.default = {
       var _this2 = this;
       this.index = 2;
       var goodsName = encodeURIComponent(this.goodsName);
+      this.showLoad = true;
       uni.$u.http.get("goods/list&sortType=sales&sortPrice=0&categoryId=0&goodsName=".concat(goodsName, "&page=1")).then(function (res) {
         console.log(res, '打印结果');
         if (res.status == 200) {
+          _this2.showLoad = false;
           _this2.goods = res.data.list.data;
           console.log('goods', _this2.goods);
         } else {}
@@ -274,9 +287,11 @@ var _default = exports.default = {
       var _this3 = this;
       this.index = 3;
       var goodsName = encodeURIComponent(this.goodsName);
+      this.showLoad = true;
       uni.$u.http.get("goods/list&sortType=prices&sortPrice=0&categoryId=0&goodsName=".concat(goodsName, "&page=1")).then(function (res) {
         console.log(res, '打印结果');
         if (res.status == 200) {
+          _this3.showLoad = false;
           _this3.goods = res.data.list.data;
           console.log('goods', _this3.goods);
         } else {}
@@ -300,9 +315,11 @@ var _default = exports.default = {
     this.goodsName = option.goodsName;
     var goodsName = encodeURIComponent(option.goodsName);
     console.log('encodegoodsName', goodsName);
+    this.showLoad = true;
     uni.$u.http.get("goods/list&sortType=all&sortPrice=0&categoryId=0&goodsName=".concat(goodsName, "&page=1")).then(function (res) {
       console.log(res, '打印结果');
       if (res.status == 200) {
+        _this4.showLoad = false;
         _this4.goods = res.data.list.data;
         console.log('goods', _this4.goods);
       } else {}

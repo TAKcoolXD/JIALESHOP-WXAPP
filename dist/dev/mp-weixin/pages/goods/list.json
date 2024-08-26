@@ -2,6 +2,7 @@
   "navigationBarTitleText": "商品列表",
   "usingComponents": {
     "u-search": "/node-modules/uview-ui/components/u-search/u-search",
-    "u-empty": "/node-modules/uview-ui/components/u-empty/u-empty"
+    "u-empty": "/node-modules/uview-ui/components/u-empty/u-empty",
+    "u-loading-page": "/node-modules/uview-ui/components/u-loading-page/u-loading-page"
   }
 }
