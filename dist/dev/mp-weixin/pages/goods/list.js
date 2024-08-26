@@ -103,6 +103,9 @@ try {
     uSearch: function () {
       return Promise.all(/*! import() | node-modules/uview-ui/components/u-search/u-search */[__webpack_require__.e("common/vendor"), __webpack_require__.e("node-modules/uview-ui/components/u-search/u-search")]).then(__webpack_require__.bind(null, /*! uview-ui/components/u-search/u-search.vue */ 291))
     },
+    uIcon: function () {
+      return Promise.all(/*! import() | node-modules/uview-ui/components/u-icon/u-icon */[__webpack_require__.e("common/vendor"), __webpack_require__.e("node-modules/uview-ui/components/u-icon/u-icon")]).then(__webpack_require__.bind(null, /*! uview-ui/components/u-icon/u-icon.vue */ 307))
+    },
     uEmpty: function () {
       return Promise.all(/*! import() | node-modules/uview-ui/components/u-empty/u-empty */[__webpack_require__.e("common/vendor"), __webpack_require__.e("node-modules/uview-ui/components/u-empty/u-empty")]).then(__webpack_require__.bind(null, /*! uview-ui/components/u-empty/u-empty.vue */ 332))
     },
@@ -239,6 +242,28 @@ exports.default = void 0;
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 var _default = exports.default = {
   data: function data() {
     return {
@@ -247,7 +272,11 @@ var _default = exports.default = {
       goods: [],
       placeholder: '',
       goodsName: '',
-      showLoad: false
+      showLoad: false,
+      up: true,
+      isUpActive: false,
+      // 上箭头初始为激活状态
+      isDownActive: false // 下箭头初始为未激活状态
     };
   },
   methods: {
@@ -258,6 +287,8 @@ var _default = exports.default = {
     showTatal: function showTatal() {
       var _this = this;
       this.index = 1;
+      this.isUpActive = false;
+      this.isDownActive = false;
       var goodsName = encodeURIComponent(this.goodsName);
       this.showLoad = true;
       uni.$u.http.get("goods/list&sortType=all&sortPrice=0&categoryId=0&goodsName=".concat(goodsName, "&page=1")).then(function (res) {
@@ -272,6 +303,8 @@ var _default = exports.default = {
     showSell: function showSell() {
       var _this2 = this;
       this.index = 2;
+      this.isUpActive = false;
+      this.isDownActive = false;
       var goodsName = encodeURIComponent(this.goodsName);
       this.showLoad = true;
       uni.$u.http.get("goods/list&sortType=sales&sortPrice=0&categoryId=0&goodsName=".concat(goodsName, "&page=1")).then(function (res) {
@@ -286,6 +319,7 @@ var _default = exports.default = {
     showPrice: function showPrice() {
       var _this3 = this;
       this.index = 3;
+      this.isUpActive = true;
       var goodsName = encodeURIComponent(this.goodsName);
       this.showLoad = true;
       uni.$u.http.get("goods/list&sortType=prices&sortPrice=0&categoryId=0&goodsName=".concat(goodsName, "&page=1")).then(function (res) {
@@ -306,10 +340,46 @@ var _default = exports.default = {
     goSearch: function goSearch() {
       uni.navigateBack();
       // console.log('回去搜索');
+    },
+    gochange: function gochange() {
+      console.log('改变');
+      this.up = !this.up;
+    },
+    toggleArrow: function toggleArrow(direction) {
+      var _this4 = this;
+      if (direction === 'up') {
+        this.index = 3;
+        this.isUpActive = true;
+        this.isDownActive = false;
+        var goodsName = encodeURIComponent(this.goodsName);
+        this.showLoad = true;
+        uni.$u.http.get("goods/list&sortType=prices&sortPrice=0&categoryId=0&goodsName=".concat(goodsName, "&page=1")).then(function (res) {
+          console.log(res, '打印结果');
+          if (res.status == 200) {
+            _this4.showLoad = false;
+            _this4.goods = res.data.list.data;
+            console.log('goods', _this4.goods);
+          } else {}
+        });
+      } else if (direction === 'down') {
+        this.index = 3;
+        this.isUpActive = false;
+        this.isDownActive = true;
+        var _goodsName = encodeURIComponent(this.goodsName);
+        this.showLoad = true;
+        uni.$u.http.get("goods/list&sortType=prices&sortPrice=1&categoryId=0&goodsName=".concat(_goodsName, "&page=1")).then(function (res) {
+          console.log(res, '打印结果');
+          if (res.status == 200) {
+            _this4.showLoad = false;
+            _this4.goods = res.data.list.data;
+            console.log('goods', _this4.goods);
+          } else {}
+        });
+      }
     }
   },
   onLoad: function onLoad(option) {
-    var _this4 = this;
+    var _this5 = this;
     console.log('option', option);
     this.placeholder = option.goodsName;
     this.goodsName = option.goodsName;
@@ -319,9 +389,9 @@ var _default = exports.default = {
     uni.$u.http.get("goods/list&sortType=all&sortPrice=0&categoryId=0&goodsName=".concat(goodsName, "&page=1")).then(function (res) {
       console.log(res, '打印结果');
       if (res.status == 200) {
-        _this4.showLoad = false;
-        _this4.goods = res.data.list.data;
-        console.log('goods', _this4.goods);
+        _this5.showLoad = false;
+        _this5.goods = res.data.list.data;
+        console.log('goods', _this5.goods);
       } else {}
     });
   }

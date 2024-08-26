@@ -45,6 +45,10 @@ export default {
 				
 				
 				this.keywordList.push(text)
+				uni.setStorageSync('historySearch', this.keywordList);
+				
+				console.log('本地存储',a);
+				
 				let goodsName=text
 				uni.navigateTo({
 					url: `/pages/goods/list?goodsName=${goodsName}`
@@ -69,7 +73,14 @@ export default {
 					url: `/pages/goods/list?goodsName=${goodsName}`
 				})
 		}
-	}
+	},
+	mounted() {
+		// 页面加载时，从本地存储读取历史搜索数据
+		const historySearch = uni.getStorageSync('historySearch');
+		if (historySearch) {
+			this.keywordList = historySearch;
+		}
+	},
 }
 
 </script>

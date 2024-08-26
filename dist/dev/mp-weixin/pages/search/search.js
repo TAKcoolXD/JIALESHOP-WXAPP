@@ -212,6 +212,8 @@ var _default = exports.default = {
         // console.log(text);
       } else {
         this.keywordList.push(text);
+        uni.setStorageSync('historySearch', this.keywordList);
+        console.log('本地存储', a);
         var goodsName = text;
         uni.navigateTo({
           url: "/pages/goods/list?goodsName=".concat(goodsName)
@@ -232,6 +234,13 @@ var _default = exports.default = {
       uni.navigateTo({
         url: "/pages/goods/list?goodsName=".concat(goodsName)
       });
+    }
+  },
+  mounted: function mounted() {
+    // 页面加载时，从本地存储读取历史搜索数据
+    var historySearch = uni.getStorageSync('historySearch');
+    if (historySearch) {
+      this.keywordList = historySearch;
     }
   }
 };
