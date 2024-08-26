@@ -322,7 +322,7 @@ var _default = exports.default = {
       this.isUpActive = true;
       var goodsName = encodeURIComponent(this.goodsName);
       this.showLoad = true;
-      uni.$u.http.get("goods/list&sortType=prices&sortPrice=0&categoryId=0&goodsName=".concat(goodsName, "&page=1")).then(function (res) {
+      uni.$u.http.get("goods/list&sortType=price&sortPrice=0&categoryId=0&goodsName=".concat(goodsName, "&page=1")).then(function (res) {
         console.log(res, '打印结果');
         if (res.status == 200) {
           _this3.showLoad = false;
@@ -353,7 +353,7 @@ var _default = exports.default = {
         this.isDownActive = false;
         var goodsName = encodeURIComponent(this.goodsName);
         this.showLoad = true;
-        uni.$u.http.get("goods/list&sortType=prices&sortPrice=0&categoryId=0&goodsName=".concat(goodsName, "&page=1")).then(function (res) {
+        uni.$u.http.get("goods/list&sortType=price&sortPrice=0&categoryId=0&goodsName=".concat(goodsName, "&page=1")).then(function (res) {
           console.log(res, '打印结果');
           if (res.status == 200) {
             _this4.showLoad = false;
@@ -367,7 +367,7 @@ var _default = exports.default = {
         this.isDownActive = true;
         var _goodsName = encodeURIComponent(this.goodsName);
         this.showLoad = true;
-        uni.$u.http.get("goods/list&sortType=prices&sortPrice=1&categoryId=0&goodsName=".concat(_goodsName, "&page=1")).then(function (res) {
+        uni.$u.http.get("goods/list&sortType=price&sortPrice=1&categoryId=0&goodsName=".concat(_goodsName, "&page=1")).then(function (res) {
           console.log(res, '打印结果');
           if (res.status == 200) {
             _this4.showLoad = false;

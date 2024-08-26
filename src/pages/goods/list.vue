@@ -140,7 +140,7 @@ export default {
 			this.isUpActive=true
 			let goodsName = encodeURIComponent(this.goodsName)
 			this.showLoad = true
-			uni.$u.http.get(`goods/list&sortType=prices&sortPrice=0&categoryId=0&goodsName=${goodsName}&page=1`,).then(res => {
+			uni.$u.http.get(`goods/list&sortType=price&sortPrice=0&categoryId=0&goodsName=${goodsName}&page=1`,).then(res => {
 				console.log(res, '打印结果');
 				if (res.status == 200) {
 					this.showLoad = false
@@ -173,7 +173,7 @@ export default {
 				this.isDownActive = false;
 				let goodsName = encodeURIComponent(this.goodsName)
 				this.showLoad = true
-				uni.$u.http.get(`goods/list&sortType=prices&sortPrice=0&categoryId=0&goodsName=${goodsName}&page=1`,).then(res => {
+				uni.$u.http.get(`goods/list&sortType=price&sortPrice=0&categoryId=0&goodsName=${goodsName}&page=1`,).then(res => {
 					console.log(res, '打印结果');
 					if (res.status == 200) {
 						this.showLoad = false
@@ -189,7 +189,7 @@ export default {
 				this.isDownActive = true;
 				let goodsName = encodeURIComponent(this.goodsName)
 				this.showLoad = true
-				uni.$u.http.get(`goods/list&sortType=prices&sortPrice=1&categoryId=0&goodsName=${goodsName}&page=1`,).then(res => {
+				uni.$u.http.get(`goods/list&sortType=price&sortPrice=1&categoryId=0&goodsName=${goodsName}&page=1`,).then(res => {
 					console.log(res, '打印结果');
 					if (res.status == 200) {
 						this.showLoad = false
