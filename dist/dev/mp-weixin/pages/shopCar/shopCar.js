@@ -110,6 +110,9 @@ try {
     uToast: function () {
       return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-toast/u-toast */ "node-modules/uview-ui/components/u-toast/u-toast").then(__webpack_require__.bind(null, /*! uview-ui/components/u-toast/u-toast.vue */ 340))
     },
+    uModal: function () {
+      return Promise.all(/*! import() | node-modules/uview-ui/components/u-modal/u-modal */[__webpack_require__.e("common/vendor"), __webpack_require__.e("node-modules/uview-ui/components/u-modal/u-modal")]).then(__webpack_require__.bind(null, /*! uview-ui/components/u-modal/u-modal.vue */ 316))
+    },
   }
 } catch (e) {
   if (
@@ -252,6 +255,16 @@ var _test = __webpack_require__(/*! ../../uni_modules/uv-ui-tools/libs/function/
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 var _default = exports.default = {
   data: function data() {
     return {
@@ -262,7 +275,11 @@ var _default = exports.default = {
       shopCarList: [],
       token: '',
       value: '',
-      cartId: []
+      cartId: [],
+      showDelete: false,
+      showModal: false,
+      title: '友情提示',
+      content: '您确定要删除该商品吗?'
     };
   },
   methods: {
@@ -292,8 +309,9 @@ var _default = exports.default = {
       });
     },
     change: function change() {
-      console.log('sad ');
+      console.log('sad');
       this.showhandle = !this.showhandle;
+      this.showDelete = !this.showDelete;
     },
     goSettleMent: function goSettleMent() {
       var _this2 = this;
@@ -351,6 +369,87 @@ var _default = exports.default = {
       uni.switchTab({
         url: '/pages/index/index'
       });
+    },
+    clearShopList: function clearShopList() {
+      console.log('清除shopList');
+      if (this.checkedAll) {
+        this.shopCarList = [];
+      } else {
+        // this.shopCarList.forEach(item => {
+        // 	console.log('勾选的', item.checked);
+        // 	if (item.checked == true) {
+        // 		console.log('清除选择的');
+        this.showModal = true;
+        // 	}
+        // })
+        // console.log(''a);
+
+        // console.log('选错选中的');
+      }
+    },
+    confirm: function confirm() {
+      var _this3 = this;
+      console.log('确认');
+      this.shopCarList.forEach(function (item) {
+        console.log('勾选的', item.checked);
+        if (item.checked == true) {
+          console.log('清除选择的', item.id);
+          var data = {
+            cartIds: []
+          };
+          data.cartIds.push(item.id);
+          uni.$u.http.post("cart/clear", data).then(function (res) {
+            console.log(res, '打印结果');
+            if (res.status == 200) {
+              _this3.$refs.uToast.show({
+                message: res.message,
+                type: 'success',
+                position: 'center',
+                duration: 1000
+              });
+              uni.$u.http.get("cart/list").then(function (res) {
+                console.log(res, '打印结果');
+                if (res.status == 200) {
+                  _this3.loading = false;
+                  _this3.cartTotal = res.data.cartTotal;
+                  var list = res.data.list;
+                  _this3.shopCarList = list.map(function (item) {
+                    item.checked = false;
+                    return item;
+                  });
+                  console.log(_this3.shopCarList);
+                  console.log('商城数组长度', _this3.shopCarList.length);
+                  if (_this3.shopCarList.length > 0) {
+                    uni.setTabBarBadge({
+                      index: 2,
+                      // 确保索引与购物车tab一致
+                      text: String(_this3.shopCarList.length) // 将长度转换为字符串
+                    });
+                  } else {
+                    uni.removeTabBarBadge({
+                      index: 2
+                    });
+                  }
+                } else {
+                  _this3.show = true;
+                }
+              });
+            } else {
+              _this3.$refs.uToast.show({
+                message: '删除失败',
+                type: 'error',
+                position: 'center',
+                duration: 1000
+              });
+            }
+          });
+          _this3.showModal = false;
+        }
+      });
+    },
+    cancel: function cancel() {
+      console.log('取消');
+      this.showModal = false;
     }
   },
   computed: {
@@ -373,27 +472,27 @@ var _default = exports.default = {
     }
   },
   onShow: function onShow() {
-    var _this3 = this;
+    var _this4 = this;
     this.loading = true;
     this.token = uni.getStorageSync('token');
     if (this.token) {
       uni.$u.http.get("cart/list").then(function (res) {
         console.log(res, '打印结果');
         if (res.status == 200) {
-          _this3.loading = false;
-          _this3.cartTotal = res.data.cartTotal;
+          _this4.loading = false;
+          _this4.cartTotal = res.data.cartTotal;
           var list = res.data.list;
-          _this3.shopCarList = list.map(function (item) {
+          _this4.shopCarList = list.map(function (item) {
             item.checked = false;
             return item;
           });
-          console.log(_this3.shopCarList);
-          console.log('商城数组长度', _this3.shopCarList.length);
-          if (_this3.shopCarList.length > 0) {
+          console.log(_this4.shopCarList);
+          console.log('商城数组长度', _this4.shopCarList.length);
+          if (_this4.shopCarList.length > 0) {
             uni.setTabBarBadge({
               index: 2,
               // 确保索引与购物车tab一致
-              text: String(_this3.shopCarList.length) // 将长度转换为字符串
+              text: String(_this4.shopCarList.length) // 将长度转换为字符串
             });
           } else {
             uni.removeTabBarBadge({
@@ -401,7 +500,7 @@ var _default = exports.default = {
             });
           }
         } else {
-          _this3.show = true;
+          _this4.show = true;
         }
       });
     }

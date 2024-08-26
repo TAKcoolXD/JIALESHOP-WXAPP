@@ -23,18 +23,6 @@
 				<view @click="toggleArrow('down')">
 					<u-icon :name="'arrow-down'" :color="isDownActive ? '#e7a1b8' : 'black'"></u-icon>
 				</view>
-				<!-- <view @click="gochange" >
-					<u-icon :name="up ? 'arrow-up' : 'arrow-down'" :color="up ? '#e7a1b8' : 'black'"></u-icon>
-				</view> -->
-				<!-- <view>
-					<u-icon name="arrow-up"></u-icon>
-				</view>
-				<view >
-					<u-icon name="arrow-down" color="#e7a1b8"></u-icon>
-				</view>
-				<view @click="gochange">
-					<u-icon name="arrow-down"></u-icon>
-				</view> -->
 			</view>
 		</view>
 		<view v-show="index == 1">
@@ -161,10 +149,6 @@ export default {
 			uni.navigateBack()
 			// console.log('回去搜索');
 
-		},
-		gochange() {
-			console.log('改变');
-			this.up = !this.up
 		},
 		toggleArrow(direction) {
 			if (direction === 'up') {

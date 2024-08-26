@@ -43,12 +43,20 @@
 						合计：<span style="font-size: 20rpx;color: #ff91ab;">￥</span><span style="color: #ff91ab;">{{
 							totalPrice }}</span>
 					</view>
+					<view v-if="!showDelete">
+						<button v-if="!isCheck" @click="goSettleMent1"
+							style="padding: 10rpx 40rpx;background-color: #ff91ab;border-radius: 35rpx;color: white;">去结算</button>
+						<button v-else @click="goSettleMent"
+							style="padding: 10rpx 40rpx;background-color: #ff547b;border-radius: 35rpx;color: white;">去结算{{
+								cartTotal }}</button>
+					</view>
+					<view v-else>
+						<button v-if="!isCheck" @click="clearShopList"
+							style="padding: 10rpx 40rpx;background-color: #ff91ab;border-radius: 35rpx;color: white;">删除</button>
+						<button v-else @click="clearShopList"
+							style="padding: 10rpx 40rpx;background-color: #ff547b;border-radius: 35rpx;color: white;">删除</button>
+					</view>
 
-					<button v-if="!isCheck" @click="goSettleMent1"
-						style="padding: 10rpx 40rpx;background-color: #ff91ab;border-radius: 35rpx;color: white;">去结算</button>
-					<button v-else @click="goSettleMent"
-						style="padding: 10rpx 40rpx;background-color: #ff547b;border-radius: 35rpx;color: white;">去结算{{
-							cartTotal }}</button>
 					<!-- <view @click="goSettleMent"
 					style="padding: 10rpx 40rpx;background-color: #ff91ab;border-radius: 35rpx;color: white;">
 					去结算
@@ -64,6 +72,8 @@
 				去逛逛</view>
 		</view>
 		<u-toast ref="uToast"></u-toast>
+		<u-modal :show="showModal" :title="title" :content='content' showCancelButton="true" @confirm="confirm"
+			@cancel="cancel" confirmText="确定" cancelText="取消"></u-modal>
 	</view>
 </template>
 <script>
@@ -81,6 +91,10 @@ export default {
 			token: '',
 			value: '',
 			cartId: [],
+			showDelete: false,
+			showModal: false,
+			title: '友情提示',
+			content: '您确定要删除该商品吗?',
 		}
 	},
 	methods: {
@@ -110,8 +124,9 @@ export default {
 			})
 		},
 		change() {
-			console.log('sad ');
+			console.log('sad');
 			this.showhandle = !this.showhandle;
+			this.showDelete = !this.showDelete
 		},
 		goSettleMent() {
 			console.log('去结算');
@@ -171,6 +186,89 @@ export default {
 			});
 
 		},
+		clearShopList() {
+			console.log('清除shopList');
+
+			if (this.checkedAll) {
+				this.shopCarList = []
+			} else {
+				// this.shopCarList.forEach(item => {
+				// 	console.log('勾选的', item.checked);
+				// 	if (item.checked == true) {
+				// 		console.log('清除选择的');
+				this.showModal = true
+				// 	}
+				// })
+				// console.log(''a);
+
+				// console.log('选错选中的');
+
+			}
+
+		},
+		confirm() {
+			console.log('确认');
+			this.shopCarList.forEach(item => {
+				console.log('勾选的', item.checked);
+				if (item.checked == true) {
+					console.log('清除选择的', item.id);
+					let data = {
+						cartIds: []
+					}
+					data.cartIds.push(item.id)
+					uni.$u.http.post(`cart/clear`, data).then(res => {
+						console.log(res, '打印结果');
+						if (res.status == 200) {
+							this.$refs.uToast.show({
+								message: res.message,
+								type: 'success',
+								position: 'center',
+								duration: 1000
+							});
+							uni.$u.http.get(`cart/list`,).then(res => {
+								console.log(res, '打印结果');
+								if (res.status == 200) {
+									this.loading = false
+									this.cartTotal = res.data.cartTotal
+									let list = res.data.list
+									this.shopCarList = list.map(item => {
+										item.checked = false
+										return item
+									})
+									console.log(this.shopCarList);
+									console.log('商城数组长度', this.shopCarList.length);
+									if (this.shopCarList.length > 0) {
+										uni.setTabBarBadge({
+											index: 2, // 确保索引与购物车tab一致
+											text: String(this.shopCarList.length) // 将长度转换为字符串
+										});
+									} else {
+										uni.removeTabBarBadge({
+											index: 2
+										});
+									}
+								} else {
+									this.show = true
+								}
+							})
+
+						} else {
+							this.$refs.uToast.show({
+								message: '删除失败',
+								type: 'error',
+								position: 'center',
+								duration: 1000
+							});
+						}
+					})
+					this.showModal = false
+				}
+			})
+		},
+		cancel() {
+			console.log('取消');
+			this.showModal = false
+		}
 	},
 	computed: {
 		checkedAll() {

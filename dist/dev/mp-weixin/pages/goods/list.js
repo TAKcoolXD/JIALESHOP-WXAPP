@@ -252,18 +252,6 @@ exports.default = void 0;
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 var _default = exports.default = {
   data: function data() {
     return {
@@ -340,10 +328,6 @@ var _default = exports.default = {
     goSearch: function goSearch() {
       uni.navigateBack();
       // console.log('回去搜索');
-    },
-    gochange: function gochange() {
-      console.log('改变');
-      this.up = !this.up;
     },
     toggleArrow: function toggleArrow(direction) {
       var _this4 = this;

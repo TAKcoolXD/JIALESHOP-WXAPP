@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<!-- 搜索框 -->
-		<view style="margin-top: 10rpx;">
+		<view style="margin-top: 10rpx;" @click="goSearch">
 			<u-search placeholder="请输入您搜索的商品" v-model="keyword" @search="search(keyword)"
 				@custom="Search(keyword)"></u-search>
 		</view>
@@ -97,6 +97,12 @@ export default {
 		},
 		Search(a) {
 			console.log('搜索', a);
+		},
+		goSearch(){
+			this.keywords = ''
+			uni.navigateTo({
+				url: '/pages/search/search'
+			})
 		},
 		goShow(ID) {
 

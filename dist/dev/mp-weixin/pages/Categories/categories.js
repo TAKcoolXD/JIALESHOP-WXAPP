@@ -269,6 +269,12 @@ var _default = exports.default = {
     Search: function Search(a) {
       console.log('搜索', a);
     },
+    goSearch: function goSearch() {
+      this.keywords = '';
+      uni.navigateTo({
+        url: '/pages/search/search'
+      });
+    },
     goShow: function goShow(ID) {
       var _this2 = this;
       this.index = ID;

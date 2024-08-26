@@ -4,6 +4,7 @@
     "u-icon": "/node-modules/uview-ui/components/u-icon/u-icon",
     "u-number-box": "/node-modules/uview-ui/components/u-number-box/u-number-box",
     "u-empty": "/node-modules/uview-ui/components/u-empty/u-empty",
-    "u-toast": "/node-modules/uview-ui/components/u-toast/u-toast"
+    "u-toast": "/node-modules/uview-ui/components/u-toast/u-toast",
+    "u-modal": "/node-modules/uview-ui/components/u-modal/u-modal"
   }
 }
