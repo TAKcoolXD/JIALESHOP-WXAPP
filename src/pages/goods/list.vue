@@ -21,8 +21,8 @@
 				<view v-for="item in goods" :key="item" style="" @click="goDetail(item.goods_id)">
 					<image :src="item.goods_image" style="width: 355rpx;height: 400rpx;margin: 8rpx;"
 						mode="scaleToFill" />
-					<view>{{ item.goods_name }}</view>
-					<view style="color: palevioletred;">￥{{ item.goods_price_max }}</view>
+					<view style="margin-left: 10rpx;text-align: center;">{{ item.goods_name }}</view>
+					<view style="color: palevioletred;text-align: center;">￥{{ item.goods_price_max }}</view>
 				</view>
 			</view>
 		</view>
@@ -32,8 +32,8 @@
 				<view v-for="item in goods" :key="item" style="" @click="goDetail(item.goods_id)">
 					<image :src="item.goods_image" style="width: 355rpx;height: 400rpx;margin: 8rpx;"
 						mode="scaleToFill" />
-					<view>11{{ item.goods_name }}</view>
-					<view style="color: palevioletred;">￥{{ item.goods_price_max }}</view>
+					<view style="margin-left: 10rpx;text-align: center;">{{ item.goods_name }}</view>
+					<view style="color: palevioletred;text-align: center;">￥{{ item.goods_price_max }}</view>
 				</view>
 			</view>
 		</view>
@@ -43,8 +43,8 @@
 				<view v-for="item in goods" :key="item" style="" @click="goDetail(item.goods_id)">
 					<image :src="item.goods_image" style="width: 355rpx;height: 400rpx;margin: 8rpx;"
 						mode="scaleToFill" />
-					<view>11{{ item.goods_name }}</view>
-					<view style="color: palevioletred;">￥{{ item.goods_price_max }}</view>
+					<view style="margin-left: 10rpx;text-align: center;">{{ item.goods_name }}</view>
+					<view style="color: palevioletred;text-align: center;">￥{{ item.goods_price_max }}</view>
 				</view>
 			</view>
 		</view>

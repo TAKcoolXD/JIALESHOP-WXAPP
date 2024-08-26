@@ -257,12 +257,12 @@ var _default = exports.default = {
                           delta: 1
                         });
                       } else if (page1.$page.fullPath == '/pages/index/index' || page1.$page.fullPath == '/pages/Categories/categories') {
-                        if (pages.length == 4) {
+                        if (pages.length == 4 || pages.length == 6) {
                           uni.navigateBack({
                             delta: 2
                           });
                         }
-                        if (pages.length == 3) {
+                        if (pages.length == 3 || pages.length == 5) {
                           uni.navigateBack({
                             delta: 1
                           });

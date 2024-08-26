@@ -9,7 +9,7 @@
 		</view>
 		<view style="display: flex;margin-top: 15rpx;flex-wrap: wrap;">
 			<view v-for="item in keywordList" :key="item" @click="gokeyword(item)"
-				style="padding: 5rpx 10rpx;text-align: center;margin: 8rpx 10rpx;border-radius: 20rpx;background-color: #ff547b;">
+				style="padding: 10rpx 76rpx;text-align: center;margin: 8rpx 10rpx;border-radius: 12rpx;background-color: #ff547b;color: white;">
 				{{ item }}</view>
 		</view>
 		<u-toast ref="uToast"></u-toast>
