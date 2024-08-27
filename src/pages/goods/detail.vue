@@ -181,6 +181,7 @@ export default {
 			content1: '此时此刻需要您登录哦',
 			SwiperList: [],
 			goodsId: '',
+			cartId:'',
 			goods_price: '',
 			goods_sales: '',
 			content: '',
@@ -229,7 +230,7 @@ export default {
 		goBuy(goodsId) {
 			console.log('商品ID', goodsId);
 			uni.navigateTo({
-				url: `/pages/settlement/settlement?goodsid=${goodsId}&CountValue=${this.CountValue}`
+				url: `/pages/settlement/settlement?goodsid=${goodsId}&CountValue=${this.CountValue}&cartId=${this.cartId}`
 			})
 			this.shareBuy = false
 		},
@@ -294,8 +295,11 @@ export default {
 	onLoad(option) {
 		this.token = uni.getStorageSync('token')
 		this.loading = true
+		console.log('页面参数',option);
+		
 		console.log('传过来的ID', option.goodsid);
 		this.goodsId = option.goodsid
+		this.cartId = option.cartId
 		uni.$u.http.get(`goods/detail&goodsId=${option.goodsid}&verifyStatus=1`,).then(res => {
 			console.log(res, '打印结果');
 			if (res.status == 200) {

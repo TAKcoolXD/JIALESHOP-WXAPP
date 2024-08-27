@@ -256,6 +256,7 @@ var _default = exports.default = {
       content1: '此时此刻需要您登录哦',
       value: '',
       goodsId: '',
+      cartId: '',
       CountValue: '',
       goodsList: [],
       orderTotalNum: '',
@@ -299,7 +300,7 @@ var _default = exports.default = {
           }
         });
       }
-      if (page.$page.fullPath == "/pages/settlement/settlement?goodsid=".concat(this.goodsId, "&CountValue=").concat(this.CountValue)) {
+      if (page.$page.fullPath == "/pages/settlement/settlement?goodsid=".concat(this.goodsId, "&CountValue=").concat(this.CountValue) || page.$page.fullPath == "/pages/settlement/settlement?goodsid=".concat(this.goodsId, "&CountValue=").concat(this.CountValue, "&cartId=").concat(this.cartId)) {
         console.log('立即购买');
         var _data = {
           couponId: 0,
@@ -337,6 +338,10 @@ var _default = exports.default = {
     var _this2 = this;
     //https://yoshop-test.azhuquq.com/index.php?s=/api/checkout/order&mode=buyNow&delivery=0&couponId=0&isUsePoints=0&goodsId=10002&goodsNum=2&goodsSkuId=0
     this.loading = true;
+    console.log('页面参数', option);
+    this.cartId = option.cartId;
+    this.goodsId = option.goodsid;
+    this.CountValue = option.CountValue;
     if (uni.getStorageSync('token')) {
       var pages = getCurrentPages();
       var page = pages[pages.length - 1];
@@ -345,11 +350,11 @@ var _default = exports.default = {
       console.log('获取当前页面', page.$page.fullPath);
       console.log('从哪个页面过来', page1.$page.fullPath);
       if (page1.$page.fullPath == '/pages/index/index' || page1.$page.fullPath == '/pages/Categories/categories') {
-        console.log(option, '页面参数');
+        // console.log(option, '页面参数');
         console.log('传过来的商品个数', option.CountValue);
         console.log('传过来的ID', option.goodsid);
-        this.goodsId = option.goodsid;
-        this.CountValue = option.CountValue;
+        // this.goodsId = option.goodsid
+        // this.CountValue = option.CountValue
         uni.$u.http.get("checkout/order&mode=buyNow&delivery=0&couponId=0&isUsePoints=0&goodsId=".concat(option.goodsid, "&goodsNum=").concat(option.CountValue, "&goodsSkuId=0")).then(function (res) {
           console.log(res, '打印结果');
           if (res.status == 200) {
@@ -364,24 +369,40 @@ var _default = exports.default = {
         });
       }
       if (page1.$page.fullPath == '/pages/shopCar/shopCar') {
-        console.log('1');
-        console.log(option.cartIds, '页面参数传递过来的购物车ID');
-        this.cartIds = option.cartIds;
-        var encodedCartID = encodeURIComponent(this.cartIds);
-        this.encodedCartID = encodedCartID;
-        console.log(encodedCartID, '编码转换');
-        uni.$u.http.get("checkout/order&mode=cart&delivery=0&couponId=0&isUsePoints=0&cartIds=".concat(encodedCartID)).then(function (res) {
-          console.log(res, '打印结果');
-          if (res.status == 200) {
-            _this2.loading = false;
-            _this2.goodsList = res.data.order.goodsList;
-            _this2.orderTotalNum = res.data.order.orderTotalNum;
-            _this2.orderTotalPrice = res.data.order.orderTotalPrice;
-            _this2.orderPayPrice = res.data.order.orderPayPrice;
-            _this2.expressPrice = res.data.order.expressPrice;
-            _this2.address = res.data.order.address;
-          }
-        });
+        if (page.$page.fullPath == "/pages/settlement/settlement?goodsid=".concat(this.goodsId, "&CountValue=").concat(this.CountValue, "&cartId=").concat(this.cartId)) {
+          console.log('2');
+          uni.$u.http.get("checkout/order&mode=buyNow&delivery=0&couponId=0&isUsePoints=0&goodsId=".concat(option.goodsid, "&goodsNum=").concat(option.CountValue, "&goodsSkuId=0")).then(function (res) {
+            console.log(res, '打印结果');
+            if (res.status == 200) {
+              _this2.loading = false;
+              _this2.goodsList = res.data.order.goodsList;
+              _this2.orderTotalNum = res.data.order.orderTotalNum;
+              _this2.orderTotalPrice = res.data.order.orderTotalPrice;
+              _this2.orderPayPrice = res.data.order.orderPayPrice;
+              _this2.expressPrice = res.data.order.expressPrice;
+              _this2.address = res.data.order.address;
+            }
+          });
+        } else {
+          console.log('1');
+          console.log(option.cartIds, '页面参数传递过来的购物车ID');
+          this.cartIds = option.cartIds;
+          var encodedCartID = encodeURIComponent(this.cartIds);
+          this.encodedCartID = encodedCartID;
+          console.log(encodedCartID, '编码转换');
+          uni.$u.http.get("checkout/order&mode=cart&delivery=0&couponId=0&isUsePoints=0&cartIds=".concat(encodedCartID)).then(function (res) {
+            console.log(res, '打印结果');
+            if (res.status == 200) {
+              _this2.loading = false;
+              _this2.goodsList = res.data.order.goodsList;
+              _this2.orderTotalNum = res.data.order.orderTotalNum;
+              _this2.orderTotalPrice = res.data.order.orderTotalPrice;
+              _this2.orderPayPrice = res.data.order.orderPayPrice;
+              _this2.expressPrice = res.data.order.expressPrice;
+              _this2.address = res.data.order.address;
+            }
+          });
+        }
       }
     } else {
       this.show = true;

@@ -358,6 +358,7 @@ var _default = exports.default = {
       content1: '此时此刻需要您登录哦',
       SwiperList: [],
       goodsId: '',
+      cartId: '',
       goods_price: '',
       goods_sales: '',
       content: '',
@@ -406,7 +407,7 @@ var _default = exports.default = {
     goBuy: function goBuy(goodsId) {
       console.log('商品ID', goodsId);
       uni.navigateTo({
-        url: "/pages/settlement/settlement?goodsid=".concat(goodsId, "&CountValue=").concat(this.CountValue)
+        url: "/pages/settlement/settlement?goodsid=".concat(goodsId, "&CountValue=").concat(this.CountValue, "&cartId=").concat(this.cartId)
       });
       this.shareBuy = false;
     },
@@ -469,8 +470,10 @@ var _default = exports.default = {
     var _this2 = this;
     this.token = uni.getStorageSync('token');
     this.loading = true;
+    console.log('页面参数', option);
     console.log('传过来的ID', option.goodsid);
     this.goodsId = option.goodsid;
+    this.cartId = option.cartId;
     uni.$u.http.get("goods/detail&goodsId=".concat(option.goodsid, "&verifyStatus=1")).then(function (res) {
       console.log(res, '打印结果');
       if (res.status == 200) {

@@ -373,25 +373,15 @@ var _default = exports.default = {
     clearShopList: function clearShopList() {
       console.log('点击清除shopList按钮');
       this.showModal = true;
-      // this.showModal = true
-      // if (this.checkedAll) {
-      // 	this.shopCarList = []
-      // 	console.log('清除全部shopList');
-      // 	this.showModal = true
-      // } else {
-      // 	// this.shopCarList.forEach(item => {
-      // 	// 	console.log('勾选的', item.checked);
-      // 	// 	if (item.checked == true) {
-      // 	// 		console.log('清除选择的');
-      // 	// console.log('清除部分shopList');
-
-      // 	// 	}
-      // 	// })
-      // 	// console.log(''a);
-
-      // 	// console.log('选错选中的');
-
-      // }
+    },
+    clearShopList1: function clearShopList1() {
+      console.log('请选择要删除的商品');
+      this.$refs.uToast.show({
+        message: '请选择要删除的商品',
+        type: 'error',
+        position: 'center',
+        duration: 1000
+      });
     },
     confirm: function confirm() {
       var _this3 = this;
@@ -518,6 +508,12 @@ var _default = exports.default = {
     cancel: function cancel() {
       console.log('取消');
       this.showModal = false;
+    },
+    goDetail: function goDetail(item) {
+      console.log('商品详情', item);
+      uni.navigateTo({
+        url: "/pages/goods/detail?goodsid=".concat(item.goods_id, "&cartId=").concat(item.id)
+      });
     }
   },
   computed: {

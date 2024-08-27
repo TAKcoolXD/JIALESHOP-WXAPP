@@ -14,7 +14,7 @@
 				</view>
 			</view>
 			<!-- 商品列表 计步器 -->
-			<view v-for="item in shopCarList" :key="item"
+			<view v-for="item in shopCarList" :key="item" 
 				style="width: 700rpx;height: 270rpx;margin: 20rpx auto;border-radius: 15rpx;background-color: white;">
 				<view style="display: flex;justify-content: space-around;align-items: center;height: 100%;">
 					<view>
@@ -22,7 +22,7 @@
 							<checkbox :checked="item.checked" />
 						</checkbox-group>
 					</view>
-					<image :src="item.goods.goods_image" style="width: 200rpx;height: 200rpx;" mode="scaleToFill" />
+					<image  :src="item.goods.goods_image" style="width: 200rpx;height: 200rpx;" mode="scaleToFill" @click="goDetail(item)" />
 					<view>
 						<u-number-box v-model="item.goods_num" @change="valChange(item)"></u-number-box>
 					</view>
@@ -51,7 +51,7 @@
 								cartTotal }}</button>
 					</view>
 					<view v-else>
-						<button v-if="!isCheck" @click="clearShopList"
+						<button v-if="!isCheck" @click="clearShopList1"
 							style="padding: 10rpx 40rpx;background-color: #ff91ab;border-radius: 35rpx;color: white;">删除</button>
 						<button v-else @click="clearShopList"
 							style="padding: 10rpx 40rpx;background-color: #ff547b;border-radius: 35rpx;color: white;">删除</button>
@@ -189,26 +189,15 @@ export default {
 		clearShopList() {
 			console.log('点击清除shopList按钮');
 			this.showModal = true
-			// this.showModal = true
-			// if (this.checkedAll) {
-			// 	this.shopCarList = []
-			// 	console.log('清除全部shopList');
-			// 	this.showModal = true
-			// } else {
-			// 	// this.shopCarList.forEach(item => {
-			// 	// 	console.log('勾选的', item.checked);
-			// 	// 	if (item.checked == true) {
-			// 	// 		console.log('清除选择的');
-			// 	// console.log('清除部分shopList');
-
-			// 	// 	}
-			// 	// })
-			// 	// console.log(''a);
-
-			// 	// console.log('选错选中的');
-
-			// }
-
+		},
+		clearShopList1(){
+			console.log('请选择要删除的商品');
+			this.$refs.uToast.show({
+				message: '请选择要删除的商品',
+				type: 'error',
+				position: 'center',
+				duration: 1000
+			});
 		},
 		confirm() {
 			console.log('确认');
@@ -336,6 +325,12 @@ export default {
 		cancel() {
 			console.log('取消');
 			this.showModal = false
+		},
+		goDetail(item){
+			console.log('商品详情', item);
+			uni.navigateTo({
+				url: `/pages/goods/detail?goodsid=${item.goods_id}&cartId=${item.id}`
+			})
 		}
 	},
 	computed: {
