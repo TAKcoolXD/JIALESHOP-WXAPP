@@ -1556,7 +1556,7 @@ function initData(vueOptions, context) {
     try {
       data = data.call(context); // 支持 Vue.prototype 上挂的数据
     } catch (e) {
-      if (Object({"NODE_ENV":"development","VUE_APP_DARK_MODE":"false","VUE_APP_NAME":"知识社区论坛","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
+      if (Object({"VUE_APP_DARK_MODE":"false","VUE_APP_NAME":"知识社区论坛","VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
         console.warn('根据 Vue 的 data 函数初始化小程序 data 失败，请尽量确保 data 函数中不访问 vm 对象，否则可能影响首次数据渲染速度。', data);
       }
     }
@@ -8889,7 +8889,7 @@ function type(obj) {
 
 function flushCallbacks$1(vm) {
     if (vm.__next_tick_callbacks && vm.__next_tick_callbacks.length) {
-        if (Object({"NODE_ENV":"development","VUE_APP_DARK_MODE":"false","VUE_APP_NAME":"知识社区论坛","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
+        if (Object({"VUE_APP_DARK_MODE":"false","VUE_APP_NAME":"知识社区论坛","VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
             var mpInstance = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:flushCallbacks[' + vm.__next_tick_callbacks.length + ']');
@@ -8910,14 +8910,14 @@ function nextTick$1(vm, cb) {
     //1.nextTick 之前 已 setData 且 setData 还未回调完成
     //2.nextTick 之前存在 render watcher
     if (!vm.__next_tick_pending && !hasRenderWatcher(vm)) {
-        if(Object({"NODE_ENV":"development","VUE_APP_DARK_MODE":"false","VUE_APP_NAME":"知识社区论坛","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"VUE_APP_DARK_MODE":"false","VUE_APP_NAME":"知识社区论坛","VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:nextVueTick');
         }
         return nextTick(cb, vm)
     }else{
-        if(Object({"NODE_ENV":"development","VUE_APP_DARK_MODE":"false","VUE_APP_NAME":"知识社区论坛","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"VUE_APP_DARK_MODE":"false","VUE_APP_NAME":"知识社区论坛","VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance$1 = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance$1.is || mpInstance$1.route) + '][' + vm._uid +
                 ']:nextMPTick');
@@ -9013,7 +9013,7 @@ var patch = function(oldVnode, vnode) {
     });
     var diffData = this.$shouldDiffData === false ? data : diff(data, mpData);
     if (Object.keys(diffData).length) {
-      if (Object({"NODE_ENV":"development","VUE_APP_DARK_MODE":"false","VUE_APP_NAME":"知识社区论坛","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
+      if (Object({"VUE_APP_DARK_MODE":"false","VUE_APP_NAME":"知识社区论坛","VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
         console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + this._uid +
           ']差量更新',
           JSON.stringify(diffData));
@@ -21762,6 +21762,79 @@ var _default = exports.default = {
 /* 350 */,
 /* 351 */,
 /* 352 */
+/*!******************************************************************!*\
+  !*** ./node_modules/uview-ui/components/u-loading-page/props.js ***!
+  \******************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(uni) {
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+var _default = exports.default = {
+  props: {
+    // 提示内容
+    loadingText: {
+      type: [String, Number],
+      default: uni.$u.props.loadingPage.loadingText
+    },
+    // 文字上方用于替换loading动画的图片
+    image: {
+      type: String,
+      default: uni.$u.props.loadingPage.image
+    },
+    // 加载动画的模式，circle-圆形，spinner-花朵形，semicircle-半圆形
+    loadingMode: {
+      type: String,
+      default: uni.$u.props.loadingPage.loadingMode
+    },
+    // 是否加载中
+    loading: {
+      type: Boolean,
+      default: uni.$u.props.loadingPage.loading
+    },
+    // 背景色
+    bgColor: {
+      type: String,
+      default: uni.$u.props.loadingPage.bgColor
+    },
+    // 文字颜色
+    color: {
+      type: String,
+      default: uni.$u.props.loadingPage.color
+    },
+    // 文字大小
+    fontSize: {
+      type: [String, Number],
+      default: uni.$u.props.loadingPage.fontSize
+    },
+    // 图标大小
+    iconSize: {
+      type: [String, Number],
+      default: uni.$u.props.loadingPage.fontSize
+    },
+    // 加载中图标的颜色，只能rgb或者十六进制颜色值
+    loadingColor: {
+      type: String,
+      default: uni.$u.props.loadingPage.loadingColor
+    }
+  }
+};
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 2)["default"]))
+
+/***/ }),
+/* 353 */,
+/* 354 */,
+/* 355 */,
+/* 356 */,
+/* 357 */,
+/* 358 */,
+/* 359 */,
+/* 360 */
 /*!***********************************************************!*\
   !*** ./node_modules/uview-ui/components/u-popup/props.js ***!
   \***********************************************************/
@@ -21851,79 +21924,6 @@ var _default = exports.default = {
     overlayOpacity: {
       type: [Number, String],
       default: uni.$u.props.popup.overlayOpacity
-    }
-  }
-};
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 2)["default"]))
-
-/***/ }),
-/* 353 */,
-/* 354 */,
-/* 355 */,
-/* 356 */,
-/* 357 */,
-/* 358 */,
-/* 359 */,
-/* 360 */
-/*!******************************************************************!*\
-  !*** ./node_modules/uview-ui/components/u-loading-page/props.js ***!
-  \******************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-var _default = exports.default = {
-  props: {
-    // 提示内容
-    loadingText: {
-      type: [String, Number],
-      default: uni.$u.props.loadingPage.loadingText
-    },
-    // 文字上方用于替换loading动画的图片
-    image: {
-      type: String,
-      default: uni.$u.props.loadingPage.image
-    },
-    // 加载动画的模式，circle-圆形，spinner-花朵形，semicircle-半圆形
-    loadingMode: {
-      type: String,
-      default: uni.$u.props.loadingPage.loadingMode
-    },
-    // 是否加载中
-    loading: {
-      type: Boolean,
-      default: uni.$u.props.loadingPage.loading
-    },
-    // 背景色
-    bgColor: {
-      type: String,
-      default: uni.$u.props.loadingPage.bgColor
-    },
-    // 文字颜色
-    color: {
-      type: String,
-      default: uni.$u.props.loadingPage.color
-    },
-    // 文字大小
-    fontSize: {
-      type: [String, Number],
-      default: uni.$u.props.loadingPage.fontSize
-    },
-    // 图标大小
-    iconSize: {
-      type: [String, Number],
-      default: uni.$u.props.loadingPage.fontSize
-    },
-    // 加载中图标的颜色，只能rgb或者十六进制颜色值
-    loadingColor: {
-      type: String,
-      default: uni.$u.props.loadingPage.loadingColor
     }
   }
 };

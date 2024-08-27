@@ -187,83 +187,151 @@ export default {
 
 		},
 		clearShopList() {
-			console.log('清除shopList');
+			console.log('点击清除shopList按钮');
+			this.showModal = true
+			// this.showModal = true
+			// if (this.checkedAll) {
+			// 	this.shopCarList = []
+			// 	console.log('清除全部shopList');
+			// 	this.showModal = true
+			// } else {
+			// 	// this.shopCarList.forEach(item => {
+			// 	// 	console.log('勾选的', item.checked);
+			// 	// 	if (item.checked == true) {
+			// 	// 		console.log('清除选择的');
+			// 	// console.log('清除部分shopList');
 
-			if (this.checkedAll) {
-				this.shopCarList = []
-			} else {
-				// this.shopCarList.forEach(item => {
-				// 	console.log('勾选的', item.checked);
-				// 	if (item.checked == true) {
-				// 		console.log('清除选择的');
-				this.showModal = true
-				// 	}
-				// })
-				// console.log(''a);
+			// 	// 	}
+			// 	// })
+			// 	// console.log(''a);
 
-				// console.log('选错选中的');
+			// 	// console.log('选错选中的');
 
-			}
+			// }
 
 		},
 		confirm() {
 			console.log('确认');
-			this.shopCarList.forEach(item => {
-				console.log('勾选的', item.checked);
-				if (item.checked == true) {
-					console.log('清除选择的', item.id);
-					let data = {
-						cartIds: []
-					}
-					data.cartIds.push(item.id)
-					uni.$u.http.post(`cart/clear`, data).then(res => {
-						console.log(res, '打印结果');
-						if (res.status == 200) {
-							this.$refs.uToast.show({
-								message: res.message,
-								type: 'success',
-								position: 'center',
-								duration: 1000
-							});
-							uni.$u.http.get(`cart/list`,).then(res => {
-								console.log(res, '打印结果');
-								if (res.status == 200) {
-									this.loading = false
-									this.cartTotal = res.data.cartTotal
-									let list = res.data.list
-									this.shopCarList = list.map(item => {
-										item.checked = false
-										return item
-									})
-									console.log(this.shopCarList);
-									console.log('商城数组长度', this.shopCarList.length);
-									if (this.shopCarList.length > 0) {
-										uni.setTabBarBadge({
-											index: 2, // 确保索引与购物车tab一致
-											text: String(this.shopCarList.length) // 将长度转换为字符串
-										});
-									} else {
-										uni.removeTabBarBadge({
-											index: 2
-										});
-									}
-								} else {
-									this.show = true
-								}
-							})
+			let data = {
+				cartIds: []
+			}
+			if (this.checkedAll) {
+				console.log('清除全部shopList');
+				this.shopCarList.forEach(item => {
+					console.log('勾选的', item.checked);
+					if (item.checked == true) {
+						console.log('清除选择的', item.id);
 
-						} else {
-							this.$refs.uToast.show({
-								message: '删除失败',
-								type: 'error',
-								position: 'center',
-								duration: 1000
-							});
+						data.cartIds.push(item.id)
+					}
+				})
+				console.log(data);
+				uni.$u.http.post(`cart/clear`, data).then(res => {
+							console.log(res, '打印结果');
+							if (res.status == 200) {
+								this.$refs.uToast.show({
+									message: res.message,
+									type: 'success',
+									position: 'center',
+									duration: 1000
+								});
+								uni.$u.http.get(`cart/list`,).then(res => {
+									console.log(res, '打印结果');
+									if (res.status == 200) {
+										this.loading = false
+										this.cartTotal = res.data.cartTotal
+										let list = res.data.list
+										this.shopCarList = list.map(item => {
+											item.checked = false
+											return item
+										})
+										console.log(this.shopCarList);
+										console.log('商城数组长度', this.shopCarList.length);
+										if (this.shopCarList.length > 0) {
+											uni.setTabBarBadge({
+												index: 2, // 确保索引与购物车tab一致
+												text: String(this.shopCarList.length) // 将长度转换为字符串
+											});
+										} else {
+											uni.removeTabBarBadge({
+												index: 2
+											});
+										}
+									} else {
+										this.show = true
+									}
+								})
+								this.showModal = false
+
+							} else {
+								this.$refs.uToast.show({
+									message: '删除失败',
+									type: 'error',
+									position: 'center',
+									duration: 1000
+								});
+							}
+						})
+			} else {
+				console.log('清除部分shopList');
+				this.shopCarList.forEach(item => {
+					console.log('勾选的', item.checked);
+					if (item.checked == true) {
+						console.log('清除选择的', item.id);
+						let data = {
+							cartIds: []
 						}
-					})
-					this.showModal = false
-				}
-			})
+						data.cartIds.push(item.id)
+						uni.$u.http.post(`cart/clear`, data).then(res => {
+							console.log(res, '打印结果');
+							if (res.status == 200) {
+								this.$refs.uToast.show({
+									message: res.message,
+									type: 'success',
+									position: 'center',
+									duration: 1000
+								});
+								uni.$u.http.get(`cart/list`,).then(res => {
+									console.log(res, '打印结果');
+									if (res.status == 200) {
+										this.loading = false
+										this.cartTotal = res.data.cartTotal
+										let list = res.data.list
+										this.shopCarList = list.map(item => {
+											item.checked = false
+											return item
+										})
+										console.log(this.shopCarList);
+										console.log('商城数组长度', this.shopCarList.length);
+										if (this.shopCarList.length > 0) {
+											uni.setTabBarBadge({
+												index: 2, // 确保索引与购物车tab一致
+												text: String(this.shopCarList.length) // 将长度转换为字符串
+											});
+										} else {
+											uni.removeTabBarBadge({
+												index: 2
+											});
+										}
+									} else {
+										this.show = true
+									}
+								})
+
+							} else {
+								this.$refs.uToast.show({
+									message: '删除失败',
+									type: 'error',
+									position: 'center',
+									duration: 1000
+								});
+							}
+						})
+						this.showModal = false
+					}
+				})
+			}
+
 		},
 		cancel() {
 			console.log('取消');
@@ -312,7 +380,7 @@ export default {
 						});
 					}
 				} else {
-					this.show = true 
+					this.show = true
 				}
 			})
 		}
