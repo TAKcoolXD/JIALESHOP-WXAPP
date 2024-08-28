@@ -1,7 +1,7 @@
 <template>
 	<view class="settlement" style="background-color: #fafafa;position: relative;">
 		<view style="display: flex;justify-content: space-around;height: 150rpx;color: #b1b1b2;">
-			<view style="display: flex;align-items: center;">
+			<view style="display: flex;align-items: center;" @click="goAddress">
 				<view style="margin-right: 60rpx;"><u-icon name="map" color="#b1b1b2" size="20"></u-icon></view>
 				<view>
 					<view>{{ address.name }} {{ address.phone }}</view>
@@ -120,7 +120,7 @@ export default {
 					console.log(res, '打印结果');
 					if (res.status == 200) {
 						this.orderId = res.data.orderId
-						uni.navigateTo({
+						uni.redirectTo({
 							url: `/pages/settlement/cashier?goodsId=${this.goodsId}&CountValue=${this.CountValue}&orderId=${this.orderId}`
 						})
 					}
@@ -142,7 +142,7 @@ export default {
 					console.log(res, '打印结果');
 					if (res.status == 200) {
 						this.orderId = res.data.orderId
-						uni.navigateTo({
+						uni.redirectTo({
 							url: `/pages/settlement/cashier?goodsId=${this.goodsId}&CountValue=${this.CountValue}&orderId=${this.orderId}`
 						})
 					}
@@ -160,6 +160,12 @@ export default {
 		cancel() {
 			console.log('22');
 			uni.navigateBack()
+		},
+		goAddress(){
+			console.log('编辑地址');
+			uni.navigateTo({
+				url: '/pages/address/address'
+			})
 		}
 	},
 	onLoad(option) {

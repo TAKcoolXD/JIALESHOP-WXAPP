@@ -99,7 +99,7 @@ var components
 try {
   components = {
     uIcon: function () {
-      return Promise.all(/*! import() | node-modules/uview-ui/components/u-icon/u-icon */[__webpack_require__.e("common/vendor"), __webpack_require__.e("node-modules/uview-ui/components/u-icon/u-icon")]).then(__webpack_require__.bind(null, /*! uview-ui/components/u-icon/u-icon.vue */ 307))
+      return Promise.all(/*! import() | node-modules/uview-ui/components/u-icon/u-icon */[__webpack_require__.e("common/vendor"), __webpack_require__.e("node-modules/uview-ui/components/u-icon/u-icon")]).then(__webpack_require__.bind(null, /*! uview-ui/components/u-icon/u-icon.vue */ 313))
     },
   }
 } catch (e) {
@@ -156,7 +156,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-
+/* WEBPACK VAR INJECTION */(function(uni) {
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -190,12 +190,32 @@ exports.default = void 0;
 //
 //
 //
+//
 var _default = exports.default = {
   data: function data() {
-    return {};
+    return {
+      addressList: []
+    };
   },
-  methods: {}
+  methods: {
+    goUpdata: function goUpdata() {
+      console.log('编辑');
+      uni.navigateTo({
+        url: "/pages/address/updataAddress"
+      });
+    }
+  },
+  onLoad: function onLoad() {
+    var _this = this;
+    uni.$u.http.get('address/list').then(function (res) {
+      console.log(res, '打印结果');
+      if (res.status == 200) {
+        _this.addressList = res.data.list;
+      }
+    });
+  }
 };
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 2)["default"]))
 
 /***/ })
 

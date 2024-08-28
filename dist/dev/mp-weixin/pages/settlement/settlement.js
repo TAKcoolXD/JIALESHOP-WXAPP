@@ -101,16 +101,16 @@ var components
 try {
   components = {
     uIcon: function () {
-      return Promise.all(/*! import() | node-modules/uview-ui/components/u-icon/u-icon */[__webpack_require__.e("common/vendor"), __webpack_require__.e("node-modules/uview-ui/components/u-icon/u-icon")]).then(__webpack_require__.bind(null, /*! uview-ui/components/u-icon/u-icon.vue */ 307))
+      return Promise.all(/*! import() | node-modules/uview-ui/components/u-icon/u-icon */[__webpack_require__.e("common/vendor"), __webpack_require__.e("node-modules/uview-ui/components/u-icon/u-icon")]).then(__webpack_require__.bind(null, /*! uview-ui/components/u-icon/u-icon.vue */ 313))
     },
     "u-Input": function () {
-      return Promise.all(/*! import() | node-modules/uview-ui/components/u--input/u--input */[__webpack_require__.e("common/vendor"), __webpack_require__.e("node-modules/uview-ui/components/u--input/u--input")]).then(__webpack_require__.bind(null, /*! uview-ui/components/u--input/u--input.vue */ 363))
+      return Promise.all(/*! import() | node-modules/uview-ui/components/u--input/u--input */[__webpack_require__.e("common/vendor"), __webpack_require__.e("node-modules/uview-ui/components/u--input/u--input")]).then(__webpack_require__.bind(null, /*! uview-ui/components/u--input/u--input.vue */ 369))
     },
     uLoadingPage: function () {
-      return Promise.all(/*! import() | node-modules/uview-ui/components/u-loading-page/u-loading-page */[__webpack_require__.e("common/vendor"), __webpack_require__.e("node-modules/uview-ui/components/u-loading-page/u-loading-page")]).then(__webpack_require__.bind(null, /*! uview-ui/components/u-loading-page/u-loading-page.vue */ 347))
+      return Promise.all(/*! import() | node-modules/uview-ui/components/u-loading-page/u-loading-page */[__webpack_require__.e("common/vendor"), __webpack_require__.e("node-modules/uview-ui/components/u-loading-page/u-loading-page")]).then(__webpack_require__.bind(null, /*! uview-ui/components/u-loading-page/u-loading-page.vue */ 353))
     },
     uModal: function () {
-      return Promise.all(/*! import() | node-modules/uview-ui/components/u-modal/u-modal */[__webpack_require__.e("common/vendor"), __webpack_require__.e("node-modules/uview-ui/components/u-modal/u-modal")]).then(__webpack_require__.bind(null, /*! uview-ui/components/u-modal/u-modal.vue */ 316))
+      return Promise.all(/*! import() | node-modules/uview-ui/components/u-modal/u-modal */[__webpack_require__.e("common/vendor"), __webpack_require__.e("node-modules/uview-ui/components/u-modal/u-modal")]).then(__webpack_require__.bind(null, /*! uview-ui/components/u-modal/u-modal.vue */ 322))
     },
   }
 } catch (e) {
@@ -294,7 +294,7 @@ var _default = exports.default = {
           console.log(res, '打印结果');
           if (res.status == 200) {
             _this.orderId = res.data.orderId;
-            uni.navigateTo({
+            uni.redirectTo({
               url: "/pages/settlement/cashier?goodsId=".concat(_this.goodsId, "&CountValue=").concat(_this.CountValue, "&orderId=").concat(_this.orderId)
             });
           }
@@ -316,7 +316,7 @@ var _default = exports.default = {
           console.log(res, '打印结果');
           if (res.status == 200) {
             _this.orderId = res.data.orderId;
-            uni.navigateTo({
+            uni.redirectTo({
               url: "/pages/settlement/cashier?goodsId=".concat(_this.goodsId, "&CountValue=").concat(_this.CountValue, "&orderId=").concat(_this.orderId)
             });
           }
@@ -332,6 +332,12 @@ var _default = exports.default = {
     cancel: function cancel() {
       console.log('22');
       uni.navigateBack();
+    },
+    goAddress: function goAddress() {
+      console.log('编辑地址');
+      uni.navigateTo({
+        url: '/pages/address/address'
+      });
     }
   },
   onLoad: function onLoad(option) {

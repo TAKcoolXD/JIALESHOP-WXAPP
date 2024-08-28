@@ -88,7 +88,7 @@ export default {
 						complete() {
 							console.log('orderId',orderId);
 							
-							uni.navigateTo({ url: `/pages/order/order?orderId=${orderId}`})
+							uni.redirectTo({ url: `/pages/order/order?orderId=${orderId}`})
 						}
 					})
 					

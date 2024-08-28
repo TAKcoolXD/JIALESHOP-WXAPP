@@ -140,6 +140,14 @@
 				"navigationBarTitleText" : "会员登录",
 				"enablePullDownRefresh" : false
 			}
+		},
+		{
+			"path" : "pages/address/updataAddress",
+			"style" : 
+			{
+				"navigationBarTitleText" : "编辑收货地址",
+				"enablePullDownRefresh" : false
+			}
 		}
 	],
 	"globalStyle": {
