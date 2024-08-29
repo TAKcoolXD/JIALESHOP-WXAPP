@@ -109,6 +109,9 @@ try {
     uLoadingPage: function () {
       return Promise.all(/*! import() | node-modules/uview-ui/components/u-loading-page/u-loading-page */[__webpack_require__.e("common/vendor"), __webpack_require__.e("node-modules/uview-ui/components/u-loading-page/u-loading-page")]).then(__webpack_require__.bind(null, /*! uview-ui/components/u-loading-page/u-loading-page.vue */ 354))
     },
+    uModal: function () {
+      return Promise.all(/*! import() | node-modules/uview-ui/components/u-modal/u-modal */[__webpack_require__.e("common/vendor"), __webpack_require__.e("node-modules/uview-ui/components/u-modal/u-modal")]).then(__webpack_require__.bind(null, /*! uview-ui/components/u-modal/u-modal.vue */ 323))
+    },
   }
 } catch (e) {
   if (
@@ -230,24 +233,16 @@ exports.default = void 0;
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 var _default = exports.default = {
-  onLoad: function onLoad() {
-    var _this = this;
-    uni.$u.http.get('category/list').then(function (res) {
-      console.log(res, '打印结果');
-      if (res.status == 200) {
-        _this.categoriesList = res.data.list;
-        console.log("🚀 分类菜单", _this.categoriesList);
-      }
-    });
-    uni.$u.http.get("goods/list&categoryId=0&page=1").then(function (res) {
-      console.log(res, '打印结果');
-      if (res.status == 200) {
-        _this.goodsList = res.data.list.data;
-        console.log("🚀 商品数据", _this.goodsList);
-      }
-    });
-  },
+  onLoad: function onLoad() {},
   onReady: function onReady() {},
   data: function data() {
     return {
@@ -259,7 +254,10 @@ var _default = exports.default = {
       //展示的标志
       goodsList: [],
       goodsListDetail: [],
-      loading: false
+      loading: false,
+      show: false,
+      title: '温馨提示',
+      content1: '此时此刻需要您登录哦'
     };
   },
   methods: {
@@ -276,15 +274,15 @@ var _default = exports.default = {
       });
     },
     goShow: function goShow(ID) {
-      var _this2 = this;
+      var _this = this;
       this.index = ID;
       this.loading = true;
       uni.$u.http.get("goods/list&categoryId=".concat(ID, "&page=1")).then(function (res) {
         console.log(res, '打印结果');
         if (res.status == 200) {
-          _this2.loading = false;
-          _this2.goodsListDetail = res.data.list.data;
-          console.log("🚀 某一个分类的商品数据", _this2.goodsListDetail);
+          _this.loading = false;
+          _this.goodsListDetail = res.data.list.data;
+          console.log("🚀 某一个分类的商品数据", _this.goodsListDetail);
         }
       });
     },
@@ -296,7 +294,61 @@ var _default = exports.default = {
       uni.navigateTo({
         url: "/pages/goods/detail?goodsid=".concat(goodsitem.goods_id)
       });
+    },
+    goAddCart: function goAddCart(item) {
+      var _this2 = this;
+      console.log('加入购物车', item);
+      var data = {
+        goodsId: item.goods_id,
+        goodsNum: 1,
+        goodsSkuId: 0
+      };
+      this.loading = true;
+      if (uni.getStorageSync('token')) {
+        uni.$u.http.post('cart/add', data).then(function (res) {
+          console.log(res, '打印结果');
+          if (res.status == 200) {
+            _this2.loading = false;
+            _this2.shareCart = false;
+            uni.switchTab({
+              url: "/pages/shopCar/shopCar"
+            });
+          }
+        });
+      } else {
+        this.show = true;
+        this.shareCart = false;
+      }
+    },
+    confirm: function confirm() {
+      console.log('去登陆');
+      uni.navigateTo({
+        url: '/pages/login/login'
+      });
+      this.show = false;
+    },
+    cancel: function cancel() {
+      console.log('在逛会');
+      this.show = false;
+      this.loading = false;
     }
+  },
+  onShow: function onShow() {
+    var _this3 = this;
+    uni.$u.http.get('category/list').then(function (res) {
+      console.log(res, '打印结果');
+      if (res.status == 200) {
+        _this3.categoriesList = res.data.list;
+        console.log("🚀 分类菜单", _this3.categoriesList);
+      }
+    });
+    uni.$u.http.get("goods/list&categoryId=0&page=1").then(function (res) {
+      console.log(res, '打印结果');
+      if (res.status == 200) {
+        _this3.goodsList = res.data.list.data;
+        console.log("🚀 商品数据", _this3.goodsList);
+      }
+    });
   }
 };
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 2)["default"]))

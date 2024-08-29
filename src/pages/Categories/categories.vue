@@ -5,7 +5,6 @@
 			<u-search placeholder="请输入您搜索的商品" v-model="keyword" @search="search(keyword)"
 				@custom="Search(keyword)"></u-search>
 		</view>
-
 		<view style=" width: 750rpx;height: 1355rpx;display: flex;">
 			<!-- 菜单分类 -->
 			<view style="width: 200rpx;height: 1330rpx;background-color: #f8f8f8;">
@@ -22,13 +21,16 @@
 			<view style="width: 520rpx;height: 1330rpx;margin-left: 20rpx;overflow: scroll;">
 				<!-- 全部商品数据展示 -->
 				<view v-if="index == 0" style="width: 490rpx;height: 1330rpx;margin:10rpx 15rpx;overflow: scroll;">
-					<view @click="goGoodDetails(goodsitem)" v-for="goodsitem in goodsList" :key="goodsitem.goods_id" style="display: flex;padding: 20rpx;">
-						<image :src="goodsitem.goods_image" mode="scaleToFill" style="width: 150rpx;height: 150rpx;" />
+					<view v-for="goodsitem in goodsList" :key="goodsitem.goods_id"
+						style="display: flex;padding: 20rpx;">
+						<image @click="goGoodDetails(goodsitem)" :src="goodsitem.goods_image" mode="scaleToFill"
+							style="width: 150rpx;height: 150rpx;" />
 						<view style="width: 350rpx;">
 							<view style="margin-left: 10rpx;">{{ goodsitem.goods_name }}</view>
 							<view style="display: flex;margin-top: 50rpx ;justify-content: space-between;">
 								<view style="color: #ff547b;">￥{{ goodsitem.goods_price_min }}</view>
-								<view style="margin-top: 8rpx;"><u-icon name="plus-circle" color="#ff547b" size="20"></u-icon></view>
+								<view @click="goAddCart(goodsitem)" style="margin-top: 8rpx;"><u-icon name="plus-circle"
+										color="#ff547b" size="20"></u-icon></view>
 							</view>
 						</view>
 					</view>
@@ -37,13 +39,15 @@
 				<view v-if="categoitem.category_id == index" v-for="categoitem in categoriesList"
 					:key="categoitem.category_id"
 					style="width: 490rpx;height: 1330rpx;margin:10rpx 15rpx;overflow: scroll;">
-					<view @click="goGoodDetails(item1)" v-for="item1 in goodsListDetail" :key="item1.goods_id" style="display: flex;padding: 20rpx;">
-						<image :src="item1.goods_image" mode="scaleToFill" style="width: 150rpx;height: 150rpx;" />
+					<view v-for="item1 in goodsListDetail" :key="item1.goods_id" style="display: flex;padding: 20rpx;">
+						<image @click="goGoodDetails(item1)" :src="item1.goods_image" mode="scaleToFill"
+							style="width: 150rpx;height: 150rpx;" />
 						<view style="width: 350rpx;">
 							<view style="margin-left: 10rpx;">{{ item1.goods_name }}</view>
 							<view style="display: flex;margin-top: 50rpx ;justify-content: space-between;">
 								<view style="color: #ff547b;">￥{{ item1.goods_price_max }}</view>
-								<view  style="margin-top: 8rpx;"><u-icon name="plus-circle" color="#ff547b" size="20"></u-icon></view>
+								<view @click="goAddCart(item1)" style="margin-top: 8rpx;"><u-icon name="plus-circle"
+										color="#ff547b" size="20"></u-icon></view>
 							</view>
 						</view>
 					</view>
@@ -54,27 +58,18 @@
 				</view>
 			</view>
 		</view>
-
+		<view>
+			<u-modal :show="show" @confirm="confirm" @cancel="cancel" :title="title" :content='content1'
+				confirmText="去登陆" cancelText="在逛会" showCancelButton="true"></u-modal>
+		</view>
+		
 	</view>
 </template>
 
 <script>
 export default {
 	onLoad() {
-		uni.$u.http.get('category/list',).then(res => {
-			console.log(res, '打印结果');
-			if (res.status == 200) {
-				this.categoriesList = res.data.list
-				console.log("🚀 分类菜单", this.categoriesList)
-			}
-		})
-		uni.$u.http.get(`goods/list&categoryId=0&page=1`,).then(res => {
-			console.log(res, '打印结果');
-			if (res.status == 200) {
-				this.goodsList = res.data.list.data
-				console.log("🚀 商品数据", this.goodsList)
-			}
-		})
+		
 	},
 	onReady() {
 
@@ -87,7 +82,9 @@ export default {
 			goodsList: [],
 			goodsListDetail: [],
 			loading: false,
-
+			show: false,
+			title: '温馨提示',
+			content1: '此时此刻需要您登录哦',
 		}
 	},
 	methods: {
@@ -98,7 +95,7 @@ export default {
 		Search(a) {
 			console.log('搜索', a);
 		},
-		goSearch(){
+		goSearch() {
 			this.keywords = ''
 			uni.navigateTo({
 				url: '/pages/search/search'
@@ -123,12 +120,67 @@ export default {
 		showAll() {
 			this.index = 0
 		},
-		goGoodDetails(goodsitem){
-			console.log('111',goodsitem);
+		goGoodDetails(goodsitem) {
+			console.log('111', goodsitem);
 			uni.navigateTo({
 				url: `/pages/goods/detail?goodsid=${goodsitem.goods_id}`
 			})
-		}
+		},
+		goAddCart(item) {
+			console.log('加入购物车',item);
+			let data = {
+				goodsId: item.goods_id,
+				goodsNum: 1,
+				goodsSkuId: 0
+			}
+			this.loading = true
+			if (uni.getStorageSync('token')) {
+				uni.$u.http.post('cart/add', data).then(res => {
+					console.log(res, '打印结果');
+
+					if (res.status == 200) {
+						this.loading = false
+						this.shareCart = false
+						uni.switchTab({
+							url: `/pages/shopCar/shopCar`
+						})
+
+					}
+				})
+			} else {
+
+				this.show = true
+				this.shareCart = false
+			}
+		},
+		confirm() {
+			console.log('去登陆');
+			uni.navigateTo({
+				url: '/pages/login/login'
+			})
+			this.show = false
+		},
+		cancel() {
+			console.log('在逛会');
+			this.show=false
+			this.loading=false
+		},
+	},
+	onShow(){
+		uni.$u.http.get('category/list',).then(res => {
+			console.log(res, '打印结果');
+			if (res.status == 200) {
+				this.categoriesList = res.data.list
+				console.log("🚀 分类菜单", this.categoriesList)
+			}
+		})
+		uni.$u.http.get(`goods/list&categoryId=0&page=1`,).then(res => {
+			console.log(res, '打印结果');
+			if (res.status == 200) {
+				this.goodsList = res.data.list.data
+				console.log("🚀 商品数据", this.goodsList)
+			}
+		})
 	}
 }
 </script>
