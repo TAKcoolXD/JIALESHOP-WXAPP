@@ -92,7 +92,7 @@ export default {
 														delta: 1
 													});
 												}
-												if(pages.length == 3){
+												if (pages.length == 3) {
 													console.log('去地址页');
 													uni.navigateBack({
 														delta: 1
@@ -100,7 +100,7 @@ export default {
 												}
 
 											} else if (page1.$page.fullPath == '/pages/index/index' || page1.$page.fullPath == '/pages/Categories/categories') {
-												if (pages.length == 4 || pages.length == 6) {
+												if (pages.length == 4 || pages.length == 6 || pages.length == 2) {
 													uni.navigateBack({
 														delta: 2
 													});

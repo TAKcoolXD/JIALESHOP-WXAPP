@@ -334,6 +334,7 @@ var _default = exports.default = {
   },
   onShow: function onShow() {
     var _this3 = this;
+    this.loading = false;
     uni.$u.http.get('category/list').then(function (res) {
       console.log(res, '打印结果');
       if (res.status == 200) {

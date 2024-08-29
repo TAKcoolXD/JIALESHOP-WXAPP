@@ -265,7 +265,7 @@ var _default = exports.default = {
                           });
                         }
                       } else if (page1.$page.fullPath == '/pages/index/index' || page1.$page.fullPath == '/pages/Categories/categories') {
-                        if (pages.length == 4 || pages.length == 6) {
+                        if (pages.length == 4 || pages.length == 6 || pages.length == 2) {
                           uni.navigateBack({
                             delta: 2
                           });

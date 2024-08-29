@@ -167,6 +167,7 @@ export default {
 		},
 	},
 	onShow() {
+		this.loading=false
 		uni.$u.http.get('category/list',).then(res => {
 			console.log(res, '打印结果');
 			if (res.status == 200) {
