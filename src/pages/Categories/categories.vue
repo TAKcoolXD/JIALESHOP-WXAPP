@@ -62,14 +62,13 @@
 			<u-modal :show="show" @confirm="confirm" @cancel="cancel" :title="title" :content='content1'
 				confirmText="去登陆" cancelText="在逛会" showCancelButton="true"></u-modal>
 		</view>
-		
 	</view>
 </template>
 
 <script>
 export default {
 	onLoad() {
-		
+
 	},
 	onReady() {
 
@@ -85,6 +84,7 @@ export default {
 			show: false,
 			title: '温馨提示',
 			content1: '此时此刻需要您登录哦',
+			
 		}
 	},
 	methods: {
@@ -127,7 +127,7 @@ export default {
 			})
 		},
 		goAddCart(item) {
-			console.log('加入购物车',item);
+			console.log('加入购物车', item);
 			let data = {
 				goodsId: item.goods_id,
 				goodsNum: 1,
@@ -162,11 +162,11 @@ export default {
 		},
 		cancel() {
 			console.log('在逛会');
-			this.show=false
-			this.loading=false
+			this.show = false
+			this.loading = false
 		},
 	},
-	onShow(){
+	onShow() {
 		uni.$u.http.get('category/list',).then(res => {
 			console.log(res, '打印结果');
 			if (res.status == 200) {

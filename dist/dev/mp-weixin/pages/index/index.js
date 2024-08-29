@@ -101,10 +101,13 @@ var components
 try {
   components = {
     uSearch: function () {
-      return Promise.all(/*! import() | node-modules/uview-ui/components/u-search/u-search */[__webpack_require__.e("common/vendor"), __webpack_require__.e("node-modules/uview-ui/components/u-search/u-search")]).then(__webpack_require__.bind(null, /*! uview-ui/components/u-search/u-search.vue */ 298))
+      return Promise.all(/*! import() | node-modules/uview-ui/components/u-search/u-search */[__webpack_require__.e("common/vendor"), __webpack_require__.e("node-modules/uview-ui/components/u-search/u-search")]).then(__webpack_require__.bind(null, /*! uview-ui/components/u-search/u-search.vue */ 302))
     },
     uNoticeBar: function () {
-      return Promise.all(/*! import() | node-modules/uview-ui/components/u-notice-bar/u-notice-bar */[__webpack_require__.e("common/vendor"), __webpack_require__.e("node-modules/uview-ui/components/u-notice-bar/u-notice-bar")]).then(__webpack_require__.bind(null, /*! uview-ui/components/u-notice-bar/u-notice-bar.vue */ 306))
+      return Promise.all(/*! import() | node-modules/uview-ui/components/u-notice-bar/u-notice-bar */[__webpack_require__.e("common/vendor"), __webpack_require__.e("node-modules/uview-ui/components/u-notice-bar/u-notice-bar")]).then(__webpack_require__.bind(null, /*! uview-ui/components/u-notice-bar/u-notice-bar.vue */ 310))
+    },
+    uLoadmore: function () {
+      return Promise.all(/*! import() | node-modules/uview-ui/components/u-loadmore/u-loadmore */[__webpack_require__.e("common/vendor"), __webpack_require__.e("node-modules/uview-ui/components/u-loadmore/u-loadmore")]).then(__webpack_require__.bind(null, /*! uview-ui/components/u-loadmore/u-loadmore.vue */ 413))
     },
   }
 } catch (e) {
@@ -233,23 +236,12 @@ var _asyncToGenerator2 = _interopRequireDefault(__webpack_require__(/*! @babel/r
 //
 //
 //
+//
+//
+//
+//
+//
 var _default = exports.default = {
-  onLoad: function onLoad() {
-    var _this = this;
-    this.CateData();
-    this.PostData();
-    uni.$u.http.get('page/detail').then(function (res) {
-      console.log(res, '打印结果');
-      if (res.status == 200) {
-        _this.SwiperList = res.data.pageData.items[2].data;
-        _this.goods = res.data.pageData.items[3].data;
-        _this.noticeText = res.data.pageData.items[1].params.text;
-        console.log("🚀 店鋪公告", _this.noticeText);
-        console.log("🚀 商品列表", _this.goods);
-        console.log("🚀 轮播图列表", _this.SwiperList);
-      }
-    });
-  },
   data: function data() {
     return {
       post: [],
@@ -266,14 +258,23 @@ var _default = exports.default = {
       duration: 500,
       SwiperList: [],
       goods: [],
-      noticeText: ''
+      noticeText: '',
+      status: 'loadmore',
+      list: 20,
+      page: 0,
+      loadText: {
+        loadmore: '轻轻上拉',
+        loading: '努力加载中',
+        nomore: '实在没有了'
+      },
+      Firstgoods: []
     };
   },
   methods: {
     CateData: function CateData() {
-      var _this2 = this;
+      var _this = this;
       return (0, _asyncToGenerator2.default)( /*#__PURE__*/_regenerator.default.mark(function _callee() {
-        var _this2$cate;
+        var _this$cate;
         var data, result;
         return _regenerator.default.wrap(function _callee$(_context) {
           while (1) switch (_context.prev = _context.next) {
@@ -288,13 +289,13 @@ var _default = exports.default = {
                 _context.next = 7;
                 break;
               }
-              _this2.$refs.notice.show({
+              _this.$refs.notice.show({
                 type: "error",
                 message: result.msg
               });
               return _context.abrupt("return", false);
             case 7:
-              (_this2$cate = _this2.cate).push.apply(_this2$cate, (0, _toConsumableArray2.default)(result.data));
+              (_this$cate = _this.cate).push.apply(_this$cate, (0, _toConsumableArray2.default)(result.data));
             case 8:
             case "end":
               return _context.stop();
@@ -303,7 +304,7 @@ var _default = exports.default = {
       }))();
     },
     PostData: function PostData() {
-      var _this3 = this;
+      var _this2 = this;
       return (0, _asyncToGenerator2.default)( /*#__PURE__*/_regenerator.default.mark(function _callee2() {
         var data, result;
         return _regenerator.default.wrap(function _callee2$(_context2) {
@@ -311,8 +312,8 @@ var _default = exports.default = {
             case 0:
               //组装数据
               data = {
-                cateid: _this3.cateid,
-                keywords: _this3.keywords
+                cateid: _this2.cateid,
+                keywords: _this2.keywords
               };
               _context2.next = 3;
               return uni.$u.http.post('/post/index', data);
@@ -322,14 +323,14 @@ var _default = exports.default = {
                 _context2.next = 7;
                 break;
               }
-              _this3.$refs.notice.show({
+              _this2.$refs.notice.show({
                 type: "error",
                 message: result.msg
               });
               return _context2.abrupt("return", false);
             case 7:
               //覆盖值
-              _this3.post = result.data;
+              _this2.post = result.data;
             case 8:
             case "end":
               return _context2.stop();
@@ -371,6 +372,40 @@ var _default = exports.default = {
         })
       });
     }
+  },
+  onLoad: function onLoad() {
+    var _this3 = this;
+    this.CateData();
+    this.PostData();
+    uni.$u.http.get('page/detail').then(function (res) {
+      console.log(res, '打印结果');
+      if (res.status == 200) {
+        _this3.SwiperList = res.data.pageData.items[2].data;
+        _this3.goods = res.data.pageData.items[3].data;
+        _this3.noticeText = res.data.pageData.items[1].params.text;
+        console.log("🚀 店鋪公告", _this3.noticeText);
+        console.log("🚀 轮播图列表", _this3.SwiperList);
+        console.log("🚀 所有商品列表", _this3.goods);
+        _this3.Firstgoods = _this3.goods.splice(0, 4);
+        console.log('提取数组前6项', _this3.Firstgoods);
+        console.log("🚀 所有商品列表", _this3.goods);
+      }
+    });
+  },
+  onReachBottom: function onReachBottom() {
+    var _this4 = this;
+    console.log('滚动下拉');
+    if (this.page >= 5) return;
+    this.status = 'loading';
+    this.page = ++this.page;
+    setTimeout(function () {
+      var _this4$Firstgoods;
+      var a = _this4.goods.splice(0, 4);
+      (_this4$Firstgoods = _this4.Firstgoods).push.apply(_this4$Firstgoods, (0, _toConsumableArray2.default)(a));
+      console.log('提取数组前4项', _this4.Firstgoods);
+      console.log("🚀 所有商品列表", _this4.goods);
+      if (_this4.page >= 5) _this4.status = 'nomore';else _this4.status = 'loading';
+    }, 2000);
   }
 };
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 2)["default"]))

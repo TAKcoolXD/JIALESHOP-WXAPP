@@ -1,1 +1,1 @@
-<view class="points">我的积分</view>
+<view class="points data-v-143a6866"><block wx:for="{{list}}" wx:for-item="item" wx:for-index="index" wx:key="index"><view class="item u-border-bottom data-v-143a6866">{{''+('第'+item+'条数据')+''}}</view></block><u-loadmore vue-id="73132560-1" status="{{status}}" loadmoreText="{{loadText.loadmore}}" loadingText="{{loadText.loading}}" nomoreText="{{loadText.nomore}}" data-event-opts="{{[['^loadmore',[['loadmore']]]]}}" bind:loadmore="__e" class="data-v-143a6866" bind:__l="__l"></u-loadmore></view>

@@ -17,7 +17,7 @@
 			<swiper class="swiper" circular :indicator-dots="indicatorDots" :autoplay="autoplay" :interval="interval"
 				:duration="duration">
 				<swiper-item v-for="(item, index) in SwiperList" :key="index">
-					<image :src="item.imgUrl" style="width: 100%;height: 100%;" @click="preview(index)"/>
+					<image :src="item.imgUrl" style="width: 100%;height: 100%;" @click="preview(index)" />
 				</swiper-item>
 			</swiper>
 		</view>
@@ -25,13 +25,18 @@
 		<view class="goods"
 			style="margin-top: 10rpx;display: flex;flex-wrap: wrap;align-items: center;justify-content: center;">
 
-			<view v-for="item in goods" :key="item" style="" @click="goGoodsDeail(item)">
+			<view v-for="item in Firstgoods" :key="item" style="" @click="goGoodsDeail(item)">
 				<image :src="item.goods_image" style="width: 355rpx;height: 400rpx;margin: 8rpx;" mode="scaleToFill" />
 				<view>{{ item.goods_name }}</view>
 				<view style="color: palevioletred;">￥{{ item.goods_price_max }}</view>
 			</view>
 		</view>
 
+		<u-loadmore :status="status" @loadmore="loadmore" :loadmoreText="loadText.loadmore"
+			:loadingText="loadText.loading" :nomoreText="loadText.nomore" />
+		<!-- <view>
+			<u-loadmore :status="status" :loading-text="loadingText" :loadmore-text="loadmoreText" :nomore-text="nomoreText" />
+		</view> -->
 		<!-- <view class="list" v-if="post.length > 0">
 			<view class="item" v-for="(item, index) in post" :key="index">
 				<view class="business">
@@ -62,21 +67,6 @@
 
 <script>
 export default {
-	onLoad() {
-		this.CateData()
-		this.PostData()
-		uni.$u.http.get('page/detail',).then(res => {
-			console.log(res, '打印结果');
-			if (res.status == 200) {
-				this.SwiperList = res.data.pageData.items[2].data
-				this.goods = res.data.pageData.items[3].data
-				this.noticeText = res.data.pageData.items[1].params.text
-				console.log("🚀 店鋪公告", this.noticeText)
-				console.log("🚀 商品列表", this.goods)
-				console.log("🚀 轮播图列表", this.SwiperList)
-			}
-		})
-	},
 	data() {
 		return {
 			post: [],
@@ -92,7 +82,16 @@ export default {
 			duration: 500,
 			SwiperList: [],
 			goods: [],
-			noticeText: ''
+			noticeText: '',
+			status: 'loadmore',
+			list: 20,
+			page: 0,
+			loadText: {
+				loadmore: '轻轻上拉',
+				loading: '努力加载中',
+				nomore: '实在没有了'
+			},
+			Firstgoods: []
 		}
 	},
 	methods: {
@@ -165,9 +164,42 @@ export default {
 				urls: this.SwiperList.map((item) => item.imgUrl)
 			});
 
-		}
+		},
 	},
+	onLoad() {
+		this.CateData()
+		this.PostData()
+		uni.$u.http.get('page/detail',).then(res => {
+			console.log(res, '打印结果');
+			if (res.status == 200) {
+				this.SwiperList = res.data.pageData.items[2].data
+				this.goods = res.data.pageData.items[3].data
+				this.noticeText = res.data.pageData.items[1].params.text
+				console.log("🚀 店鋪公告", this.noticeText)
+				console.log("🚀 轮播图列表", this.SwiperList)
+				console.log("🚀 所有商品列表", this.goods)
+				this.Firstgoods = this.goods.splice(0, 4)
+				console.log('提取数组前6项', this.Firstgoods);
+				console.log("🚀 所有商品列表", this.goods)
 
+
+			}
+		})
+	},
+	onReachBottom() {
+		console.log('滚动下拉');
+		if (this.page >= 5) return;
+		this.status = 'loading';
+		this.page = ++this.page;
+		setTimeout(() => {
+			let a = this.goods.splice(0, 4)
+			this.Firstgoods.push(...a)
+			console.log('提取数组前4项', this.Firstgoods);
+			console.log("🚀 所有商品列表", this.goods)
+			if (this.page >= 5) this.status = 'nomore';
+			else this.status = 'loading';
+		}, 2000)
+	},
 
 }
 </script>

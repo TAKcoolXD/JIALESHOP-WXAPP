@@ -1,5 +1,7 @@
 {
   "navigationBarTitleText": "账单明细",
   "enablePullDownRefresh": false,
-  "usingComponents": {}
+  "usingComponents": {
+    "u-loadmore": "/node-modules/uview-ui/components/u-loadmore/u-loadmore"
+  }
 }
