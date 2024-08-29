@@ -391,6 +391,11 @@ var _default = exports.default = {
       uni.navigateTo({
         url: '/pages/login/login'
       });
+    },
+    goPersonal: function goPersonal() {
+      uni.navigateTo({
+        url: '/pages/personal/personal'
+      });
     }
   },
   computed: {

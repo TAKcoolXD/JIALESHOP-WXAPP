@@ -4,7 +4,7 @@
 			<view style="display:flex;margin-left: 40rpx;align-items: center;">
 				<image v-if="!UserInfo" src="../../static/logo.png" mode="scaleToFill"
 					style="width: 100rpx;height: 100rpx;border-radius: 50%;" />
-				<image v-else :src="UserInfo.avatarUrl" mode="scaleToFill"
+				<image @click="goPersonal" v-else :src="UserInfo.avatarUrl" mode="scaleToFill"
 					style="width: 100rpx;height: 100rpx;border-radius: 50%;" />
 				<view v-if="!UserInfo" @click="goLogin" style="margin-left: 30rpx;color: #d0af6b;">未登录请点击登录</view>
 				<view v-else @click="goLogin" style="margin-left: 30rpx;color: #d0af6b;">{{ UserInfo.nickName }}</view>
@@ -225,6 +225,11 @@ export default {
 			uni.navigateTo({
 				url: '/pages/login/login'
 			})
+		},
+		goPersonal(){
+			uni.navigateTo({
+				 url: '/pages/personal/personal'
+			});
 		}
 	},
 	computed: {

@@ -18,7 +18,8 @@
     "pages/refund/refund",
     "pages/help/help",
     "pages/login/login",
-    "pages/address/updataAddress"
+    "pages/address/updataAddress",
+    "pages/personal/personal"
   ],
   "subPackages": [],
   "window": {

@@ -87,7 +87,7 @@ export default {
 			list: 20,
 			page: 0,
 			loadText: {
-				loadmore: '轻轻上拉',
+				// loadmore: '轻轻上拉',
 				loading: '努力加载中',
 				nomore: '实在没有了'
 			},
