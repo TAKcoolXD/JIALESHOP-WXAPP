@@ -85,23 +85,32 @@ export default {
 											console.log('获取所有页面', pages);
 											console.log('获取当前页面', page.$page.fullPath);
 											console.log('从哪个页面过来', page1.$page.fullPath);
-											if (page1.$page.fullPath == '/pages/User/User' ) {
-												console.log('1');
-												uni.navigateBack({
-													delta: 1
-												});
+											if (page1.$page.fullPath == '/pages/User/User') {
+												if (pages.length == 2) {
+													console.log('去user页');
+													uni.navigateBack({
+														delta: 1
+													});
+												}
+												if(pages.length == 3){
+													console.log('去地址页');
+													uni.navigateBack({
+														delta: 1
+													});
+												}
+
 											} else if (page1.$page.fullPath == '/pages/index/index' || page1.$page.fullPath == '/pages/Categories/categories') {
-												if(pages.length==4 || pages.length==6){
+												if (pages.length == 4 || pages.length == 6) {
 													uni.navigateBack({
-													delta: 2
-												});
+														delta: 2
+													});
 												}
-												if(pages.length==3 || pages.length==5){
+												if (pages.length == 3 || pages.length == 5) {
 													uni.navigateBack({
-													delta: 1
-												});
+														delta: 1
+													});
 												}
-												
+
 											}
 										}
 									})

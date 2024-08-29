@@ -24,6 +24,10 @@
 				</view>
 			</view>
 		</view>
+		<view>
+			<u-modal :show="show" @confirm="confirm" @cancel="cancel" :title="title" :content='content1'
+				confirmText="去登陆" cancelText="在逛会" showCancelButton="true"></u-modal>
+		</view>
 	</view>
 </template>
 
@@ -32,26 +36,52 @@ export default {
 	data() {
 		return {
 			addressList: [],
+			show: false,
+			title: '温馨提示',
+			content1: '此时此刻需要您登录哦',
 		}
 	},
 	methods: {
-		goUpdata(){
+		goUpdata() {
 			console.log('编辑');
 			uni.navigateTo({
 				url: `/pages/address/updataAddress`
 			})
 		},
+		confirm() {
+			console.log('去登陆');
+			uni.navigateTo({
+				url: '/pages/login/login'
+			})
+			this.show = false
+		},
+		cancel() {
+			console.log('在逛会');
+			uni.navigateBack()
+		},
 	},
 	onLoad() {
-		uni.$u.http.get('address/list',).then(res => {
-			console.log(res, '打印结果');
-			if (res.status == 200) {
-				this.addressList = res.data.list
-			}
+	
 
-		})
+	},
+	onShow(){
+		if (uni.getStorageSync('token')) {
+			uni.$u.http.get('address/list',).then(res => {
+				console.log(res, '打印结果');
+				if (res.status == 200) {
+					this.addressList = res.data.list
+				}
+
+			})
+		} else {
+			this.show = true
+		}
 	}
 }
 </script>
 
-<style></style>
+<style>
+.u-modal__content__text.data-v-713d0fd3 {
+	text-align: center;
+}
+</style>

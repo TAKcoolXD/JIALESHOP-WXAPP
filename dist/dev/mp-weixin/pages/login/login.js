@@ -99,10 +99,10 @@ var components
 try {
   components = {
     uLoadingPage: function () {
-      return Promise.all(/*! import() | node-modules/uview-ui/components/u-loading-page/u-loading-page */[__webpack_require__.e("common/vendor"), __webpack_require__.e("node-modules/uview-ui/components/u-loading-page/u-loading-page")]).then(__webpack_require__.bind(null, /*! uview-ui/components/u-loading-page/u-loading-page.vue */ 353))
+      return Promise.all(/*! import() | node-modules/uview-ui/components/u-loading-page/u-loading-page */[__webpack_require__.e("common/vendor"), __webpack_require__.e("node-modules/uview-ui/components/u-loading-page/u-loading-page")]).then(__webpack_require__.bind(null, /*! uview-ui/components/u-loading-page/u-loading-page.vue */ 354))
     },
     uToast: function () {
-      return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-toast/u-toast */ "node-modules/uview-ui/components/u-toast/u-toast").then(__webpack_require__.bind(null, /*! uview-ui/components/u-toast/u-toast.vue */ 346))
+      return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-toast/u-toast */ "node-modules/uview-ui/components/u-toast/u-toast").then(__webpack_require__.bind(null, /*! uview-ui/components/u-toast/u-toast.vue */ 347))
     },
   }
 } catch (e) {
@@ -252,10 +252,18 @@ var _default = exports.default = {
                       console.log('获取当前页面', page.$page.fullPath);
                       console.log('从哪个页面过来', page1.$page.fullPath);
                       if (page1.$page.fullPath == '/pages/User/User') {
-                        console.log('1');
-                        uni.navigateBack({
-                          delta: 1
-                        });
+                        if (pages.length == 2) {
+                          console.log('去user页');
+                          uni.navigateBack({
+                            delta: 1
+                          });
+                        }
+                        if (pages.length == 3) {
+                          console.log('去地址页');
+                          uni.navigateBack({
+                            delta: 1
+                          });
+                        }
                       } else if (page1.$page.fullPath == '/pages/index/index' || page1.$page.fullPath == '/pages/Categories/categories') {
                         if (pages.length == 4 || pages.length == 6) {
                           uni.navigateBack({
