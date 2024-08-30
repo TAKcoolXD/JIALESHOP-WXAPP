@@ -1,42 +1,11 @@
-# UniApp 全家桶项目环境搭建
+本项目是一个小型的购物商城小程序，该小程序的主要功能包括：
+1、用户的登录
+2、商品的展示，商品分类展示，商品详情的展示
+3、输入商品关键字对商品进行搜索，根据关键字搜索后展示的商品列表，该商品的列表可以根据商品的综合、销量、价格的升序和降序来实现商品的展示。
+4、对商品进行支付购买功能，提交订单功能，对商品进行支付操作功能 
+5、订单的详情展示 显示订单的状态 展示各个订单的状态 对订单进行操作 取消订单的功能 对未支付的订单进行支付功能
+6、购物车的管理 对购物车列表进行结算功能 编辑购物车列表功能 
+7、修够用户的地址 对登录用户的信息进行修改
 
-```
-Vite + Vue-CLI + Vue-Router + Vant + Axios
-```
-
->	安装依赖包
-
-```
-yarn install
-```
-
->	执行启动命令
-
-```
-yarn dev
-```
-
-# 基础教程
-
-|描述|文件夹|
-|:--|:--|
-|项目搭建全家桶源码|[quickask-uniapp-project](./base/quickask-uniapp-project/)|
-
-
-# 目录结构
-
-|描述|文件夹|
-|:--|:--|
-|base|基础教程源码目录|
-|public|公共资源目录|
-
-
-# 详细教程
-
-**[https://www.quickask.net/](https://www.quickask.net/)**
-
-https://yoshop-test.azhuquq.com/admin
-这是大管理
-
-小管理是
-https://yoshop-test.azhuquq.com/store
+基本的页面包括：
+首页的展示： <br> ![image](https://github.com/TAKcoolXD/uniapp/blob/main/projectShow/%E4%BC%9A%E5%91%98%E4%B8%AD%E5%BF%83%E9%A1%B5%E9%9D%A2.png) <br>
