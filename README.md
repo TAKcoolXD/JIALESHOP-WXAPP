@@ -5,7 +5,7 @@
 4、对商品进行支付购买功能，提交订单进行结算功能，对商品进行支付操作功能 
 5、订单的详情展示 显示订单的状态 展示各个订单的状态 对订单进行操作 取消订单的功能 对未支付的订单进行支付功能
 6、购物车的管理 对购物车列表进行结算功能 编辑购物车列表功能 
-7、修够用户的地址 对登录用户的信息进行修改
+7、修改用户的地址 对登录用户的信息进行修改
 
 基本的页面包括：
 首页的展示： <br> ![image](https://github.com/TAKcoolXD/uniapp/blob/main/projectShow/%E9%A6%96%E9%A1%B5%E5%B1%95%E7%A4%BA.png) <br>
@@ -29,3 +29,7 @@
 编辑购物车列表功能: <br> ![image](https://github.com/TAKcoolXD/uniapp/blob/main/projectShow/%E8%B4%AD%E7%89%A9%E8%BD%A6%E8%BF%9B%E8%A1%8C%E7%AE%A1%E7%90%86.png) <br>
 未登录进行用户的登录：  <br> ![image](https://github.com/TAKcoolXD/uniapp/blob/main/projectShow/%E6%9C%AA%E7%99%BB%E5%BD%95%E8%BF%9B%E8%A1%8C%E7%99%BB%E5%BD%95.png) <br>
 未登录时不能够进行购买，加入购物车，对购物车进行查看，不能对订单进行查看等操作 引导用户进行登录：<br> ![image](https://github.com/TAKcoolXD/uniapp/blob/main/projectShow/%E6%9C%AA%E7%99%BB%E5%BD%95%E7%9A%84%E6%83%85%E5%86%B5%20%E4%B8%8D%E8%83%BD%E8%BF%9B%E8%A1%8C%E8%B4%AD%E4%B9%B0%E6%94%AF%E4%BB%98%E8%BF%9B%E5%85%A5%E8%B4%AD%E7%89%A9%E8%BD%A6%20%E5%BC%95%E5%AF%BC%E7%94%A8%E6%88%B7%E8%BF%9B%E5%85%A5%E7%99%BB%E5%BD%95.png) <br>
+收货地址的展示 <br> ![image](https://github.com/TAKcoolXD/uniapp/blob/main/projectShow/%E6%94%B6%E8%8E%B7%E4%B8%AD%E5%BF%83%E5%B1%95%E7%A4%BA.png) <br>
+修改用户的地址 <br> ![image](https://github.com/TAKcoolXD/uniapp/blob/main/projectShow/%E7%BC%96%E8%BE%91%E6%94%B6%E8%8E%B7%E5%9C%B0%E5%9D%80.png) <br>
+用户信息个人头像修改： <br> ![image](https://github.com/TAKcoolXD/uniapp/blob/main/projectShow/%E4%B8%AA%E4%BA%BA%E4%BF%A1%E6%81%AF%E5%A4%B4%E5%83%8F%E8%BF%9B%E8%A1%8C%E4%BF%AE%E6%94%B9.png) <br>
+用户信息个人昵称的修改<br> ![image](https://github.com/TAKcoolXD/uniapp/blob/main/projectShow/%E4%B8%AA%E4%BA%BA%E4%BF%A1%E6%81%AF%E6%98%B5%E7%A7%B0%E4%BF%AE%E6%94%B9.png) <br>
