@@ -1,5 +1,7 @@
 {
   "navigationBarTitleText": "我的钱包",
   "enablePullDownRefresh": false,
-  "usingComponents": {}
+  "usingComponents": {
+    "u-modal": "/node-modules/uview-ui/components/u-modal/u-modal"
+  }
 }

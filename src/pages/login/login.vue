@@ -93,7 +93,7 @@ export default {
 													});
 												}
 												if (pages.length == 3) {
-													console.log('去地址页');
+													console.log('去地址页 || 去我的钱包');
 													uni.navigateBack({
 														delta: 1
 													});

@@ -7,7 +7,7 @@
 				<image @click="goPersonal" v-else :src="wxImgUrl" mode="scaleToFill"
 					style="width: 100rpx;height: 100rpx;border-radius: 50%;" />
 				<view v-if="!UserInfo" @click="goLogin" style="margin-left: 30rpx;color: #d0af6b;">未登录请点击登录</view>
-				<view v-else @click="goLogin" style="margin-left: 30rpx;color: #d0af6b;">{{ nickName }}</view>
+				<view v-else  style="margin-left: 30rpx;color: #d0af6b;">{{ nickName }}</view>
 			</view>
 		</view>
 		<view
@@ -217,6 +217,7 @@ export default {
 			console.log('提示框确认按钮');
 			uni.removeStorageSync('token')
 			uni.removeStorageSync('UserInfo')
+			this.balance=''
 			this.UserInfo = null
 			this.show = false
 		},

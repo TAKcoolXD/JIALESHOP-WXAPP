@@ -5,7 +5,7 @@
 			<view
 				style="width: 569rpx; padding: 33rpx;margin-left: 40rpx; display: flex;justify-content: flex-start;align-items: center;border-bottom: 1px solid #b6b6b6;height: 120rpx;">
 				<view style="margin-right: 50rpx;">头像</view>
-				<button open-type="chooseAvatar" @chooseavatar="chooseavatar"
+				<button open-type="chooseAvatar" @chooseavatar="chooseavatar" 
 					style="border-radius: 50%;display: flex;align-items: center;background: none; border: none; padding: 0; margin: 0;box-shadow: none; ">
 					<image :src="wxImgUrl" mode="scaleToFill"
 						style="width: 120rpx;height: 120rpx;border-radius: 50%;" />
@@ -40,13 +40,14 @@ export default {
 			wxImgUrl: '',
 			nickName: '',
 			avatar_id: '',
-			show:false
+			show:false,
 		};
 	},
 	methods: {
 		chooseavatar(e) {
 			console.log('chooseavatar', e);
 			this.wxImgUrl = e.detail.avatarUrl;
+			
 		},
 		savePersonal() {
 			this.show = true
