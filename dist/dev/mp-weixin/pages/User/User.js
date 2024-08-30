@@ -101,10 +101,10 @@ var components
 try {
   components = {
     uIcon: function () {
-      return Promise.all(/*! import() | node-modules/uview-ui/components/u-icon/u-icon */[__webpack_require__.e("common/vendor"), __webpack_require__.e("node-modules/uview-ui/components/u-icon/u-icon")]).then(__webpack_require__.bind(null, /*! uview-ui/components/u-icon/u-icon.vue */ 318))
+      return Promise.all(/*! import() | node-modules/uview-ui/components/u-icon/u-icon */[__webpack_require__.e("common/vendor"), __webpack_require__.e("node-modules/uview-ui/components/u-icon/u-icon")]).then(__webpack_require__.bind(null, /*! uview-ui/components/u-icon/u-icon.vue */ 332))
     },
     uModal: function () {
-      return Promise.all(/*! import() | node-modules/uview-ui/components/u-modal/u-modal */[__webpack_require__.e("common/vendor"), __webpack_require__.e("node-modules/uview-ui/components/u-modal/u-modal")]).then(__webpack_require__.bind(null, /*! uview-ui/components/u-modal/u-modal.vue */ 327))
+      return Promise.all(/*! import() | node-modules/uview-ui/components/u-modal/u-modal */[__webpack_require__.e("common/vendor"), __webpack_require__.e("node-modules/uview-ui/components/u-modal/u-modal")]).then(__webpack_require__.bind(null, /*! uview-ui/components/u-modal/u-modal.vue */ 341))
     },
   }
 } catch (e) {
@@ -314,7 +314,9 @@ var _default = exports.default = {
       show: false,
       title: '友情提示',
       content: '你确定要退出登录吗？',
-      balance: ''
+      balance: '',
+      wxImgUrl: '',
+      nickName: ''
     };
   },
   methods: {
@@ -410,15 +412,9 @@ var _default = exports.default = {
       console.log(res, '打印结果');
       if (res.status == 200) {
         _this.balance = res.data.userInfo.balance;
+        _this.wxImgUrl = res.data.userInfo.avatar_url;
+        _this.nickName = res.data.userInfo.nick_name;
       }
-      // if (res.status == 200) {
-      // 	this.show = false
-      // 	uni.switchTab({
-      // 		url: `/pages/User/User`
-      // 	})
-      // 	uni.setStorageSync('token', res.data.token);
-
-      // }
     });
     this.UserInfo = uni.getStorageSync('UserInfo');
     console.log(this.UserInfo, 'onshow2');

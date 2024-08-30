@@ -4,10 +4,10 @@
 			<view style="display:flex;margin-left: 40rpx;align-items: center;">
 				<image v-if="!UserInfo" src="../../static/logo.png" mode="scaleToFill"
 					style="width: 100rpx;height: 100rpx;border-radius: 50%;" />
-				<image @click="goPersonal" v-else :src="UserInfo.avatarUrl" mode="scaleToFill"
+				<image @click="goPersonal" v-else :src="wxImgUrl" mode="scaleToFill"
 					style="width: 100rpx;height: 100rpx;border-radius: 50%;" />
 				<view v-if="!UserInfo" @click="goLogin" style="margin-left: 30rpx;color: #d0af6b;">未登录请点击登录</view>
-				<view v-else @click="goLogin" style="margin-left: 30rpx;color: #d0af6b;">{{ UserInfo.nickName }}</view>
+				<view v-else @click="goLogin" style="margin-left: 30rpx;color: #d0af6b;">{{ nickName }}</view>
 			</view>
 		</view>
 		<view
@@ -147,6 +147,8 @@ export default {
 			title: '友情提示',
 			content: '你确定要退出登录吗？',
 			balance: '',
+			wxImgUrl: '',
+			nickName: '',
 		}
 	},
 	methods: {
@@ -247,15 +249,9 @@ export default {
 			console.log(res, '打印结果');
 			if (res.status == 200) {
 				this.balance = res.data.userInfo.balance
+				this.wxImgUrl = res.data.userInfo.avatar_url
+				this.nickName = res.data.userInfo.nick_name
 			}
-			// if (res.status == 200) {
-			// 	this.show = false
-			// 	uni.switchTab({
-			// 		url: `/pages/User/User`
-			// 	})
-			// 	uni.setStorageSync('token', res.data.token);
-
-			// }
 		})
 		this.UserInfo = uni.getStorageSync('UserInfo')
 		console.log(this.UserInfo, 'onshow2');
